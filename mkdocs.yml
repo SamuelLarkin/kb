@@ -1,0 +1,70 @@
+# [mkdocs](https://www.mkdocs.org/)
+# pip install --user -r docs/requirements.txt
+# mkdocs build
+# mkdocs serve
+site_name: Samuel Larkin's Documenation
+site_url: https://github.com/SamuelLarkin/config
+repo_url: https://github.com/SamuelLarkin/config
+repo_name: SamuelLarkin/config
+theme:
+  name: material
+  favicon: favicon-32x32.png
+  palette:
+    # Palette toggle for dark mode
+    - primary: blue
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+ 
+    # Palette toggle for light mode
+    - accent: light blue
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+  features:
+    - content.code.copy
+    - content.code.select
+    - announce.dismiss
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - rust
+    - bash
+    - python
+  shortcuts:
+    help: 191    # ?
+    next: 78     # n
+    previous: 80 # p
+    search: 83   # s
+plugins:
+  - search
+  - macros
+#  - mkdocstrings:
+#      default_handler: python
+#      handlers:
+#        python:
+#          paths: [everyvoice]
+extra:
+  homepage: https://github.com/SamuelLarkin/config
+  version:
+    provider: mike
+    default: stable
+markdown_extensions:
+#  - mkdocs-typer
+#  - mkdocs-click
+  - admonition
+#  - pymdownx.details
+#  - pymdownx.superfences
+  - toc:
+      permalink: true
+nav:
+  - Home: README.md
+  - Colors: color.md
+  - Configuration File Explained: config_files.md
+  - Miscellaneous: doc.md
+  - fzf: fzf.md
+  - rsync: rsync.md
+  - SLURM: slurm.md
+  - tmux: tmux.md
