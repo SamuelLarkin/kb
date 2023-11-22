@@ -92,6 +92,28 @@ find . -type l ! -exec test -e {} \; -print
 ```
 
 
+## Refresh Bash's Cache
+[How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
+`bash` does cache the full path to a command.
+You can verify that the command you are trying to execute is hashed with the type command:
+
+```sh
+type svnsync
+svnsync is hashed (/usr/local/bin/svnsync)
+```
+
+To clear the entire cache:
+
+`hash -r`
+
+Or just one entry:
+
+`hash -d svnsync`
+
+For additional information, consult help hash and man bash.
+
+
+
 ## BASH debugging
 * [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
 * `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
