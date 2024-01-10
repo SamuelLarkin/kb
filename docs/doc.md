@@ -185,6 +185,7 @@ PYTHONPROFILEIMPORTTIME=1 myscript.python
 
 ## miller
 
+### Tabulate BLEU Scores
 * Reading a csv dataframe
 * Write a nice table using bars
 * Print numbers with 2 decimal
@@ -206,4 +207,51 @@ PYTHONPROFILEIMPORTTIME=1 myscript.python
     then sort -nr test \
     then put 'begin {@rank = 1} $rank = @rank; @rank += 1' \
     then sort -nr expt_name
+```
+
+### Find HoC Sittings Elapsed Time
+
+```sh
+bzcat sentence_word_count_fr.tsv.bz2 | head -n 3
+```
+```
+id      datetime        wc      sentence
+House/House/391/Debates/001/HAN001      2006-04-03 11:05:00.000000      49      The 38th Parliament ...
+House/House/391/Debates/001/HAN001      2006-04-03 11:05:00.001000      5       Monday, April 3, 2006
+```
+
+* Transform `$datestamp` into the number of second since epoch 0
+* Find the minimum and maximum datetime for each Sitting
+* Figure out the elpase time
+* Convert the start and end time back to a datetime
+* Discard unwanted fields by specifying which one we want to keep
+* Reorder the fields
+
+```sh
+bzcat sentence_word_count_fr.tsv.bz2 \
+| head -n 10000 \
+| mlr --itsv --opprint --barred \
+  cut -x -f sentence then put '$datestamp = strptime($datetime, "%Y-%m-%d %T.%f")' \
+  then \
+  stats1 -g id -f datestamp -a min,max \
+  then \
+  put '$elapse = $datestamp_max - $datestamp_min'
+  then \
+  put '$start = strftime($datestamp_min, "%Y-%m-%d %T"); $end = strftime($datestamp_max, "%Y-%m-%d %T")' \
+  then \
+  cut -f id,start,end,elapse \
+  then \
+  reorder -f id,start,end,elapse
+```
+```
++------------------------------------+---------------------+---------------------+--------------------+
+| id                                 | start               | end                 | elapse             |
++------------------------------------+---------------------+---------------------+--------------------+
+| House/House/391/Debates/001/HAN001 | 2006-04-03 11:05:00 | 2006-04-03 14:05:00 | 10800.12400007248  |
+| House/House/391/Debates/002/HAN002 | 2006-04-04 00:00:00 | 2006-04-04 17:05:00 | 61500.206000089645 |
+| House/House/391/Debates/003/HAN003 | 2006-04-05 00:00:00 | 2006-04-05 18:25:00 | 66300.73900008202  |
+| House/House/391/Debates/004/HAN004 | 2006-04-06 00:00:00 | 2006-04-06 23:15:01 | 83701.97799992561  |
+| House/House/391/Debates/005/HAN005 | 2006-04-07 00:00:00 | 2006-04-07 14:30:00 | 52200.70899987221  |
+| House/House/391/Debates/006/HAN006 | 2006-04-10 00:00:00 | 2006-04-10 11:35:00 | 41700.10199999809  |
++------------------------------------+---------------------+---------------------+--------------------+
 ```
