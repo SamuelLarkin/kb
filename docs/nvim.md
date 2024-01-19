@@ -1,5 +1,8 @@
 # Neovim
 
+* [Popular Neovim Configurations](https://dotfyle.com/neovim/configurations/top)
+* [Christian Chiarulli's neovim config](https://github.com/ChristianChiarulli/nvim/)
+
 
 ## LazyVim
 
