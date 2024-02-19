@@ -8,6 +8,7 @@
 
 * [Is it possible to disable lsp formatting temporarily?](https://www.reddit.com/r/neovim/comments/oo8jcu/is_it_possible_to_disable_lsp_formatting/)
    You can avoid all autocommands with `:noa w`, or ignore some (or all) for some time with `:set eventignore=BufWritePre`.
+* Replace `gq{motion}` by `gw{motion}` to format the lines that {motion} moves over.
 
 
 ## LazyVim
