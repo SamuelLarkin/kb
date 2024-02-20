@@ -1,3 +1,7 @@
+# You need to enable github to host your pages.
+# github.com > Settings > Pages > Build and deployment:
+# > Source > Deploy from a branches
+# > Branch > gh-pages / `/root`
 name: Deploy docs
 
 on:
