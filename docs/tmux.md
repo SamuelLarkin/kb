@@ -14,3 +14,8 @@ set -g pane-border-format " [ ###P #T ] "
 CTRL+b + :
 select-pane -T "title"
 ```
+
+
+## Sharing a Window Across Sessions
+
+To share a window between two sessions: `tmux link-window -s <src-window> -t <dst-window>`
