@@ -79,6 +79,8 @@ It only covers the algorithm and implements few functions to support calculating
 
 ## gitsigns.nvim
 
+**Equivalent to VCSVimdiff**
+
 [github](https://github.com/lewis6991/gitsigns.nvim):
 Git integration for buffers.
 Super fast git decorations implemented purely in Lua.
