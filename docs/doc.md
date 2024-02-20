@@ -6,6 +6,20 @@ Sort according to a set of columns:
 zcat FILE.gz | awk -F'\t' '!_[$4,$5]++'
 ```
 
+
+## Where is the process running
+
+If there is a running process like `vim` that you would like to properly stop, you need to find in which `tmux` window it is running.
+To help figure this out, given the PID, you can ask `lsof` for its `CWD`.
+
+```sh
+lsof -a -d cwd -p PID
+```
+```
+COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF      NODE NAME
+vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp/models/HoC-Senate/corpora/spm/v2
+```
+
 ## Filtering
 Filtering tsv files based on a subset of columns.
 Provided by Marc.
