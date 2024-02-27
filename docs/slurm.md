@@ -87,6 +87,18 @@ Find out where a job will run
 scontrol show job <JOBID>
 ```
 
+### Tabulate the Information of Queued jobs
+
+If you are running a lot of jobs and need to inspect some of them for some feature, example, what command they will run, use `mlr`.
+
+```
+squeue --Format='JobID' --user=$USER --noheader \
+| \parallel 'scontrol --oneliner show job {}' \
+| sed 's/ /,/g' \
+| mlr --opprint cat \
+| less
+```
+
 ### Stats of a job
 
 Get some stats about a job that ran on `Slurm`.
