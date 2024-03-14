@@ -283,3 +283,48 @@ bzcat sentence_word_count_fr.tsv.bz2 \
 | House/House/391/Debates/006/HAN006 | 2006-04-10 00:00:00 | 2006-04-10 11:35:00 | 41700.10199999809  |
 +------------------------------------+---------------------+---------------------+--------------------+
 ```
+
+
+## Disk Usage
+
+### Tools
+
+* [diskus: A minimal, fast alternative to 'du -sh'](https://github.com/sharkdp/diskus)
+* [dua: View disk space usage and delete unwanted data, fast.](https://github.com/Byron/dua-cli)
+* [duc: Duc is a collection of tools for inspecting and visualizing disk usage](https://duc.zevv.nl/)
+* [dust: A more intuitive version of du in rust](https://github.com/bootandy/dust)
+* [dutree: a tool to analyze file system usage written in Rust](https://github.com/nachoparker/dutree)
+* [gdu: Fast disk usage analyzer with console interface written in Go](https://github.com/dundee/gdu)
+* [godu: Simple golang utility helping to discover large files/folders.](https://github.com/viktomas/godu)
+* [pdu: Highly parallelized, blazing fast directory tree analyzer](https://github.com/KSXGitHub/parallel-disk-usage)
+* [tin-summer: Find build artifacts that are taking up disk space](https://github.com/vmchale/tin-summer)
+
+
+### View disk usage by filetype.
+
+```sh
+dust -t
+```
+```
+ 3.0K   ┌── (others)      │                                             █ │   0%
+ 2.0K   ├── .BLEU         │                                             █ │   0%
+ 2.0K   ├── .CHRF         │                                             █ │   0%
+ 2.0K   ├── .TER          │                                             █ │   0%
+  64K   ├── .en           │                                             █ │   0%
+  64K   ├── .sh           │                                             █ │   0%
+  64K   ├── .train        │                                             █ │   0%
+  64K   ├── .xz           │                                             █ │   0%
+ 128K   ├── .sharditer    │                                             █ │   0%
+ 130K   ├── .0            │                                             █ │   0%
+ 192K   ├── .log          │                                             █ │   0%
+ 832K   ├── .00000        │                                             █ │   0%
+ 1.3M   ├── (no extension)│                                             █ │   0%
+ 2.1M   ├── .fr           │                                             █ │   0%
+ 2.1M   ├── .gz           │                                             █ │   0%
+ 2.6M   ├── .out          │                                             █ │   0%
+ 3.3M   ├── .json         │                                             █ │   0%
+ 4.9M   ├── .word         │                                             █ │   0%
+ 799M   ├── .00001        │                                    ██████████ │  20%
+ 3.1G   ├── .pkl          │         █████████████████████████████████████ │  80%
+ 3.9G ┌─┴ (total)         │██████████████████████████████████████████████ │ 100%
+```
