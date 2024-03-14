@@ -92,6 +92,20 @@ pv Huge.jsonl \
 ```
 
 
+### Group by X and Merge
+
+Context: after generating `*.scores.json` using `sacrebleu  --width=14 reference --metrics bleu chrf ter  < translation > scores.json`.
+Can we extract BLEU scores from all our experiments and tabulate the result using `mlr`?
+
+```sh
+find -type f -name \*scores.json \
+| xargs dirname \
+| parallel 'jq "{\"expt_name\": \"{//}\",  \"{/}\": (.[] | select(.name == \"BLEU\") | .score)}" {}/*scores.json' \
+| jq --slurp --sort-keys 'group_by(.expt_name) | [.[] | add]' \
+| mlr --json --opprint --barred cat \
+| less
+```
+
 
 ## git
 [How to remove a remote branch ref from local (gh-pages)](https://stackoverflow.com/a/64618529)
