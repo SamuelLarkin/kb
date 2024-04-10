@@ -59,6 +59,7 @@ nav:
   - Colors: color.md
   - Configuration File Explained: config_files.md
   - fzf: fzf.md
+  - git: git.md
   - Miller: milller.md
   - Miscellaneous: doc.md
   - nvim: nvim.md
