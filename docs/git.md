@@ -8,6 +8,12 @@
 git update-ref -d refs/remotes/origin/gh-pages
 ```
 
+How to delete a remote branch.
+
+```sh
+git push origin --delete dev/semantic_diff
+```
+
 
 ## GitHub
 
