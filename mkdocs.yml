@@ -60,6 +60,7 @@ nav:
   - Configuration File Explained: config_files.md
   - fzf: fzf.md
   - git: git.md
+  - json: json.md
   - Miller: milller.md
   - Miscellaneous: doc.md
   - nvim: nvim.md
