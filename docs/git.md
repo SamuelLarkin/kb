@@ -24,3 +24,13 @@ Delete all failed `CI activity` for a given user.
 gh run list --status failure --user samuellarkin --json databaseId -q '.[].databaseId' \
 | parallel --jobs  1 "gh api repos/$(gh repo view --json nameWithOwner -q .nameWithOwner)/actions/runs/{} -X DELETE"
 ```
+
+
+### Push an Approved PR's branch
+
+Once a PR is approved, you can use the following command to merge your `dev/work` branch to `main` given that your branch is at the tip of `main`.
+This effectively does a fast forward push from the CLI.
+
+```sh
+git push origin origin/dev/work:main
+```
