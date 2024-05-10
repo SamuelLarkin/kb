@@ -1,5 +1,17 @@
 # Tips-and-Tricks
 
+## Keep Sentence Pairs for Sockeye's Length Limit
+
+Here's an example that keep sentence pairs that have less than 5 tokens.
+
+```sh
+paste <(zcat OPUS-multiun-v1-eng-spa.spa.gz) <(zcat OPUS-multiun-v1-eng-spa.eng.gz) \
+| awk \
+    -F'\t' \
+    'BEGIN {OFS = FS}  (split($1, a, " +")<5 && split($2, b, " +")< 5) {print $1, $2}'
+```
+
+
 ## Sort
 Sort according to a set of columns:
 ```sh
