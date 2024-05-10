@@ -125,3 +125,17 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
   ]
 }
 ```
+
+## Zip Multiple files
+
+[Merge arrays](https://github.com/jqlang/jq/issues/680)
+The key here is the `transpose`.
+
+```sh
+zcat translation.fr.json.gz \
+| jq \
+    --slurp \
+    --argfile src <(jq -R '{"src":.}' source.en) \
+    --argfile ref <(jq -R '{"ref":.}' reference.fr) \
+    '[., $src, $ref] | transpose | map(add) | .[]'
+````
