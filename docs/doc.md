@@ -33,8 +33,12 @@ vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp
 ```
 
 ## Filtering
+
+### Filtering tsv Files on Column
+
 Filtering tsv files based on a subset of columns.
 Provided by Marc.
+
 ```sh
 # Filter-in
 awk \
@@ -52,6 +56,13 @@ awk \
   uniq.DEVTEST_2022_${BIFILTER}.tsv \
   uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
 > TRAIN_notindev.tsv
+```
+
+
+### Filter-out Testset From Train
+
+```sh
+grep --text --line-regexp --invert-match --fixed-strings --file=$testset_filename
 ```
 
 
