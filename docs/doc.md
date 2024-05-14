@@ -66,6 +66,18 @@ grep --text --line-regexp --invert-match --fixed-strings --file=$testset_filenam
 ```
 
 
+## Seeded `shuf`
+
+```sh
+function get_seeded_random {
+  local -r seed="$1"
+  openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt </dev/zero 2>/dev/null
+}
+
+shuf -i1-100 --random-source=<(get_seeded_random 42)
+```
+
+
 ## Broken Symlinks
 ```sh
 find . -type l ! -exec test -e {} \; -print
