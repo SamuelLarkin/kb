@@ -138,4 +138,4 @@ zcat translation.fr.json.gz \
     --argfile src <(jq -R '{"src":.}' source.en) \
     --argfile ref <(jq -R '{"ref":.}' reference.fr) \
     '[., $src, $ref] | transpose | map(add) | .[]'
-````
+```
