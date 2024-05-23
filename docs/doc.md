@@ -218,3 +218,33 @@ dust -t
  3.1G   ├── .pkl          │         █████████████████████████████████████ │  80%
  3.9G ┌─┴ (total)         │██████████████████████████████████████████████ │ 100%
 ```
+
+
+## Activate
+
+This is an example of an `activate` script when you compile a tool by hand and you don't install it a common place.
+
+```sh
+############ SENTENCEPIECE ############
+# Set this variable to override where Python is installed
+
+[ -n "$SENTENCEPIECE_HOME" ] && echo "NOT sourcing SENTENCEPIECE again" >&2 && return
+
+# Home
+export SENTENCEPIECE_HOME=$(readlink -m $(dirname "${BASH_SOURCE[0]}"))
+export SENTENCEPIECE_HOME=${SENTENCEPIECE_HOME_OVERRIDE:-$SENTENCEPIECE_HOME}
+
+# Binaries
+export PATH=$SENTENCEPIECE_HOME/bin:$PATH
+
+# Libraries
+export LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LIBRARY_PATH:+:$LIBRARY_PATH}
+export LD_LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_RUN_PATH=$SENTENCEPIECE_HOME/lib64${LD_RUN_PATH:+:$LD_RUN_PATH}
+
+# Includes
+export CPLUS_INCLUDE_PATH=$SENTENCEPIECE_HOME/include${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}
+
+# Package Configuration for ./configure to work when building other packages.
+export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+```
