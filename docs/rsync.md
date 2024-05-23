@@ -1,7 +1,7 @@
 # rsync
 
  [rsync copy over only certain types of files using include option](https://stackoverflow.com/a/11111793)
- NOTE you MUST add --include='*/' to let rsync at least visit all directories.
+ NOTE you MUST add `--include='*/'` to let rsync at least visit all directories.
 ```sh
 rsync \
   -Parzu \
