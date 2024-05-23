@@ -31,3 +31,18 @@ rsync \
   --exclude='*' \
   -n
 ```
+
+# Clone an Experiment's Structure
+
+```sh
+rsync \
+  -Parzu \
+  -m \
+  --include='*/' \
+  --include='*/expt_config' \
+  --include='*/model_config.yaml' \
+  --include='*/prep.sh' \
+  --exclude='*' \
+  ../en2fr.2024-03-19/finetuning \
+  .
+```
