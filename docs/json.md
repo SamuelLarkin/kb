@@ -139,3 +139,70 @@ zcat translation.fr.json.gz \
     --argfile ref <(jq -R '{"ref":.}' reference.fr) \
     '[., $src, $ref] | transpose | map(add) | .[]'
 ```
+
+
+## Flat Files to Structured json
+
+When you have multiple flat files that you want to combine into a structured json.
+
+*lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz*
+```
+SPA     0.9998978843092705
+SPA     0.9991979235059277
+```
+
+*lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz*
+```
+SPA     0.9999975457963204
+SPA     0.9847735076254288
+```
+
+*Tilde-worldbank-1-eng-spa.spa.gz*
+```
+"Igualmente, hacemos notar la importancia de abordar el problema del hambre y la malnutrición”.
+"La vida es muy difícil.
+```
+
+*Tilde-worldbank-1-eng-spa.eng.gz*
+```
+" We also note the importance of addressing hunger and malnutrition.”
+"[Life] is extremely difficult.
+```
+
+```sh
+paste \
+  <(zcat lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz) \
+  <(zcat lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz) \
+  <(zcat Tilde-worldbank-1-eng-spa.spa.gz) \
+  <(zcat Tilde-worldbank-1-eng-spa.eng.gz) \
+| mlr --tsv --ojson --implicit-csv-header \
+  label eng_spa.lid,eng_spa.confidence,all.lid,all.confidence,spa,eng \
+| jq '.[]'
+```
+
+```json
+{
+  "eng_spa": {
+    "lid": "SPA",
+    "confidence": 0.9998978843092705
+  },
+  "all": {
+    "lid": "SPA",
+    "confidence": 0.9999975457963204
+  },
+  "spa": "\"Igualmente, hacemos notar la importancia de abordar el problema del hambre y la malnutrición”.",
+  "eng": "\" We also note the importance of addressing hunger and malnutrition.”"
+}
+{
+  "eng_spa": {
+    "lid": "SPA",
+    "confidence": 0.9991979235059277
+  },
+  "all": {
+    "lid": "SPA",
+    "confidence": 0.9847735076254288
+  },
+  "spa": "\"La vida es muy difícil.",
+  "eng": "\"[Life] is extremely difficult."
+}
+```
