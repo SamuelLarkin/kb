@@ -36,10 +36,10 @@ theme:
     - rust
     - yaml
   shortcuts:
-    help: 191    # ?
-    next: 78     # n
+    help: 191 # ?
+    next: 78 # n
     previous: 80 # p
-    search: 83   # s
+    search: 83 # s
 plugins:
   - search
   - macros
@@ -50,8 +50,8 @@ extra:
     default: stable
 markdown_extensions:
   - admonition
-#  - pymdownx.details
-#  - pymdownx.superfences
+  #  - pymdownx.details
+  #  - pymdownx.superfences
   - toc:
       permalink: true
 nav:
@@ -60,6 +60,7 @@ nav:
   - Configuration File Explained: config_files.md
   - fzf: fzf.md
   - git: git.md
+  - install: install.md
   - json: json.md
   - Miller: milller.md
   - Miscellaneous: doc.md
