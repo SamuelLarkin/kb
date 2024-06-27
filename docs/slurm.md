@@ -25,6 +25,12 @@ Change the time limit.
 scontrol update jobid=<JOBID> TimeLimit=<NEW_TIMELIMIT>
 ```
 
+Change the number of maximum concurrent tasks.
+
+```sh
+scontrol update jobid=<JOBID> ArrayTaskThrottle=800
+```
+
 ### A Scriptless Job
 
 [Running a binary without a top level script in SLURM](https://stackoverflow.com/a/33402070)
