@@ -8,12 +8,11 @@
 git update-ref -d refs/remotes/origin/gh-pages
 ```
 
-## How to Delete a Remote Branch.
+## How to Delete a Remote Branch
 
 ```sh
 git push origin --delete dev/semantic_diff
 ```
-
 
 ## Realign a Branch with `origin`
 
@@ -24,6 +23,13 @@ git swith BRANCH
 git reset --hard origin/BRANC
 ```
 
+## Temporarily Disabled `delta` to Get a Patch
+
+To get a patch out of `git diff`, by the command to `less` which changes the pager from `delta` to `less`.
+
+```sh
+git diff main -- .pre-commit-config.yaml | less
+```
 
 # GitHub
 
@@ -36,7 +42,6 @@ Delete all failed `CI activity` for a given user.
 gh run list --status failure --user samuellarkin --json databaseId -q '.[].databaseId' \
 | parallel --jobs  1 "gh api repos/$(gh repo view --json nameWithOwner -q .nameWithOwner)/actions/runs/{} -X DELETE"
 ```
-
 
 ## Push an Approved PR's branch
 
