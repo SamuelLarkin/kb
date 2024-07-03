@@ -65,6 +65,7 @@ nav:
   - Miller: milller.md
   - Miscellaneous: doc.md
   - nvim: nvim.md
+  - Perl: perl.md
   - rsync: rsync.md
   - SLURM: slurm.md
   - tmux: tmux.md
