@@ -248,3 +248,12 @@ export CPLUS_INCLUDE_PATH=$SENTENCEPIECE_HOME/include${CPLUS_INCLUDE_PATH:+:$CPL
 # Package Configuration for ./configure to work when building other packages.
 export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
 ```
+
+
+## Grep for Emojis
+
+[POSIX and Unicode character categories](https://github.com/Genivia/ugrep?tab=readme-ov-file#posix-and-unicode-character-categories)
+
+```sh
+ugrep '\p{So}' input_file
+```
