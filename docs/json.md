@@ -206,3 +206,29 @@ paste \
   "eng": "\"[Life] is extremely difficult."
 }
 ```
+
+
+## XML to json
+
+Using [yq](https://github.com/mikefarah/yq/), we can convert a xml document into a json file.
+
+```sh
+yq -p xml -o json < input.xml > output.json
+```
+
+## Convert to Array
+
+Given
+
+```json
+[
+  { "seg": ["A", "B"] },
+  { "seg": "C"},
+]
+```
+
+The second object is NOT an array but you need it to be an array to process all elements the same way, you can make sure all segments are arrays by doing:
+
+```sh
+jq '.[] | .seg | (if type == "object" then [.] else . end) | .[]'
+```
