@@ -7,7 +7,7 @@
 Add a dependency to run a job after another job.
 
 ```sh
-scontrol update jobid=<JOBID> dependency=afterok:540912
+scontrol update jobid=<JOBID> dependency=afterok:<PREVIOUS_JOBID>
 ```
 
 Add dependencies to multiple jobs
