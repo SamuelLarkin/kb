@@ -51,3 +51,13 @@ This effectively does a fast forward push from the CLI.
 ```sh
 git push origin origin/dev/work:main
 ```
+
+## Find Which PR a Commit Belongs to
+
+When you want to know a commit what added during which Pull Request:
+
+```sh
+git clone --mirror git@github.com:EveryVoiceTTS/EveryVoice.git EveryVoice-mirror
+cd EveryVoice-mirror/
+sed -i 's|refs/pull/|refs/heads/pull/|' packed-refs
+git log --all --graph --decorate --oneline   # or your favourite compact log
