@@ -28,7 +28,7 @@ scontrol update jobid=<JOBID> TimeLimit=<NEW_TIMELIMIT>
 Change the number of maximum concurrent tasks.
 
 ```sh
-scontrol update jobid=<JOBID> ArrayTaskThrottle=800
+scontrol update jobid=<JOBID> ArrayTaskThrottle=0
 ```
 
 ### A Scriptless Job
