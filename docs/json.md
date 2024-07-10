@@ -45,7 +45,6 @@ zcat input.gz \
 > output.gz
 ```
 
-
 ## Counting Elements
 
 Count the number of entries/sentence pairs that have the `.unparsable` key.
@@ -54,7 +53,6 @@ Count the number of entries/sentence pairs that have the `.unparsable` key.
 pv Huge.jsonl \
 | jq --null-input '[ inputs | select(.unparsable)] | reduce .[] as $item (0; . + 1)'
 ```
-
 
 ## Group by X and Merge
 
@@ -70,8 +68,6 @@ find -type f -name \*scores.json \
 | less
 ```
 
-
-
 ## Aggregate a Field
 
 Given a list of objects where some of them have the same `id` but with a field with different values, aggregate that field for each object.
@@ -82,6 +78,7 @@ This happens when you extracted data from `mysql`.
 ```sh
 echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
 ```
+
 ```
 {
   "id": 1,
@@ -106,12 +103,11 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
   * take the first element and aggregate all of the `b` in a list
   * return that first element that has been augmented with a list of `b`
 
-
-
 ```sh
 echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
 | jq --slurp 'group_by(.id) | .[] | (.[0].b=([.[].b]|flatten)) | .[0]'
 ```
+
 ```
 {
   "id": 1,
@@ -140,30 +136,33 @@ zcat translation.fr.json.gz \
     '[., $src, $ref] | transpose | map(add) | .[]'
 ```
 
-
 ## Flat Files to Structured json
 
 When you have multiple flat files that you want to combine into a structured json.
 
 *lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz*
+
 ```
 SPA     0.9998978843092705
 SPA     0.9991979235059277
 ```
 
 *lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz*
+
 ```
 SPA     0.9999975457963204
 SPA     0.9847735076254288
 ```
 
 *Tilde-worldbank-1-eng-spa.spa.gz*
+
 ```
 "Igualmente, hacemos notar la importancia de abordar el problema del hambre y la malnutrición”.
 "La vida es muy difícil.
 ```
 
 *Tilde-worldbank-1-eng-spa.eng.gz*
+
 ```
 " We also note the importance of addressing hunger and malnutrition.”
 "[Life] is extremely difficult.
@@ -207,7 +206,6 @@ paste \
 }
 ```
 
-
 ## XML to json
 
 Using [yq](https://github.com/mikefarah/yq/), we can convert a xml document into a json file.
@@ -231,4 +229,66 @@ The second object is NOT an array but you need it to be an array to process all 
 
 ```sh
 jq '.[] | .seg | (if type == "object" then [.] else . end) | .[]'
+```
+
+## Filter-out SubObjects
+
+Given
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<dataset id="wmttest2024">
+  <collection id="general">
+    <doc origlang="en" id="test-en-news_beverly_press.3585" domain="news">
+      <src lang="en">
+        <p>
+          <seg id="1">Siso's depictions of land, water center new gallery exhibition</seg>
+        </p>
+      </src>
+      <ref lang="es" translator="refA">
+        <p>
+          <seg id="1">Representaciones de la tierra y el agua de Siso centran una nueva exposición</seg>
+        </p>
+      </ref>
+    </doc>
+    <doc origlang="en" id="test-en-news_brisbanetimes.com.au.228963" domain="NOT_news">
+      <src lang="en">
+        <p>
+          <seg id="1">Adapt the old, accommodate the new to solve issue</seg>
+        </p>
+      </src>
+      <ref lang="es" translator="refA">
+        <p>
+          <seg id="1">Adapta lo viejo, incorpora lo nuevo para resolver el problema</seg>
+        </p>
+      </ref>
+    </doc>
+  </collection>
+</dataset>
+```
+
+Remove documents that are NOT of `news` domain keeping the document's structure.
+
+```sh
+~/.local/bin/yq 'del(.dataset.collection.doc[] | select(.["+@domain"] != "news"))' wmttest2024.en-es.xml
+```
+
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<dataset id="wmttest2024">
+  <collection id="general">
+    <doc origlang="en" id="test-en-news_beverly_press.3585" domain="news">
+      <src lang="en">
+        <p>
+          <seg id="1">Siso's depictions of land, water center new gallery exhibition</seg>
+        </p>
+      </src>
+      <ref lang="es" translator="refA">
+        <p>
+          <seg id="1">Representaciones de la tierra y el agua de Siso centran una nueva exposición</seg>
+        </p>
+      </ref>
+    </doc>
+  </collection>
+</dataset>
 ```
