@@ -24,8 +24,8 @@ select-pane -T "title"
 
 To share a window between two sessions: `tmux link-window -s <src-window> -t <dst-window>`
 
-
 ## Find a Panes Running a Command
+
 find-window [-iCNrTZ] [-t target-pane] match-string
   (alias: findw)
   Search for a fnmatch(3) pattern or, with -r, regular expression match-string

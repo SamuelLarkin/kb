@@ -115,8 +115,6 @@ sacct --long --jobs=<JOBID>
 sacct -l -j <JOBID>
 ```
 
-
-
 ## Cluster information
 
 See what the nodes really offer.
@@ -162,7 +160,6 @@ ReservationName=maintenance3 StartTime=2024-02-03T14:30:00 EndTime=2024-02-05T14
    Users=root Accounts=(null) Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
-
 ### Node's Specs
 
 Get node's specs.
@@ -171,6 +168,7 @@ Get node's specs.
 sinfo --Node --responding --long
 sinfo -N -r -l
 ```
+
 | NODELIST | NODES | PARTITION   | STATE      | CPUS   | S:C:T  | MEMORY | TMP_DISK | WEIGHT | AVAIL_FE | REASON |
 |----------|-------|-------------|------------|--------|--------|--------|----------|--------|----------|--------|
 | cn101    | 1     | TrixieMain* | drained    | 64     | 2:16:2 | 192777 | 0        | 1      | (null)   | update |
@@ -180,8 +178,8 @@ sinfo -N -r -l
 | cn119    | 1     | TrixieMain* | idle       | 64     | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
 | cn125    | 1     | TrixieMain* | idle       | 64     | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
 
-
 ### Cluster Usage
+
 Find the cluster usage per user.
 
 ```sh
@@ -207,7 +205,6 @@ Usage reported in Percentage of Total
    trixie    ebadia           Ebadi              dt     0.00%    0.00%
 ```
 
-
 ### Allocated Hostnames of a Multinode Job
 
 Get a list of hostnames allocated to a multi node job.
@@ -222,7 +219,6 @@ cn102
 cn103
 cn104
 ```
-
 
 ## GPSC5
 
@@ -253,7 +249,6 @@ srun \
   --oversubscribe \
   /bin/bash -l
 ```
-
 
 ## GPSCC
 
@@ -292,7 +287,6 @@ cd /home/tes001/DT/tes001/LJSpeech-1.1/PT2
 
 srun everyvoice train text-to-spec --devices 2 --nodes 1 config/everyvoice-text-to-spec.yaml
 ```
-
 
 ### Sleeper Job
 

@@ -3,7 +3,6 @@
 * [Difference Between `.bashrc`, `.bash-profile`, and `.profile`](https://www.baeldung.com/linux/bashrc-vs-bash-profile-vs-profile)
 * [What are the functional differences between .profile .bash_profile and .bashrc](https://serverfault.com/questions/261802/what-are-the-functional-differences-between-profile-bash-profile-and-bashrc)
 
-
 `.bash_profile` and `.bashrc` are specific to `bash`, whereas `.profile` is read by many shells in the absence of their own shell-specific config files.
 (`.profile` was used by the original Bourne shell.) `.bash_profile` or `.profile` is read by login shells, along with `.bashrc`; subshells read only `.bashrc`.
 (Between job control and modern windowing systems, `.bashrc` by itself doesn't get used much. If you use `screen` or `tmux`, screens/windows usually run subshells instead of login shells.)

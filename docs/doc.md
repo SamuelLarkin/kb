@@ -11,13 +11,13 @@ paste <(zcat OPUS-multiun-v1-eng-spa.spa.gz) <(zcat OPUS-multiun-v1-eng-spa.eng.
     'BEGIN {OFS = FS}  (split($1, a, " +")<5 && split($2, b, " +")< 5) {print $1, $2}'
 ```
 
-
 ## Sort
+
 Sort according to a set of columns:
+
 ```sh
 zcat FILE.gz | awk -F'\t' '!_[$4,$5]++'
 ```
-
 
 ## Where is the process running
 
@@ -27,6 +27,7 @@ To help figure this out, given the PID, you can ask `lsof` for its `CWD`.
 ```sh
 lsof -a -d cwd -p PID
 ```
+
 ```
 COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF      NODE NAME
 vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp/models/HoC-Senate/corpora/spm/v2
@@ -48,6 +49,7 @@ awk \
   uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
 > TRAIN_indev.tsv
 ```
+
 ```sh
 # Filter-out
 awk \
@@ -58,13 +60,11 @@ awk \
 > TRAIN_notindev.tsv
 ```
 
-
 ### Filter-out Testset From Train
 
 ```sh
 grep --text --line-regexp --invert-match --fixed-strings --file=$testset_filename
 ```
-
 
 ## Seeded `shuf`
 
@@ -77,14 +77,14 @@ function get_seeded_random {
 shuf -i1-100 --random-source=<(get_seeded_random 42)
 ```
 
-
 ## Broken Symlinks
+
 ```sh
 find . -type l ! -exec test -e {} \; -print
 ```
 
-
 ## Refresh Bash's Cache
+
 [How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
 `bash` does cache the full path to a command.
 You can verify that the command you are trying to execute is hashed with the type command:
@@ -104,18 +104,16 @@ Or just one entry:
 
 For additional information, consult help hash and man bash.
 
-
-
 ## BASH debugging
+
 * [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
 * `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
 * `bash -x`
 * `bashdb`
 * `shellcheck`
 
-
-
 ## `lvim`
+
 Find commands `:WhichKey`.
 This opens a popup and if you type the shortcut key you get submenus.
 
@@ -123,9 +121,8 @@ This opens a popup and if you type the shortcut key you get submenus.
 
 `<leader>f` find a file.
 
-
-
 ## GNU parallel a la Spark
+
 ```sh
 function desubtokenize {}
 export -f desubtokenize
@@ -143,21 +140,21 @@ zcat --force train.gz \
 > train.tok.gz
 ```
 
-
 ## Weather
+
 [wttr.in - GitHub](https://github.com/chubin/wttr.in): The right way to check the weather
 Get the weather:
+
 * `curl wttr.in/CityName`
 * `curl v2d.wttr.in/CityName`
 
-
 ## Login Name
+
 Find the full name of a user from its username.
+
 ```sh
 lslogins | fzf
 ```
-
-
 
 ## Python
 
@@ -174,7 +171,6 @@ or:
 PYTHONPROFILEIMPORTTIME=1 myscript.python
 ```
 
-
 ## Disk Usage
 
 ### Tools
@@ -189,12 +185,12 @@ PYTHONPROFILEIMPORTTIME=1 myscript.python
 * [pdu: Highly parallelized, blazing fast directory tree analyzer](https://github.com/KSXGitHub/parallel-disk-usage)
 * [tin-summer: Find build artifacts that are taking up disk space](https://github.com/vmchale/tin-summer)
 
-
-### View disk usage by filetype.
+### View disk usage by filetype
 
 ```sh
 dust -t
 ```
+
 ```
  3.0K   ┌── (others)      │                                             █ │   0%
  2.0K   ├── .BLEU         │                                             █ │   0%
@@ -218,7 +214,6 @@ dust -t
  3.1G   ├── .pkl          │         █████████████████████████████████████ │  80%
  3.9G ┌─┴ (total)         │██████████████████████████████████████████████ │ 100%
 ```
-
 
 ## Activate
 
@@ -248,7 +243,6 @@ export CPLUS_INCLUDE_PATH=$SENTENCEPIECE_HOME/include${CPLUS_INCLUDE_PATH:+:$CPL
 # Package Configuration for ./configure to work when building other packages.
 export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
 ```
-
 
 ## Grep for Emojis
 

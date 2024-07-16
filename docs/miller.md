@@ -4,6 +4,7 @@
 * [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
 
 ## Tabulate BLEU Scores
+
 * Reading a csv dataframe
 * Write a nice table using bars
 * Print numbers with 2 decimal
@@ -32,6 +33,7 @@
 ```sh
 bzcat sentence_word_count_fr.tsv.bz2 | head -n 3
 ```
+
 ```
 id      datetime        wc      sentence
 House/House/391/Debates/001/HAN001      2006-04-03 11:05:00.000000      49      The 38th Parliament ...
@@ -61,6 +63,7 @@ bzcat sentence_word_count_fr.tsv.bz2 \
   then \
   reorder -f id,start,end,elapse
 ```
+
 ```
 +------------------------------------+---------------------+---------------------+--------------------+
 | id                                 | start               | end                 | elapse             |
@@ -85,11 +88,13 @@ jq --raw-output --compact-output \
   then rename en_sum,#en_word,fr_sum,#fr_word,fr_count,#sentence \
 | mlr --opprint --barred summary -a count,null_count,distinct_count,mean,min,median,max,stddev
 ```
+
 ```
 {"date":"2022-10-24","fr":18,"en":15}
 {"date":"2022-10-24","fr":18,"en":18}
 {"date":"2022-10-24","fr":29,"en":28}
 ```
+
 ```
 date=2022-10-24,#en_word=55951,#fr_word=59892,#sentence=2692
 date=2022-10-25,#en_word=73587,#fr_word=79288,#sentence=3660
@@ -103,7 +108,6 @@ date=2022-10-26,#en_word=29726,#fr_word=32800,#sentence=1492
 | #fr_word | 112 | 0 | 112 | 71302.02678571429 | 27863.87682146542 | 3150 | 76163 | 133257 |
 | #sentence | 112 | 0 | 112 | 3282.6160714285716 | 1318.6068832416186 | 128 | 3502 | 6373 |
 
-
 ## Group per Object
 
 ```sh
@@ -115,11 +119,13 @@ jq --raw-output --compact-output \
    then rename en_sum,#en_word,fr_sum,#fr_word,fr_count,#sentence \
 | mlr --opprint --barred summary -a count,null_count,distinct_count,mean,min,median,max,stddev
 ```
+
 ```
 {"sitting":{"parliament":44,"session":1,"number":116},"fr":18,"en":15}
 {"sitting":{"parliament":44,"session":1,"number":116},"fr":18,"en":18}
 {"sitting":{"parliament":44,"session":1,"number":116},"fr":29,"en":28}
 ```
+
 ```
 sitting.parliament=44,sitting.session=1,sitting.number=116,#en_word=55951,#fr_word=59892,#sentence=2692
 sitting.parliament=44,sitting.session=1,sitting.number=117,#en_word=73587,#fr_word=79288,#sentence=3660
