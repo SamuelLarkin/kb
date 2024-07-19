@@ -62,7 +62,7 @@ nav:
   - git: git.md
   - install: install.md
   - json: json.md
-  - Miller: milller.md
+  - Miller: miller.md
   - Miscellaneous: doc.md
   - nvim: nvim.md
   - Perl: perl.md
