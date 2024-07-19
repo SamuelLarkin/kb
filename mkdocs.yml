@@ -3,10 +3,10 @@
 # mkdocs build
 # mkdocs gh-deploy
 # mkdocs serve
-site_name: Samuel Larkin's Documenation
-site_url: https://SamuelLarkin.github.io
-repo_url: https://github.com/SamuelLarkin/config
-repo_name: SamuelLarkin/config
+site_name: Samuel Larkin's Knowledge Base Documenation
+site_url: https://SamuelLarkin.github.io/kb
+repo_url: https://github.com/SamuelLarkin/kb
+repo_name: SamuelLarkin / Knowledge Base
 theme:
   name: material
   favicon: favicon-32x32.png
@@ -44,7 +44,7 @@ plugins:
   - search
   - macros
 extra:
-  homepage: https://github.com/SamuelLarkin/config
+  homepage: https://github.com/SamuelLarkin/kb
   version:
     provider: mike
     default: stable
