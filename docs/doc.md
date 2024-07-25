@@ -251,3 +251,10 @@ export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG
 ```sh
 ugrep '\p{So}' input_file
 ```
+
+## setfacl
+
+```sh
+   setfacl -m g:blz_acl_mtp:rwx git
+   getfacl --access git | setfacl -d -M- git
+```
