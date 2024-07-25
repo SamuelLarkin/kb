@@ -200,3 +200,11 @@ Neovim Lua plugin for fast and familiar per-line commenting. Part of 'mini.nvim'
 
 [github](https://github.com/rcarriga/nvim-notify):
 A fancy, configurable, notification manager for NeoVim.
+
+# vim
+
+## Editing remote files via scp
+
+```sh
+vimdiff local_file scp://remoteuser@server.tld//absolute/path/to/document
+```
