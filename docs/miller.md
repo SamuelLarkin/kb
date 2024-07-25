@@ -1,20 +1,20 @@
 # miller
 
-* [Documentation](https://miller.readthedocs.io)
-* [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
+- [Documentation](https://miller.readthedocs.io)
+- [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
 
 ## Tabulate BLEU Scores
 
-* Reading a csv dataframe
-* Write a nice table using bars
-* Print numbers with 2 decimal
-* cut: keep column based on a list of regular expressions
-* merge-fields: add a `mean` column calculating the mean of columns
-* reorder: move the datetime column at the end of the table
-* label: renamed the columns
-* sort: on `test` to rank the rows
-* put: add the row's rank
-* sort: reorder `on expt_name`
+- Reading a csv dataframe
+- Write a nice table using bars
+- Print numbers with 2 decimal
+- cut: keep column based on a list of regular expressions
+- merge-fields: add a `mean` column calculating the mean of columns
+- reorder: move the datetime column at the end of the table
+- label: renamed the columns
+- sort: on `test` to rank the rows
+- put: add the row's rank
+- sort: reorder `on expt_name`
 
 ```sh
   score-tool tabulate --no-title \
@@ -40,12 +40,12 @@ House/House/391/Debates/001/HAN001      2006-04-03 11:05:00.000000      49      
 House/House/391/Debates/001/HAN001      2006-04-03 11:05:00.001000      5       Monday, April 3, 2006
 ```
 
-* Transform `$datestamp` into the number of second since epoch 0
-* Find the minimum and maximum datetime for each Sitting
-* Figure out the elpase time
-* Convert the start and end time back to a datetime
-* Discard unwanted fields by specifying which one we want to keep
-* Reorder the fields
+- Transform `$datestamp` into the number of second since epoch 0
+- Find the minimum and maximum datetime for each Sitting
+- Figure out the elpase time
+- Convert the start and end time back to a datetime
+- Discard unwanted fields by specifying which one we want to keep
+- Reorder the fields
 
 ```sh
 bzcat sentence_word_count_fr.tsv.bz2 \
@@ -101,12 +101,12 @@ date=2022-10-25,#en_word=73587,#fr_word=79288,#sentence=3660
 date=2022-10-26,#en_word=29726,#fr_word=32800,#sentence=1492
 ```
 
-| field_name | count | null_count | distinct_count | mean | stddev | min | median | max |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| date | 112 | 0 | 112 |  |  | 2022-10-24 | 2023-03-23 | 2023-09-29 |
-| #en_word | 112 | 0 | 112 | 64893.669642857145 | 25599.55527604576 | 2812 | 68386 | 123193 |
-| #fr_word | 112 | 0 | 112 | 71302.02678571429 | 27863.87682146542 | 3150 | 76163 | 133257 |
-| #sentence | 112 | 0 | 112 | 3282.6160714285716 | 1318.6068832416186 | 128 | 3502 | 6373 |
+| field_name | count | null_count | distinct_count | mean               | stddev             | min        | median     | max        |
+| ---------- | ----- | ---------- | -------------- | ------------------ | ------------------ | ---------- | ---------- | ---------- |
+| date       | 112   | 0          | 112            |                    |                    | 2022-10-24 | 2023-03-23 | 2023-09-29 |
+| #en_word   | 112   | 0          | 112            | 64893.669642857145 | 25599.55527604576  | 2812       | 68386      | 123193     |
+| #fr_word   | 112   | 0          | 112            | 71302.02678571429  | 27863.87682146542  | 3150       | 76163      | 133257     |
+| #sentence  | 112   | 0          | 112            | 3282.6160714285716 | 1318.6068832416186 | 128        | 3502       | 6373       |
 
 ## Group per Object
 
@@ -132,11 +132,11 @@ sitting.parliament=44,sitting.session=1,sitting.number=117,#en_word=73587,#fr_wo
 sitting.parliament=44,sitting.session=1,sitting.number=118,#en_word=29726,#fr_word=32800,#sentence=1492
 ```
 
-| field_name | count | null_count | distinct_count | mean | stddev | min | median | max |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sitting.parliament | 111 | 0 | 1 | 44 | 0 | 44 | 44 | 44 |
-| sitting.session | 111 | 0 | 1 | 1 | 0 | 1 | 1 | 1 |
-| sitting.number | 111 | 0 | 111 | 171.44144144144144 | 32.61697402069964 | 116 | 171 | 227 |
-| #en_word | 111 | 0 | 111 | 65478.2972972973 | 25569.833917971166 | 23026 | 68386 | 131905 |
-| #fr_word | 111 | 0 | 110 | 71944.38738738738 | 27816.245672487912 | 25521 | 76163 | 142068 |
-| #sentence | 111 | 0 | 110 | 3312.189189189189 | 1315.06589889158 | 1147 | 3502 | 6588 |
+| field_name         | count | null_count | distinct_count | mean               | stddev             | min   | median | max    |
+| ------------------ | ----- | ---------- | -------------- | ------------------ | ------------------ | ----- | ------ | ------ |
+| sitting.parliament | 111   | 0          | 1              | 44                 | 0                  | 44    | 44     | 44     |
+| sitting.session    | 111   | 0          | 1              | 1                  | 0                  | 1     | 1      | 1      |
+| sitting.number     | 111   | 0          | 111            | 171.44144144144144 | 32.61697402069964  | 116   | 171    | 227    |
+| #en_word           | 111   | 0          | 111            | 65478.2972972973   | 25569.833917971166 | 23026 | 68386  | 131905 |
+| #fr_word           | 111   | 0          | 110            | 71944.38738738738  | 27816.245672487912 | 25521 | 76163  | 142068 |
+| #sentence          | 111   | 0          | 110            | 3312.189189189189  | 1315.06589889158   | 1147  | 3502   | 6588   |

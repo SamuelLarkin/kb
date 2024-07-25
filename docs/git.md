@@ -61,3 +61,4 @@ git clone --mirror git@github.com:EveryVoiceTTS/EveryVoice.git EveryVoice-mirror
 cd EveryVoice-mirror/
 sed -i 's|refs/pull/|refs/heads/pull/|' packed-refs
 git log --all --graph --decorate --oneline   # or your favourite compact log
+```

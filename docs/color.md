@@ -18,8 +18,7 @@ In Putty, change Settings -> Connection > Data > Terminal-type string to: `putty
 
 1. Configure Putty
 
-In Settings > Windows > Colours there is a check box for "Allow terminal to use xterm 256-colour mode".
-2. Let the app know
+In Settings > Windows > Colours there is a check box for "Allow terminal to use xterm 256-colour mode". 2. Let the app know
 
 You'll probably have to change Settings -> Connection > Data > Terminal-type string to: `xterm-256color`
 
@@ -29,7 +28,7 @@ The main thing here is to make the server use an available `Terminfo` entry that
 
 ### 24bit
 
-* [Getting 24-bit color working in terminals](https://pisquare.osisoft.com/s/Blog-Detail/a8r1I000000GvXBQA0/console-things-getting-24bit-color-working-in-terminals)
+- [Getting 24-bit color working in terminals](https://pisquare.osisoft.com/s/Blog-Detail/a8r1I000000GvXBQA0/console-things-getting-24bit-color-working-in-terminals)
 
 ## LSCOLORS Schemes
 

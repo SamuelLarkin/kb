@@ -1,22 +1,22 @@
 # Neovim
 
-* [Popular Neovim Configurations](https://dotfyle.com/neovim/configurations/top)
-* [Christian Chiarulli's neovim config](https://github.com/ChristianChiarulli/nvim/)
+- [Popular Neovim Configurations](https://dotfyle.com/neovim/configurations/top)
+- [Christian Chiarulli's neovim config](https://github.com/ChristianChiarulli/nvim/)
 
 ## Tips-And-Tricks
 
-* [Is it possible to disable lsp formatting temporarily?](https://www.reddit.com/r/neovim/comments/oo8jcu/is_it_possible_to_disable_lsp_formatting/)
-   You can avoid all autocommands with `:noa w`, or ignore some (or all) for some time with `:set eventignore=BufWritePre`.
-* Replace `gq{motion}` by `gw{motion}` to format the lines that {motion} moves over.
+- [Is it possible to disable lsp formatting temporarily?](https://www.reddit.com/r/neovim/comments/oo8jcu/is_it_possible_to_disable_lsp_formatting/)
+  You can avoid all autocommands with `:noa w`, or ignore some (or all) for some time with `:set eventignore=BufWritePre`.
+- Replace `gq{motion}` by `gw{motion}` to format the lines that {motion} moves over.
 
 ## LazyVim
 
 LazyVim is a collection of plugins and is built on top of [lazy.vim](https://github.com/folke/lazy.nvim).
 LazyVim is a Neovim setup powered by [💤 lazy.nvim](https://github.com/folke/lazy.nvim) to make it easy to customize and extend your config.
 
-* [LazyVim](https://www.lazyvim.org/)
-* [GitHub](https://github.com/LazyVim/LazyVim): Neovim config for the lazy
-* [GitHub - lazy.vim](https://github.com/folke/lazy.nvim): 💤 A modern plugin manager for Neovim
+- [LazyVim](https://www.lazyvim.org/)
+- [GitHub](https://github.com/LazyVim/LazyVim): Neovim config for the lazy
+- [GitHub - lazy.vim](https://github.com/folke/lazy.nvim): 💤 A modern plugin manager for Neovim
 
 ## TreeSitter
 
@@ -26,14 +26,14 @@ Tree-sitter is a parser generator tool and an incremental parsing library.
 It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited.
 Tree-sitter aims to be:
 
-* General enough to parse any programming language
-* Fast enough to parse on every keystroke in a text editor
-* Robust enough to provide useful results even in the presence of syntax errors
-* Dependency-free so that the runtime library (which is written in pure C) can be embedded in any application
+- General enough to parse any programming language
+- Fast enough to parse on every keystroke in a text editor
+- Robust enough to provide useful results even in the presence of syntax errors
+- Dependency-free so that the runtime library (which is written in pure C) can be embedded in any application
 
-* [tree-sitter](https://github.com/tree-sitter/tree-sitter): An incremental parsing system for programming tools
-* [Documentation](https://tree-sitter.github.io/tree-sitter/)
-* [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Nvim Treesitter configurations and abstraction layer
+- [tree-sitter](https://github.com/tree-sitter/tree-sitter): An incremental parsing system for programming tools
+- [Documentation](https://tree-sitter.github.io/tree-sitter/)
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Nvim Treesitter configurations and abstraction layer
 
 ### nvim-treesitter-textobjects
 
@@ -78,20 +78,20 @@ Super fast git decorations implemented purely in Lua.
 
 Features
 
-* Signs for added, removed, and changed lines
-* Asynchronous using luv
-* Navigation between hunks
-* Stage hunks (with undo)
-* Preview diffs of hunks (with word diff)
-* Customizable (signs, highlights, mappings, etc)
-* Status bar integration
-* Git blame a specific line using virtual text.
-* Hunk text object
-* Automatically follow files moved in the index.
-* Live intra-line word diff
-* Ability to display deleted/changed lines via virtual lines.
-* Support for yadm
-* Support for detached working trees.
+- Signs for added, removed, and changed lines
+- Asynchronous using luv
+- Navigation between hunks
+- Stage hunks (with undo)
+- Preview diffs of hunks (with word diff)
+- Customizable (signs, highlights, mappings, etc)
+- Status bar integration
+- Git blame a specific line using virtual text.
+- Hunk text object
+- Automatically follow files moved in the index.
+- Live intra-line word diff
+- Ability to display deleted/changed lines via virtual lines.
+- Support for yadm
+- Support for detached working trees.
 
 ## vim-illuminate
 

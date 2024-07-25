@@ -98,10 +98,10 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
 }
 ```
 
-* group entries by `id`
-* for each group
-  * take the first element and aggregate all of the `b` in a list
-  * return that first element that has been augmented with a list of `b`
+- group entries by `id`
+- for each group
+  - take the first element and aggregate all of the `b` in a list
+  - return that first element that has been augmented with a list of `b`
 
 ```sh
 echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
@@ -140,28 +140,28 @@ zcat translation.fr.json.gz \
 
 When you have multiple flat files that you want to combine into a structured json.
 
-*lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz*
+_lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz_
 
 ```
 SPA     0.9998978843092705
 SPA     0.9991979235059277
 ```
 
-*lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz*
+_lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz_
 
 ```
 SPA     0.9999975457963204
 SPA     0.9847735076254288
 ```
 
-*Tilde-worldbank-1-eng-spa.spa.gz*
+_Tilde-worldbank-1-eng-spa.spa.gz_
 
 ```
 "Igualmente, hacemos notar la importancia de abordar el problema del hambre y la malnutrición”.
 "La vida es muy difícil.
 ```
 
-*Tilde-worldbank-1-eng-spa.eng.gz*
+_Tilde-worldbank-1-eng-spa.eng.gz_
 
 ```
 " We also note the importance of addressing hunger and malnutrition.”
@@ -219,10 +219,7 @@ yq -p xml -o json < input.xml > output.json
 Given
 
 ```json
-[
-  { "seg": ["A", "B"] },
-  { "seg": "C"},
-]
+[{ "seg": ["A", "B"] }, { "seg": "C" }]
 ```
 
 The second object is NOT an array but you need it to be an array to process all elements the same way, you can make sure all segments are arrays by doing:
