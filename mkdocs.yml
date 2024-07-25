@@ -63,7 +63,7 @@ nav:
   - install: install.md
   - json: json.md
   - Miller: miller.md
-  - Miscellaneous: doc.md
+  - Miscellaneous: miscellaneous.md
   - nvim: nvim.md
   - Perl: perl.md
   - rsync: rsync.md
