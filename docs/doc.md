@@ -106,11 +106,11 @@ For additional information, consult help hash and man bash.
 
 ## BASH debugging
 
-* [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
-* `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
-* `bash -x`
-* `bashdb`
-* `shellcheck`
+- [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
+- `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
+- `bash -x`
+- `bashdb`
+- `shellcheck`
 
 ## `lvim`
 
@@ -145,8 +145,8 @@ zcat --force train.gz \
 [wttr.in - GitHub](https://github.com/chubin/wttr.in): The right way to check the weather
 Get the weather:
 
-* `curl wttr.in/CityName`
-* `curl v2d.wttr.in/CityName`
+- `curl wttr.in/CityName`
+- `curl v2d.wttr.in/CityName`
 
 ## Login Name
 
@@ -175,15 +175,15 @@ PYTHONPROFILEIMPORTTIME=1 myscript.python
 
 ### Tools
 
-* [diskus: A minimal, fast alternative to 'du -sh'](https://github.com/sharkdp/diskus)
-* [dua: View disk space usage and delete unwanted data, fast.](https://github.com/Byron/dua-cli)
-* [duc: Duc is a collection of tools for inspecting and visualizing disk usage](https://duc.zevv.nl/)
-* [dust: A more intuitive version of du in rust](https://github.com/bootandy/dust)
-* [dutree: a tool to analyze file system usage written in Rust](https://github.com/nachoparker/dutree)
-* [gdu: Fast disk usage analyzer with console interface written in Go](https://github.com/dundee/gdu)
-* [godu: Simple golang utility helping to discover large files/folders.](https://github.com/viktomas/godu)
-* [pdu: Highly parallelized, blazing fast directory tree analyzer](https://github.com/KSXGitHub/parallel-disk-usage)
-* [tin-summer: Find build artifacts that are taking up disk space](https://github.com/vmchale/tin-summer)
+- [diskus: A minimal, fast alternative to 'du -sh'](https://github.com/sharkdp/diskus)
+- [dua: View disk space usage and delete unwanted data, fast.](https://github.com/Byron/dua-cli)
+- [duc: Duc is a collection of tools for inspecting and visualizing disk usage](https://duc.zevv.nl/)
+- [dust: A more intuitive version of du in rust](https://github.com/bootandy/dust)
+- [dutree: a tool to analyze file system usage written in Rust](https://github.com/nachoparker/dutree)
+- [gdu: Fast disk usage analyzer with console interface written in Go](https://github.com/dundee/gdu)
+- [godu: Simple golang utility helping to discover large files/folders.](https://github.com/viktomas/godu)
+- [pdu: Highly parallelized, blazing fast directory tree analyzer](https://github.com/KSXGitHub/parallel-disk-usage)
+- [tin-summer: Find build artifacts that are taking up disk space](https://github.com/vmchale/tin-summer)
 
 ### View disk usage by filetype
 
