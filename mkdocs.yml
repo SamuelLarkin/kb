@@ -69,3 +69,4 @@ nav:
   - rsync: rsync.md
   - SLURM: slurm.md
   - tmux: tmux.md
+  - vscode: vscode.md
