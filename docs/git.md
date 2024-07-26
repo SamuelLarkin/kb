@@ -7,13 +7,13 @@
 [How to remove a remote branch ref from local (gh-pages)](https://stackoverflow.com/a/64618529)
 
 ```sh
-git update-ref -d refs/remotes/origin/gh-pages
+git update-ref -d refs/remotes/origin/BRANCH
 ```
 
 ### How to Delete a Remote Branch
 
 ```sh
-git push origin --delete dev/semantic_diff
+git push --delete origin BRANCH
 ```
 
 ### Realign a Branch with `origin`
@@ -22,7 +22,7 @@ When you want to make your branch `BRANCH` the same as `origin/BRANCH` no matter
 
 ```sh
 git swith BRANCH
-git reset --hard origin/BRANC
+git reset --hard origin/BRANCH
 ```
 
 ### Temporarily Disabled `delta` to Get a Patch
@@ -30,7 +30,7 @@ git reset --hard origin/BRANC
 To get a patch out of `git diff`, by the command to `less` which changes the pager from `delta` to `less`.
 
 ```sh
-git diff main -- .pre-commit-config.yaml | less
+git diff | less
 ```
 
 ## GitHub
