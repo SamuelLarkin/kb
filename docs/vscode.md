@@ -4,14 +4,14 @@
 
 ## Plugins
 
+Install `Vim` plugin to feel more at home.
+Install `Remote Explorer`
 Install `Remote Development` plugin which include 4 plugins:
+
 - `WSL`
 - `Dev Containers`
 - `Remote - SSH`
 - `Remote - Tunnels`
-
-Install `Vim` plugin to feel more at home.
-Install `Remote Explorer`
 
 ## Remote
 

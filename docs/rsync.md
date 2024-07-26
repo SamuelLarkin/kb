@@ -1,5 +1,7 @@
 # rsync
 
+## Copy Subset of Files
+
 [rsync copy over only certain types of files using include option](https://stackoverflow.com/a/11111793)
 NOTE you MUST add `--include='*/'` to let rsync at least visit all directories.
 
@@ -19,6 +21,8 @@ rsync \
   -n
 ```
 
+## Copy Subset of Directories
+
 [How to use Rsync to copy only specific subdirectories (same names in several directories)](https://stackoverflow.com/questions/15687755/how-to-use-rsync-to-copy-only-specific-subdirectories-same-names-in-several-dir)
 
 ```sh
@@ -34,7 +38,7 @@ rsync \
   -n
 ```
 
-# Clone an Experiment's Structure
+## Clone an Experiment's Structure
 
 ```sh
 rsync \
