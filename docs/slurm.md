@@ -233,7 +233,7 @@ srun --jobid=<JOBID> --overlap --pty bash -l
 Example of connecting to a GPU running job on GPSC5.
 
 ```sh
-srun --jobid=<JOBID> --overlap --gres=gpu:8 -N 1 --ntasks=1 --mem-per-cpu=0 --pty -w ib14gpu-001 -s /bin/bash -l
+srun --jobid=<JOBID> --overlap --gres=gpu:8 -N 1 --ntasks=1 --mem-per-cpu=0 --pty -w <NODE_NAME_LIST -s /bin/bash -l
 ```
 
 ```sh
@@ -245,7 +245,7 @@ srun \
   --ntasks 1 \
   --mem-per-cpu=0 \
   --pty \
-  --nodelist ib12gpu-001 \
+  --nodelist <NODE_NAME_LIST> \
   --oversubscribe \
   /bin/bash -l
 ```
@@ -293,5 +293,20 @@ srun everyvoice train text-to-spec --devices 2 --nodes 1 config/everyvoice-text-
 Start a sleeper job
 
 ```sh
-psub -N sleeper -Q nrc_ict 'sleep 3600'
+psub -N sleeper -Q nrc_ict -gpu 'sleep 3600'
+```
+
+### Connect to Node
+
+```sh
+srun \
+  --jobid=<JOBID> \
+  --overlap \
+  --nodes=1 \
+  --ntasks=1 \
+  --mem-per-cpu=0 \
+  --pty \
+  --nodelist=<NODE_NAME_LIST> \
+  --oversubscribe \
+  /bin/bash -l
 ```
