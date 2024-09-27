@@ -1,5 +1,17 @@
 # SLURM
 
+## Access Internet from a Node
+
+```sh
+https_proxy=http://webproxy.collab.science.gc.ca:8888
+http_proxy=http://webproxy.collab.science.gc.ca:8888
+```
+
+```sh
+export https_proxy=http://webproxy.science.gc.ca:8888
+export http_proxy=http://webproxy.science.gc.ca:8888
+```
+
 ## Job Command and Information
 
 ### Update a job
