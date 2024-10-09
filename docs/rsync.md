@@ -49,6 +49,6 @@ rsync \
   --include='*/model_config.yaml' \
   --include='*/prep.sh' \
   --exclude='*' \
-  ../en2fr.2024-03-19/finetuning \
+  ../en2fr.2024-03-19/{finetuning,recency} \
   .
 ```
