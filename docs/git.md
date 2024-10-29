@@ -16,6 +16,12 @@ git update-ref -d refs/remotes/origin/BRANCH
 git push --delete origin BRANCH
 ```
 
+or
+
+```sh
+git push origin :BRANCH
+```
+
 ### Realign a Branch with `origin`
 
 When you want to make your branch `BRANCH` the same as `origin/BRANCH` no matter what.
@@ -64,3 +70,4 @@ cd EveryVoice-mirror/
 sed -i 's|refs/pull/|refs/heads/pull/|' packed-refs
 git log --all --graph --decorate --oneline   # or your favourite compact log
 ```
+
