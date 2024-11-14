@@ -258,3 +258,11 @@ ugrep '\p{So}' input_file
    setfacl -m g:blz_acl_mtp:rwx git
    getfacl --access git | setfacl -d -M- git
 ```
+
+## conda
+
+Build environment spec from explicit specs in history.
+
+```sh
+conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
+```
