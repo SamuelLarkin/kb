@@ -289,3 +289,11 @@ Remove documents that are NOT of `news` domain keeping the document's structure.
   </collection>
 </dataset>
 ```
+
+## script.jq
+
+To make a `jq` script executable:
+
+```sh
+#!/usr/bin/env -S jq -Mf --slurp
+```
