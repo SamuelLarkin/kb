@@ -83,6 +83,15 @@ shuf -i1-100 --random-source=<(get_seeded_random 42)
 find . -type l ! -exec test -e {} \; -print
 ```
 
+Here's an example to fix symlinks that need to have a level added to them.
+
+```sh
+function fix_link {
+  local -r link=${1:?LINK?}
+  ln -fns ../$(readlink $link) $link
+}
+```
+
 ## Refresh Bash's Cache
 
 [How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
