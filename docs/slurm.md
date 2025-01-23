@@ -239,26 +239,25 @@ cn104
 This is an example command to connect to a worker node on GPSC5
 
 ```sh
-srun --jobid=<JOBID> --overlap --pty bash -l
+srun --overlap --pty --jobid=<JOBID> bash -l
 ```
 
 Example of connecting to a GPU running job on GPSC5.
 
 ```sh
-srun --jobid=<JOBID> --overlap --gres=gpu:8 -N 1 --ntasks=1 --mem-per-cpu=0 --pty -w <NODE_NAME_LIST -s /bin/bash -l
+srun --overlap --gres=gpu:8 -N 1 --ntasks=1 --mem-per-cpu=0 --pty -s --jobid=<JOBID> /bin/bash -l
 ```
 
 ```sh
 srun \
-  --jobid <JOBID> \
   --overlap \
+  --oversubscribe \
+  --pty \
   --gres=gpu:0 \
   --nodes 1 \
   --ntasks 1 \
   --mem-per-cpu=0 \
-  --pty \
-  --nodelist <NODE_NAME_LIST> \
-  --oversubscribe \
+  --jobid <JOBID> \
   /bin/bash -l
 ```
 
@@ -312,13 +311,12 @@ psub -N sleeper -Q nrc_ict -gpu 'sleep 3600'
 
 ```sh
 srun \
-  --jobid=<JOBID> \
   --overlap \
+  --oversubscribe \
+  --pty \
   --nodes=1 \
   --ntasks=1 \
   --mem-per-cpu=0 \
-  --pty \
-  --nodelist=<NODE_NAME_LIST> \
-  --oversubscribe \
+  --jobid=<JOBID> \
   /bin/bash -l
 ```
