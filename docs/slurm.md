@@ -2,10 +2,14 @@
 
 ## Access Internet from a Node
 
+### GPSC-C
+
 ```sh
-https_proxy=http://webproxy.collab.science.gc.ca:8888
-http_proxy=http://webproxy.collab.science.gc.ca:8888
+export https_proxy=http://webproxy.collab.science.gc.ca:8888
+export http_proxy=http://webproxy.collab.science.gc.ca:8888
 ```
+
+### GPSC
 
 ```sh
 export https_proxy=http://webproxy.science.gc.ca:8888
