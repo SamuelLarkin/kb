@@ -66,7 +66,9 @@ nav:
   - Miscellaneous: miscellaneous.md
   - nvim: nvim.md
   - Perl: perl.md
+  - Python: python.md
   - rsync: rsync.md
   - SLURM: slurm.md
   - tmux: tmux.md
   - vscode: vscode.md
+
