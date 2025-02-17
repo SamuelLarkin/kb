@@ -297,3 +297,11 @@ To make a `jq` script executable:
 ```sh
 #!/usr/bin/env -S jq -Mf --slurp
 ```
+
+## Value in a Set
+
+Select entries that have a field value within a set.
+
+```sh
+jq 'select(.BlockID == (1742974, 1742975))' data/hoc-log-20241218-blocks.json
+```
