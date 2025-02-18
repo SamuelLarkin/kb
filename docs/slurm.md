@@ -131,6 +131,24 @@ sacct --long --jobs=<JOBID>
 sacct -l -j <JOBID>
 ```
 
+```sh
+seff 112610
+```
+
+```
+Job ID: 112610
+Cluster: trixie-rhel9
+User/Group: larkins/larkins
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 32
+CPU Utilized: 00:02:17
+CPU Efficiency: 3.79% of 01:00:16 core-walltime
+Job Wall-clock time: 00:01:53
+Memory Utilized: 2.78 GB
+Memory Efficiency: 6.96% of 40.00 GB
+```
+
 ## Cluster information
 
 See what the nodes really offer.
