@@ -465,7 +465,8 @@ function _requeue {
 
 if [[ -n "$SLURM_JOBID" ]]; then
   declare -a FORMAT_STRING=(
-    JobIDSubmit
+    JobID
+    Submit
     Start
     End
     Elapsed
@@ -482,7 +483,9 @@ if [[ -n "$SLURM_JOBID" ]]; then
     JobName%-30
     Comment%-80
   )
-  trap "sacct --jobs $SLURM_JOBID --format="$(IFS=','; echo "${FORMAT_STRING[*]}") 0
+  SACCT_FORMAT=$(IFS=","; echo "${FORMAT_STRING[*]}")
+  export SACCT_FORMAT
+  trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
   trap _requeue USR1
   unset FORMAT_STRING
 fi
