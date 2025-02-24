@@ -424,6 +424,14 @@ srun accelerate launch \
 # On GPSC7
 ##SBATCH --partition=gpu_a100
 ##SBATCH --account=nrc_ict__gpu_a100
+# On GPSC5
+##SBATCH --partition=gpu_v100
+##SBATCH --account=nrc_ict__gpu_v100
+# On GPSC-C
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
+##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
 #SBATCH --gres=gpu:1
 #SBATCH --time=02:00:00
@@ -538,8 +546,4 @@ readonly head_node_port=29507
 debug_info
 
 command time --portability bash train-cross.sh en fr
-```
-
-```
-
 ```
