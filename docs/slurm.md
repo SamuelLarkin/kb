@@ -536,8 +536,12 @@ function debug_info {
 
 source /gpfs/projects/DT/mtp/pkgs/miniforge3/bin/activate ""
 conda activate semdiv
-#export https_proxy=http://webproxy.science.gc.ca:8888
-#export http_proxy=http://webproxy.science.gc.ca:8888
+# GPSC
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export https_proxy=http://webproxy.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export http_proxy=http://webproxy.science.gc.ca:8888
+# GPSC-C
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export https_proxy=http://webproxy.collab.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export http_proxy=http://webproxy.collab.science.gc.ca:8888
 export TQDM_MININTERVAL=30
 export HF_HOME=/gpfs/projects/DT/mtp/models/HuggingFace
 readonly head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
