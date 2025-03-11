@@ -121,15 +121,6 @@ For additional information, consult help hash and man bash.
 - `bashdb`
 - `shellcheck`
 
-## `lvim`
-
-Find commands `:WhichKey`.
-This opens a popup and if you type the shortcut key you get submenus.
-
-`<leader>sT` where `<leader>` is `space` opens a popup to do fuzzy finding across files.
-
-`<leader>f` find a file.
-
 ## GNU parallel a la Spark
 
 ```sh
