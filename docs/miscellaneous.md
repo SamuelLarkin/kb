@@ -1,81 +1,41 @@
 # Tips-and-Tricks
 
-## Keep Sentence Pairs for Sockeye's Length Limit
+## Activate Template
 
-Here's an example that keep sentence pairs that have less than 5 tokens.
-
-```sh
-paste <(zcat OPUS-multiun-v1-eng-spa.spa.gz) <(zcat OPUS-multiun-v1-eng-spa.eng.gz) \
-| awk \
-    -F'\t' \
-    'BEGIN {OFS = FS}  (split($1, a, " +")<5 && split($2, b, " +")< 5) {print $1, $2}'
-```
-
-## Sort
-
-Sort according to a set of columns:
+This is an example of an `activate` script when you compile a tool by hand and you don't install it a common place.
 
 ```sh
-zcat FILE.gz | awk -F'\t' '!_[$4,$5]++'
+############ SENTENCEPIECE ############
+# Set this variable to override where Python is installed
+
+[ -n "$SENTENCEPIECE_HOME" ] && echo "NOT sourcing SENTENCEPIECE again" >&2 && return
+
+# Home
+export SENTENCEPIECE_HOME=$(readlink -m $(dirname "${BASH_SOURCE[0]}"))
+export SENTENCEPIECE_HOME=${SENTENCEPIECE_HOME_OVERRIDE:-$SENTENCEPIECE_HOME}
+
+# Binaries
+export PATH=$SENTENCEPIECE_HOME/bin:$PATH
+
+# Libraries
+export LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LIBRARY_PATH:+:$LIBRARY_PATH}
+export LD_LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_RUN_PATH=$SENTENCEPIECE_HOME/lib64${LD_RUN_PATH:+:$LD_RUN_PATH}
+
+# Includes
+export CPLUS_INCLUDE_PATH=$SENTENCEPIECE_HOME/include${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}
+
+# Package Configuration for ./configure to work when building other packages.
+export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
 ```
 
-## Where is the process running
+## BASH Debugging
 
-If there is a running process like `vim` that you would like to properly stop, you need to find in which `tmux` window it is running.
-To help figure this out, given the PID, you can ask `lsof` for its `CWD`.
-
-```sh
-lsof -a -d cwd -p PID
-```
-
-```
-COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF      NODE NAME
-vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp/models/HoC-Senate/corpora/spm/v2
-```
-
-## Filtering
-
-### Filtering tsv Files on Column
-
-Filtering tsv files based on a subset of columns.
-Provided by Marc.
-
-```sh
-# Filter-in
-awk \
-  -F'\t' \
-  'NR==FNR{a[$4,$5];next} ($4,$5) in a' \
-  uniq.DEVTEST_2022_${BIFILTER}.tsv \
-  uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
-> TRAIN_indev.tsv
-```
-
-```sh
-# Filter-out
-awk \
-  -F'\t' \
-  'NR==FNR{a[$4,$5];next} !(($4,$5) in a)' \
-  uniq.DEVTEST_2022_${BIFILTER}.tsv \
-  uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
-> TRAIN_notindev.tsv
-```
-
-### Filter-out Testset From Train
-
-```sh
-grep --text --line-regexp --invert-match --fixed-strings --file=$testset_filename
-```
-
-## Seeded `shuf`
-
-```sh
-function get_seeded_random {
-  local -r seed="$1"
-  openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt </dev/zero 2>/dev/null
-}
-
-shuf -i1-100 --random-source=<(get_seeded_random 42)
-```
+- [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
+- `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
+- `bash -x`
+- `bashdb`
+- `shellcheck`
 
 ## Broken Symlinks
 
@@ -90,70 +50,6 @@ function fix_link {
   local -r link=${1:?LINK?}
   ln -fns ../$(readlink $link) $link
 }
-```
-
-## Refresh Bash's Cache
-
-[How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
-`bash` does cache the full path to a command.
-You can verify that the command you are trying to execute is hashed with the type command:
-
-```sh
-type svnsync
-svnsync is hashed (/usr/local/bin/svnsync)
-```
-
-To clear the entire cache:
-
-`hash -r`
-
-Or just one entry:
-
-`hash -d svnsync`
-
-For additional information, consult help hash and man bash.
-
-## BASH debugging
-
-- [Bash debugging - Youtube](https://www.youtube.com/watch?v=9pbpevjuwmI)
-- `PS4` `export PS4='${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]}() - [${SHLVL},${BASH_SUBSHELL},$?] '`
-- `bash -x`
-- `bashdb`
-- `shellcheck`
-
-## GNU parallel a la Spark
-
-```sh
-function desubtokenize {}
-export -f desubtokenize
-
-function tokenize_corpus {}
-export -f tokenize_corpus
-
-zcat --force train.gz \
-| parallel \
-  --spreadstdin \
-  --recend '\n' \
-  --env desubtokenize \
-  --env tokenize_corpus \
-  "desubtokenize | tokenize_corpus $lang" \
-> train.tok.gz
-```
-
-## Weather
-
-[wttr.in - GitHub](https://github.com/chubin/wttr.in): The right way to check the weather
-Get the weather:
-
-- `curl wttr.in/CityName`
-- `curl v2d.wttr.in/CityName`
-
-## Login Name
-
-Find the full name of a user from its username.
-
-```sh
-lslogins | fzf
 ```
 
 ## Disk Usage
@@ -200,33 +96,56 @@ dust -t
  3.9G ┌─┴ (total)         │██████████████████████████████████████████████ │ 100%
 ```
 
-## Activate
+## Filtering
 
-This is an example of an `activate` script when you compile a tool by hand and you don't install it a common place.
+### Filtering tsv Files on Column
+
+Filtering tsv files based on a subset of columns.
+Provided by Marc.
 
 ```sh
-############ SENTENCEPIECE ############
-# Set this variable to override where Python is installed
+# Filter-in
+awk \
+  -F'\t' \
+  'NR==FNR{a[$4,$5];next} ($4,$5) in a' \
+  uniq.DEVTEST_2022_${BIFILTER}.tsv \
+  uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
+> TRAIN_indev.tsv
+```
 
-[ -n "$SENTENCEPIECE_HOME" ] && echo "NOT sourcing SENTENCEPIECE again" >&2 && return
+```sh
+# Filter-out
+awk \
+  -F'\t' \
+  'NR==FNR{a[$4,$5];next} !(($4,$5) in a)' \
+  uniq.DEVTEST_2022_${BIFILTER}.tsv \
+  uniq.TRAIN_2021-2016_${BIFILTER}.tsv \
+> TRAIN_notindev.tsv
+```
 
-# Home
-export SENTENCEPIECE_HOME=$(readlink -m $(dirname "${BASH_SOURCE[0]}"))
-export SENTENCEPIECE_HOME=${SENTENCEPIECE_HOME_OVERRIDE:-$SENTENCEPIECE_HOME}
+### Filter-out Testset From Train
 
-# Binaries
-export PATH=$SENTENCEPIECE_HOME/bin:$PATH
+```sh
+grep --text --line-regexp --invert-match --fixed-strings --file=$testset_filename
+```
 
-# Libraries
-export LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LIBRARY_PATH:+:$LIBRARY_PATH}
-export LD_LIBRARY_PATH=$SENTENCEPIECE_HOME/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
-export LD_RUN_PATH=$SENTENCEPIECE_HOME/lib64${LD_RUN_PATH:+:$LD_RUN_PATH}
+## GNU parallel a la Spark
 
-# Includes
-export CPLUS_INCLUDE_PATH=$SENTENCEPIECE_HOME/include${CPLUS_INCLUDE_PATH:+:$CPLUS_INCLUDE_PATH}
+```sh
+function desubtokenize {}
+export -f desubtokenize
 
-# Package Configuration for ./configure to work when building other packages.
-export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}
+function tokenize_corpus {}
+export -f tokenize_corpus
+
+zcat --force train.gz \
+| parallel \
+  --spreadstdin \
+  --recend '\n' \
+  --env desubtokenize \
+  --env tokenize_corpus \
+  "desubtokenize | tokenize_corpus $lang" \
+> train.tok.gz
 ```
 
 ## Grep for Emojis
@@ -237,11 +156,91 @@ export PKG_CONFIG_PATH=$SENTENCEPIECE_HOME/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG
 ugrep '\p{So}' input_file
 ```
 
-## setfacl
+## Keep Sentence Pairs for Sockeye's Length Limit
+
+Here's an example that keep sentence pairs that have less than 5 tokens.
 
 ```sh
-   setfacl -m g:blz_acl_mtp:rwx git
-   getfacl --access git | setfacl -d -M- git
+paste <(zcat OPUS-multiun-v1-eng-spa.spa.gz) <(zcat OPUS-multiun-v1-eng-spa.eng.gz) \
+| awk \
+    -F'\t' \
+    'BEGIN {OFS = FS}  (split($1, a, " +")<5 && split($2, b, " +")< 5) {print $1, $2}'
+```
+
+## Login Name
+
+Find the full name of a user from its username.
+
+```sh
+lslogins | fzf
+```
+
+## Refresh Bash's Cache
+
+[How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
+`bash` does cache the full path to a command.
+You can verify that the command you are trying to execute is hashed with the type command:
+
+```sh
+type svnsync
+svnsync is hashed (/usr/local/bin/svnsync)
+```
+
+To clear the entire cache:
+
+`hash -r`
+
+Or just one entry:
+
+`hash -d svnsync`
+
+For additional information, consult help hash and man bash.
+
+## Seeded `shuf`
+
+```sh
+function get_seeded_random {
+  local -r seed="$1"
+  openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt </dev/zero 2>/dev/null
+}
+
+shuf -i1-100 --random-source=<(get_seeded_random 42)
+```
+
+## Sort
+
+Sort according to a set of columns:
+
+```sh
+zcat FILE.gz | awk -F'\t' '!_[$4,$5]++'
+```
+
+## Time
+
+```sh
+command time --portability python my_script.py
+```
+
+## Weather
+
+[wttr.in - GitHub](https://github.com/chubin/wttr.in): The right way to check the weather
+Get the weather:
+
+- `curl wttr.in/CityName`
+- `curl v2d.wttr.in/CityName`
+
+## Where is the process running
+
+If there is a running process like `vim` that you would like to properly stop, you need to find in which `tmux` window it is running.
+To help figure this out, given the PID, you can ask `lsof` for its `CWD`.
+
+```sh
+lsof -a -d cwd -p PID
+```
+
+```
+COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF      NODE NAME
+vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp/models/HoC-Senate/corpora/spm/v2
 ```
 
 ## conda
@@ -252,8 +251,9 @@ Build environment spec from explicit specs in history.
 conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
 ```
 
-## Time
+## setfacl
 
 ```sh
-command time --portability python my_script.py
+   setfacl -m g:blz_acl_mtp:rwx git
+   getfacl --access git | setfacl -d -M- git
 ```
