@@ -156,21 +156,6 @@ Find the full name of a user from its username.
 lslogins | fzf
 ```
 
-## Python
-
-How to profile python's import statements.
-Used in finding expensive imports that slow down `--help`.
-
-```sh
-python -X importtime myscript.py
-```
-
-or:
-
-```sh
-PYTHONPROFILEIMPORTTIME=1 myscript.python
-```
-
 ## Disk Usage
 
 ### Tools
