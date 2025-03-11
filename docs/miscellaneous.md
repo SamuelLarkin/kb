@@ -266,3 +266,9 @@ Build environment spec from explicit specs in history.
 ```sh
 conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
 ```
+
+## Time
+
+```sh
+command time --portability python my_script.py
+```
