@@ -3,31 +3,6 @@
 - [Documentation](https://miller.readthedocs.io)
 - [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
 
-## Tabulate BLEU Scores
-
-- Reading a csv dataframe
-- Write a nice table using bars
-- Print numbers with 2 decimal
-- cut: keep column based on a list of regular expressions
-- merge-fields: add a `mean` column calculating the mean of columns
-- reorder: move the datetime column at the end of the table
-- label: renamed the columns
-- sort: on `test` to rank the rows
-- put: add the row's rank
-- sort: reorder `on expt_name`
-
-```sh
-  score-tool tabulate --no-title \
-  | mlr --icsv --opprint --barred --ofmt %.2f \
-    cut -rf expt_name,$suffix,date \
-    then merge-fields  -a mean  -r $suffix  -o $suffix  -k \
-    then reorder -e -f datetime \
-    then label expt_name,test,validation,mean,datetime \
-    then sort -nr test \
-    then put 'begin {@rank = 1} $rank = @rank; @rank += 1' \
-    then sort -nr expt_name
-```
-
 ## Find HoC Sittings Elapsed Time
 
 ```sh
@@ -140,3 +115,28 @@ sitting.parliament=44,sitting.session=1,sitting.number=118,#en_word=29726,#fr_wo
 | #en_word           | 111   | 0          | 111            | 65478.2972972973   | 25569.833917971166 | 23026 | 68386  | 131905 |
 | #fr_word           | 111   | 0          | 110            | 71944.38738738738  | 27816.245672487912 | 25521 | 76163  | 142068 |
 | #sentence          | 111   | 0          | 110            | 3312.189189189189  | 1315.06589889158   | 1147  | 3502   | 6588   |
+
+## Tabulate BLEU Scores
+
+- Reading a csv dataframe
+- Write a nice table using bars
+- Print numbers with 2 decimal
+- cut: keep column based on a list of regular expressions
+- merge-fields: add a `mean` column calculating the mean of columns
+- reorder: move the datetime column at the end of the table
+- label: renamed the columns
+- sort: on `test` to rank the rows
+- put: add the row's rank
+- sort: reorder `on expt_name`
+
+```sh
+  score-tool tabulate --no-title \
+  | mlr --icsv --opprint --barred --ofmt %.2f \
+    cut -rf expt_name,$suffix,date \
+    then merge-fields  -a mean  -r $suffix  -o $suffix  -k \
+    then reorder -e -f datetime \
+    then label expt_name,test,validation,mean,datetime \
+    then sort -nr test \
+    then put 'begin {@rank = 1} $rank = @rank; @rank += 1' \
+    then sort -nr expt_name
+```
