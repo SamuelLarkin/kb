@@ -101,6 +101,21 @@ pv Huge.jsonl \
 | jq --null-input '[ inputs | select(.unparsable)] | reduce .[] as $item (0; . + 1)'
 ```
 
+## Filename
+
+If you need the file name in your script, you can call the function `input_filename`.
+
+```sh
+jq '[input_filename, input_line_number]' translation/nmt/test.en2fr.scores.json
+```
+
+```
+[
+  "translation/nmt/test.en2fr.scores.json",
+  53
+]
+```
+
 ## Filter-out SubObjects
 
 Given
@@ -293,8 +308,8 @@ The key here is the `transpose`.
 zcat translation.fr.json.gz \
 | jq \
     --slurp \
-    --argfile src <(jq -R '{"src":.}' source.en) \
-    --argfile ref <(jq -R '{"ref":.}' reference.fr) \
+    --argfile src <(jq --raw-input '{"src":.}' source.en) \
+    --argfile ref <(jq --raw-input '{"ref":.}' reference.fr) \
     '[., $src, $ref] | transpose | map(add) | .[]'
 ```
 
