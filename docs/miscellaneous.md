@@ -217,8 +217,16 @@ zcat FILE.gz | awk -F'\t' '!_[$4,$5]++'
 
 ## Time
 
+To get an time output that is easier to parse.
+
 ```sh
 command time --portability python my_script.py
+```
+
+```
+real 3588.63
+user 3333.36
+sys 519.36
 ```
 
 ## Weather
