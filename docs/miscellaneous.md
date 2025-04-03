@@ -265,3 +265,11 @@ conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
    setfacl -m g:blz_acl_mtp:rwx git
    getfacl --access git | setfacl -d -M- git
 ```
+
+Change the default for the common group.
+Apply only to directories.
+
+```sh
+find corpora/ models/ pkgs/ venv/ -type d \
+| xargs setfacl -d -m g:ai4dcluster-dt-mtp-project:rwx
+```
