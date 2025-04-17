@@ -229,6 +229,21 @@ user 3333.36
 sys 519.36
 ```
 
+## Watch Files/Directories then Take Action
+
+If you want to take action when a directory gets created, you can use `watchexec`.
+Note, there used to be a `--emit-events-to environment` but it is phasing-out.
+
+```sh
+watchexec \
+  --emit-events-to file \
+  --watch compare-mt.output/ \
+  --fs-events=create \
+  --filter='checkpoint-?00' \
+  --filter='checkpoint-*000' \
+  "parallel --dry-run --plus 'sbatch translate.slurm {##create:} en2fr' :::: \$WATCHEXEC_EVENTS_FILE"
+```
+
 ## Weather
 
 [wttr.in - GitHub](https://github.com/chubin/wttr.in): The right way to check the weather
