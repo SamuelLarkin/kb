@@ -408,6 +408,19 @@ srun accelerate launch \
   my_huggingface_trainer.py
 ```
 
+## Submitting on Multiple Cluster
+
+On GPSC, we can now submit up to 1000 6 hour-job with `#SBATCH --qos=low`.
+
+```sh
+sbatch \
+  --time=00:10:00 \
+  --clusters=gpsc5,gpsc6,gpsc7,gpsc8 \
+  --account=${NRC_RC} \
+  --partition=standard \
+  myjob.sh
+```
+
 ## Template.slurm
 
 ```sh
