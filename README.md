@@ -8,6 +8,7 @@ This repository consists of tips-and-tricks that I found or techniques that I ha
 python -m venv venv
 source venv/bin/activate ""
 python -m pip install -r requirements.txt
+git config --local core.hooksPath .githooks/
 ```
 
 ## Build

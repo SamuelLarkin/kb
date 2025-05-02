@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [[ $(command -v mkdocs) ]]; then
+  source venv/bin/activate ""
+fi
+
+echo "Building MkDocs site..."
+mkdocs build
+echo "MkDocs site built successfully."
