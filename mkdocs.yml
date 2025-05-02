@@ -42,7 +42,6 @@ theme:
     search: 83 # s
 plugins:
   - search
-  - macros
 extra:
   homepage: https://github.com/SamuelLarkin/kb
   version:
@@ -71,4 +70,3 @@ nav:
   - SLURM: slurm.md
   - tmux: tmux.md
   - vscode: vscode.md
-
