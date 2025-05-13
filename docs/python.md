@@ -21,6 +21,15 @@ PYTHONPROFILEIMPORTTIME=1 myscript.python
 A simple object subclass that provides attribute access to its namespace, as
 well as a meaningful repr.
 
+## Simple Hack for None json.dumps Objects
+
+Specify a `default` function to process objects that are not json serializable.
+Note that `default=str` has to be after `indent` otherwise `indent` is not working.
+
+```python
+print(json.dumps(my_data, indent=2, default=str))
+```
+
 ## Typer
 
 Disable the long exception stack.
