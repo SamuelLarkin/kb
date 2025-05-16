@@ -1,6 +1,24 @@
 # Tips-and-Tricks
 
-## Activate Template
+## Activate Custom Scripts
+
+When running experiments, we often have a `venv` and a couple of custom scripts and aliases.
+This templates is used to enable all those.
+
+```sh
+# :vim:filetype=bash:
+
+tool_dir=$(readlink -m $(dirname "${BASH_SOURCE[0]}"))
+echo $tool_dir
+
+test -f $tool_dir/../venv/bin/activate && source $tool_dir/../venv/bin/activate ""
+[ -f $tool_dir/aliases ] && source $tool_dir/aliases ""
+export PATH=$tool_dir${PATH:+:$PATH}
+
+unset tool_dir
+```
+
+## Activate Template for Common Software
 
 This is an example of an `activate` script when you compile a tool by hand and you don't install it a common place.
 
