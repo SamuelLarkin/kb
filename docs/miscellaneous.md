@@ -193,6 +193,14 @@ Find the full name of a user from its username.
 lslogins | fzf
 ```
 
+## No newline at end of file
+
+[How to add a newline to the end of a file?](https://unix.stackexchange.com/a/31955)
+
+```sh
+sed -i -e '$a\' file
+```
+
 ## Refresh Bash's Cache
 
 [How do I clear Bash's cache of paths to executables?](https://unix.stackexchange.com/a/5610)
