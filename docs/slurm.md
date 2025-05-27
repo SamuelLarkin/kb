@@ -425,11 +425,12 @@ sbatch \
 
 ```sh
 #!/bin/bash
+# vim:syntax=bash:
 
-# sbatch train-cross.slurm
+# sbatch WMT2025_eval.slurm
 
-#SBATCH --job-name=train-cross
-#SBATCH --comment="Xling-SemDiv train-cross"
+#SBATCH --job-name=WMT25.eval
+#SBATCH --comment="Official WMT2025 LRSL eval script"
 
 # Trixie
 #SBATCH --partition=TrixieMain,JobTesting
@@ -447,16 +448,17 @@ sbatch \
 ##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
 #SBATCH --gres=gpu:1
-#SBATCH --time=02:00:00
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=6G
 
 #SBATCH --open-mode=append
+#SBATCH --output=%x-%j.out
+
 #SBATCH --requeue
 #SBATCH --signal=B:USR1@30
-#SBATCH --output=%x-%j.out
 
 # Fix SLURM environment variables.
 SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
@@ -547,20 +549,29 @@ function debug_info {
   echo;echo;echo
 }
 
-source /gpfs/projects/DT/mtp/pkgs/miniforge3/bin/activate ""
-conda activate semdiv
 # GPSC
 # [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export https_proxy=http://webproxy.science.gc.ca:8888
 # [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export http_proxy=http://webproxy.science.gc.ca:8888
 # GPSC-C
 # [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export https_proxy=http://webproxy.collab.science.gc.ca:8888
 # [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export http_proxy=http://webproxy.collab.science.gc.ca:8888
-export TQDM_MININTERVAL=30
-export HF_HOME=/gpfs/projects/DT/mtp/models/HuggingFace
-readonly head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
-readonly head_node_port=29507
+export TQDM_MININTERVAL=90
+head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+readonly head_node_ip
+readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
 
+
+source wmt25-lrsl-evaluation/venv/bin/activate ""
+
+# Call this after you have setup your environemnt and all your local variables
 debug_info
 
-command time --portability bash train-cross.sh en fr
+command time --portability lm_eval \
+  --model hf \
+  --model_args pretrained=unsloth/Qwen2.5-3B-Instruct-unsloth-bnb-4bit \
+  --tasks sorbian \
+  --device cuda:0 \
+  --batch_size 8 \
+  --output_path baseline_output_sorbian \
+  --log_samples
 ```
