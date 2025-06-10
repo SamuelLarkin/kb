@@ -64,6 +64,7 @@ nav:
   - Miller: miller.md
   - Miscellaneous: miscellaneous.md
   - nvim: nvim.md
+  - ollama: ollama.md
   - Perl: perl.md
   - Python: python.md
   - rsync: rsync.md
