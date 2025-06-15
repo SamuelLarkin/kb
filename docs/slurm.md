@@ -267,7 +267,7 @@ srun --overlap --pty --jobid=<JOBID> bash -l
 Example of connecting to a GPU running job on GPSC5.
 
 ```sh
-srun --overlap --gres=gpu:8 -N 1 --ntasks=1 --mem-per-cpu=0 --pty -s --jobid=<JOBID> /bin/bash -l
+srun --overlap --gres=gpu:1 --nodes=1 --ntasks=1 --mem-per-cpu=0 --pty --oversubscribe --jobid=<SLURM_JOBID> /bin/bash -l
 ```
 
 ```sh
@@ -276,10 +276,10 @@ srun \
   --oversubscribe \
   --pty \
   --gres=gpu:0 \
-  --nodes 1 \
-  --ntasks 1 \
+  --nodes=1 \
+  --ntasks=1 \
   --mem-per-cpu=0 \
-  --jobid <JOBID> \
+  --jobid=<JOBID> \
   /bin/bash -l
 ```
 
