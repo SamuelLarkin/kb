@@ -534,9 +534,9 @@ function debug_info {
     tr ":" "\n" <<< "$LD_LIBRARY_PATH"
     # What conda environment are we in?
     # Record all package versions.
-    uv pip list
-    uv pip freeze
-    conda env export
+    command -v uv &> /dev/null uv pip list
+    command -v uv &> /dev/null uv pip freeze
+    command -v conda &> /dev/null && conda env export
   } >&2
 
   {
