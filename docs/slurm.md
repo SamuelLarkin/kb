@@ -521,6 +521,7 @@ function debug_info {
   echo "DEBUGGING INFO" >&2
 
   {
+    date
     hostname
     uname --all
     cat /etc/issue
