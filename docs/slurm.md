@@ -526,18 +526,24 @@ function debug_info {
     uname --all
     cat /etc/issue
     pwd
-    which python
-    #env
+    command -v python
     # [How to list variables declared in script in bash?](https://stackoverflow.com/a/1305273)
     # In section SHELL BUILTIN COMMANDS (in the set section) it says: "In
     # posix mode, only shell variables are listed."
     ( set -o posix; set; )
     tr ":" "\n" <<< "$LD_LIBRARY_PATH"
-    # What conda environment are we in?
+    # What conda/uv environment are we in?
     # Record all package versions.
-    command -v uv &> /dev/null uv pip list
-    command -v uv &> /dev/null uv pip freeze
-    command -v conda &> /dev/null && conda env export
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+      echo "VENV: $VIRTUAL_ENV"
+      command -v uv
+      uv pip list
+      uv pip freeze
+    fi
+    if [[ -n "CONDA_DEFAULT_ENV" ]]; then
+      command -v conda
+      conda env export
+    fi
   } >&2
 
   {
