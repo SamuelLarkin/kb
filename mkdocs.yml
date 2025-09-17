@@ -67,6 +67,7 @@ nav:
   - nvim: nvim.md
   - ollama: ollama.md
   - Perl: perl.md
+  - Putty: putty.md
   - Python: python.md
   - rsync: rsync.md
   - SLURM: slurm.md
