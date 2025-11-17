@@ -1,6 +1,8 @@
 # JSON/JSONL
 
-## Aggregate a Field
+## Cookbook
+
+### Aggregate a Field
 
 Given a list of objects where some of them have the same `id` but with a field with different values, aggregate that field for each object.
 This happens when you extracted data from `mysql`.
@@ -54,7 +56,7 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
 }
 ```
 
-## Compare
+### Compare
 
 Compare two jsonl files that are not in the same order.
 This implies that we need to sort the files on some `key`.
@@ -78,7 +80,7 @@ Otherwise, use the alias `jqdiff` which essentially does
 vimdiff <(jq --sort-keys . file1.json) <(jq --sort-keys . file2.json)
 ```
 
-## Convert to Array
+### Convert to Array
 
 Given
 
@@ -92,7 +94,7 @@ The second object is NOT an array but you need it to be an array to process all 
 jq '.[] | .seg | (if type == "object" then [.] else . end) | .[]'
 ```
 
-## Counting Elements
+### Counting Elements
 
 Count the number of entries/sentence pairs that have the `.unparsable` key.
 
@@ -101,7 +103,7 @@ pv Huge.jsonl \
 | jq --null-input '[ inputs | select(.unparsable)] | reduce .[] as $item (0; . + 1)'
 ```
 
-## Filename
+### Filename
 
 If you need the file name in your script, you can call the function `input_filename`.
 
@@ -116,7 +118,7 @@ jq '[input_filename, input_line_number]' translation/nmt/test.en2fr.scores.json
 ]
 ```
 
-## Filter-out SubObjects
+### Filter-out SubObjects
 
 Given
 
@@ -178,7 +180,7 @@ Remove documents that are NOT of `news` domain keeping the document's structure.
 </dataset>
 ```
 
-## Flat Files to Structured json
+### Flat Files to Structured json
 
 When you have multiple flat files that you want to combine into a structured json.
 
@@ -248,7 +250,7 @@ paste \
 }
 ```
 
-## Group by X and Merge
+### Group by X and Merge
 
 Context: after generating `*.scores.json` using `sacrebleu  --width=14 reference --metrics bleu chrf ter  < translation > scores.json`.
 Can we extract BLEU scores from all our experiments and tabulate the result using `mlr`?
@@ -262,7 +264,7 @@ find -type f -name \*scores.json \
 | less
 ```
 
-## Parallel Processing
+### Parallel Processing
 
 Note that we use `--keep-order`, `--spreadstdin` & `--recend='\n'`.
 
@@ -283,7 +285,7 @@ zcat input.gz \
 > output.gz
 ```
 
-## Value in a Set
+### Value in a Set
 
 Select entries that have a field value within a set.
 
@@ -291,7 +293,7 @@ Select entries that have a field value within a set.
 jq 'select(.BlockID == (1742974, 1742975))' data/hoc-log-20241218-blocks.json
 ```
 
-## XML to json
+### XML to json
 
 Using [yq](https://github.com/mikefarah/yq/), we can convert a xml document into a json file.
 
@@ -299,7 +301,7 @@ Using [yq](https://github.com/mikefarah/yq/), we can convert a xml document into
 yq -p xml -o json < input.xml > output.json
 ```
 
-## Zip Multiple files
+### Zip Multiple files
 
 [Merge arrays](https://github.com/jqlang/jq/issues/680)
 The key here is the `transpose`.
