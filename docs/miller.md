@@ -3,6 +3,24 @@
 - [Documentation](https://miller.readthedocs.io)
 - [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
 
+## script.mlr
+
+[Scripting with Miller](https://miller.readthedocs.io/en/latest/scripting/#miller-scripts)
+In the following example, we simply convert a `jsonl` file to `tsv`.
+To make a `miller` script executable:
+
+```sh
+#!/usr/bin/env -S mlr -s
+# -S, --split-string=S
+# -s {file name} Take command-line flags from file name. For more
+#                information please see
+#                https://miller.readthedocs.io/en/latest/scripting/.
+
+
+--ijsonl --otsv
+cat
+```
+
 ## Cookbook
 
 ### Find HoC Sittings Elapsed Time
