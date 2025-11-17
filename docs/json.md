@@ -2,6 +2,17 @@
 
 [jq manual](https://jqlang.org/manual/)
 
+## script.jq
+
+To make a `jq` script executable:
+
+```sh
+#!/usr/bin/env -S jq --monochrome-output --compact-output --from-file
+# -S, --split-string=S
+
+# your `jq` filters
+```
+
 ## Cookbook
 
 ### Aggregate a Field
@@ -315,12 +326,4 @@ zcat translation.fr.json.gz \
     --argfile src <(jq --raw-input '{"src":.}' source.en) \
     --argfile ref <(jq --raw-input '{"ref":.}' reference.fr) \
     '[., $src, $ref] | transpose | map(add) | .[]'
-```
-
-## script.jq
-
-To make a `jq` script executable:
-
-```sh
-#!/usr/bin/env -S jq -Mf --slurp
 ```
