@@ -3,7 +3,9 @@
 - [Documentation](https://miller.readthedocs.io)
 - [GitHub](https://github.com/johnkerl/miller): Miller is like awk, sed, cut, join, and sort for name-indexed data such as CSV, TSV, and tabular JSON.
 
-## Find HoC Sittings Elapsed Time
+## Cookbook
+
+### Find HoC Sittings Elapsed Time
 
 ```sh
 bzcat sentence_word_count_fr.tsv.bz2 | head -n 3
@@ -52,7 +54,7 @@ bzcat sentence_word_count_fr.tsv.bz2 \
 +------------------------------------+---------------------+---------------------+--------------------+
 ```
 
-## Group per Date
+### Group per Date
 
 ```sh
 jq --raw-output --compact-output \
@@ -83,7 +85,7 @@ date=2022-10-26,#en_word=29726,#fr_word=32800,#sentence=1492
 | #fr_word   | 112   | 0          | 112            | 71302.02678571429  | 27863.87682146542  | 3150       | 76163      | 133257     |
 | #sentence  | 112   | 0          | 112            | 3282.6160714285716 | 1318.6068832416186 | 128        | 3502       | 6373       |
 
-## Group per Object
+### Group per Object
 
 ```sh
 jq --raw-output --compact-output \
@@ -116,7 +118,7 @@ sitting.parliament=44,sitting.session=1,sitting.number=118,#en_word=29726,#fr_wo
 | #fr_word           | 111   | 0          | 110            | 71944.38738738738  | 27816.245672487912 | 25521 | 76163  | 142068 |
 | #sentence          | 111   | 0          | 110            | 3312.189189189189  | 1315.06589889158   | 1147  | 3502   | 6588   |
 
-## Tabulate BLEU Scores
+### Tabulate BLEU Scores
 
 - Reading a csv dataframe
 - Write a nice table using bars
