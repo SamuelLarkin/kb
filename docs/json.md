@@ -1,5 +1,7 @@
 # JSON/JSONL
 
+[jq manual](https://jqlang.org/manual/)
+
 ## Cookbook
 
 ### Aggregate a Field
