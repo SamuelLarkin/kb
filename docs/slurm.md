@@ -194,6 +194,26 @@ ReservationName=maintenance3 StartTime=2024-02-03T14:30:00 EndTime=2024-02-05T14
    Users=root Accounts=(null) Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
+### Compute Capabilities
+
+```sh
+sbatch \
+  --partition=JobTesting \
+  --gres=gpu:1 \
+  --time=00:10:00 \
+  --cpus-per-task=1 \
+  --tasks-per-node=1 \
+  --nodes=1 \
+  --mem=1G \
+  --wrap='nvidia-smi --query-gpu=compute_cap'
+```
+
+```
+compute_cap
+7.0
+
+```
+
 ### Node's Specs
 
 Get node's specs.
