@@ -299,6 +299,34 @@ Build environment spec from explicit specs in history.
 conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
 ```
 
+### export conda environments
+
+```sh
+#!/bin/bash
+# Let's record what is installed in each conda environments
+
+function save {
+  local -r prefix=${1:?PREFIX?}
+  conda env export > $prefix.yaml
+  conda env export --from-history > $prefix.from_history.yaml
+
+  conda activate $prefix
+  pip freeze > $prefix.freeze.txt
+  pip list > $prefix.list.txt
+}
+export -f save
+
+source /space/group/nrc_ict/pkgs/ubuntu22/miniforge3/bin/activate ""
+
+find -mindepth 2 -maxdepth 2 -type d \
+| parallel \
+    --j 10 \
+    --eta \
+    --progress \
+    --env=save \
+    'cd {//} && save {/}'
+```
+
 ## setfacl
 
 ```sh
