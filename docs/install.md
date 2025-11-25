@@ -3,7 +3,7 @@
 ## uv
 
 ```sh
-uv venv --relocatable --python=3.12 --prompt=my_env --python-preference=only-managed  venv
+uv venv --relocatable --python-preference=only-managed  --python=3.12 --prompt=my_env venv
 ```
 
 ## Unsloth.ai
