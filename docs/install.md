@@ -1,5 +1,11 @@
 # Install
 
+## uv
+
+```sh
+uv venv --relocatable --python=3.12 --prompt=my_env --python-preference=only-managed  venv
+```
+
 ## Unsloth.ai
 
 ### On GPSC7
