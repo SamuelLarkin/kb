@@ -304,27 +304,41 @@ conda env export --from-history --prefix "$prefix" > "$prefix.from-history.yaml"
 ```sh
 #!/bin/bash
 # Let's record what is installed in each conda environments
+# NOTE that you should run this script from the directory containing the
+# environments directories.
+
 
 function save {
   local -r prefix=${1:?PREFIX?}
-  conda env export > $prefix.yaml
-  conda env export --from-history > $prefix.from_history.yaml
+  local -r output_dir=${2:-.}
+  echo "$prefix" >&2
 
-  conda activate $prefix
-  pip freeze > $prefix.freeze.txt
-  pip list > $prefix.list.txt
+  test -s /space/group/nrc_ict/pkgs/ubuntu22/miniforge3/bin/activate && source /space/group/nrc_ict/pkgs/ubuntu22/miniforge3/bin/activate ""
+  test -s /gpfs/projects/DT/mtp/pkgs/miniforge3/bin/activate && source /gpfs/projects/DT/mtp/pkgs/miniforge3/bin/activate ""
+  conda activate "./$prefix"
+
+  conda env export > "$output_dir/$prefix.yaml"
+  conda env export --from-history > "$output_dir/$prefix.from_history.yaml"
+  conda list --show-channel-urls --json > "$output_dir/$prefix.list.json"
+
+  python -m pip freeze > "$output_dir/$prefix.pip_freeze.txt"
+  python -m pip list --include-editable > "$output_dir/$prefix.pip_list.txt"
 }
 export -f save
 
-source /space/group/nrc_ict/pkgs/ubuntu22/miniforge3/bin/activate ""
 
-find -mindepth 2 -maxdepth 2 -type d \
-| parallel \
-    --j 10 \
-    --eta \
-    --progress \
-    --env=save \
-    'cd {//} && save {/}'
+if [[ "${BASH_SOURCE}" == "${0}" ]]; then
+  # This block runs only when the script is executed, not sourced
+  readonly output_dir=${1:-.}
+
+  find . -mindepth 1 -maxdepth 1 -type d \
+  | grep -v REQUIREMENTS \
+  | parallel \
+      --j 10 \
+      --env=save \
+      --env=output_dir \
+      "save {/} $output_dir"
+fi
 ```
 
 ## setfacl
