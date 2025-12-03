@@ -560,7 +560,7 @@ function debug_info {
       uv pip list
       uv pip freeze
     fi
-    if [[ -n "CONDA_DEFAULT_ENV" ]]; then
+    if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
       command -v conda
       conda env export
     fi
