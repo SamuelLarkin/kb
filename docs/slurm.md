@@ -411,21 +411,28 @@ head -n 112312 "$0" my_huggingface_trainer.py
 source setup_env.sh ""
 
 # These are required to setup the distributed framework.
+export TQDM_MININTERVAL=90
 head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
-head_node_port=29507  # You can choose your own port
+readonly head_node_ip
+readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+export launcher="accelerate launch \
+  --mixed_precision=fp16 \
+  --num_processes=$((SLURM_NNODES * SLURM_GPUS_ON_NODE)) \
+  --num_machines=$SLURM_NNODES \
+  --num_cpu_threads_per_process=$SLURM_CPUS_PER_TASK \
+  --rdzv_backend=c10d \
+  --main_process_ip=$head_node_ip \
+  --main_process_port=$head_node_port \
+  --machine_rank=$SLURM_NODEID \
+  "
 
 # Dump the environment.
 ( set -o posix ; set )
 
 
-srun accelerate launch \
-  --num_processes=$((SLURM_NNODES * SLURM_GPUS_ON_NODE)) \
-  --num_machines="$SLURM_NNODES" \
-  --rdzv_backend=c10d \
-  --main_process_ip="$head_node_ip" \
-  --main_process_port="$head_node_port" \
-  --machine_rank="$SLURM_NODEID" \
-  my_huggingface_trainer.py
+srun $launcher my_huggingface_trainer.py
+# or
+srun $launcher -m my_python_module
 ```
 
 ## Submitting on Multiple Cluster
