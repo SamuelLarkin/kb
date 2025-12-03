@@ -223,14 +223,14 @@ sinfo --Node --responding --long
 sinfo -N -r -l
 ```
 
-| NODELIST | NODES | PARTITION    | STATE   | CPUS | S:C:T  | MEMORY | TMP_DISK | WEIGHT | AVAIL_FE | REASON |
-| -------- | ----- | ------------ | ------- | ---- | ------ | ------ | -------- | ------ | -------- | ------ |
-| cn101    | 1     | TrixieMain\* | drained | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | update |
-| cn102    | 1     | TrixieMain\* | mixed   | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
-| cn110    | 1     | TrixieMain\* | mixed   | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
-| cn118    | 1     | TrixieMain\* | idle    | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
-| cn119    | 1     | TrixieMain\* | idle    | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
-| cn125    | 1     | TrixieMain\* | idle    | 64   | 2:16:2 | 192777 | 0        | 1      | (null)   | none   |
+| NODELIST | NODES | PARTITION    | STATE   | CPUS |  S:C:T | MEMORY | TMP_DISK | WEIGHT | AVAIL_FE | REASON |
+| :------- | ----: | :----------- | :------ | ---: | -----: | -----: | -------: | -----: | -------: | :----- |
+| cn101    |     1 | TrixieMain\* | drained |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | update |
+| cn102    |     1 | TrixieMain\* | mixed   |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | none   |
+| cn110    |     1 | TrixieMain\* | mixed   |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | none   |
+| cn118    |     1 | TrixieMain\* | idle    |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | none   |
+| cn119    |     1 | TrixieMain\* | idle    |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | none   |
+| cn125    |     1 | TrixieMain\* | idle    |   64 | 2:16:2 | 192777 |        0 |      1 |   (null) | none   |
 
 ### Cluster Usage
 
