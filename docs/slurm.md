@@ -431,10 +431,16 @@ export launcher="accelerate launch \
 ( set -o posix ; set )
 
 
-$ NOTE: You may have to provide options to your script to detect nodes/GPUs `--trainer.num_nodes="$SLURM_NNODES"`.
-srun $launcher my_huggingface_trainer.py
+function task {
+# NOTE: You may have to provide options to your script to detect nodes/GPUs `--trainer.num_nodes="$SLURM_NNODES"`.
+  srun $launcher my_huggingface_trainer.py
 # or
-srun $launcher -m my_python_module
+  srun $launcher -m my_python_module
+}
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task &
+wait
 ```
 
 Question: using pytorch lightining using multiple nodes and multiple gpu per node
@@ -636,12 +642,18 @@ source wmt25-lrsl-evaluation/venv/bin/activate ""
 # Call this after you have setup your environemnt and all your local variables
 debug_info
 
-command time --portability lm_eval \
-  --model hf \
-  --model_args pretrained=unsloth/Qwen2.5-3B-Instruct-unsloth-bnb-4bit \
-  --tasks sorbian \
-  --device cuda:0 \
-  --batch_size 8 \
-  --output_path baseline_output_sorbian \
-  --log_samples
+function task {
+  command time --portability lm_eval \
+    --model hf \
+    --model_args pretrained=unsloth/Qwen2.5-3B-Instruct-unsloth-bnb-4bit \
+    --tasks sorbian \
+    --device cuda:0 \
+    --batch_size 8 \
+    --output_path baseline_output_sorbian \
+    --log_samples
+}
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task &
+wait
 ```
