@@ -376,12 +376,13 @@ srun \
 #SBATCH --partition=TrixieMain
 #SBATCH --account=dt-mtp
 
-#SBATCH --time=12:00:00
 #SBATCH --job-name=MNIST.distributed
-#SBATCH --gres=gpu:4
+
+#SBATCH --time=12:00:00
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:4
 
 #SBATCH --output=%x-%j.out
 #SBATCH --signal=B:USR1@30
@@ -430,10 +431,45 @@ export launcher="accelerate launch \
 ( set -o posix ; set )
 
 
+$ NOTE: You may have to provide options to your script to detect nodes/GPUs `--trainer.num_nodes="$SLURM_NNODES"`.
 srun $launcher my_huggingface_trainer.py
 # or
 srun $launcher -m my_python_module
 ```
+
+Question: using pytorch lightining using multiple nodes and multiple gpu per node
+
+To train a PyTorch Lightning model across multiple nodes with multiple GPUs per node, configure the `Trainer` with the appropriate parameters.
+Use the `accelerator="gpu"`, devices to specify the number of GPUs per node, `num_nodes` to define the total number of nodes, and `strategy="ddp"` for distributed data parallelism.
+For example, to train on 32 GPUs across 4 nodes with 8 GPUs per node, the configuration would be:
+
+```python
+trainer = Trainer(
+    accelerator="gpu",
+    devices=8,
+    num_nodes=4,
+    strategy="ddp",
+    max_epochs=10
+)
+```
+
+This setup leverages PyTorch Lightning's built-in DDP support to manage distributed training across nodes.
+The devices parameter can also be set to "auto" to automatically detect available GPUs.
+
+When using a job scheduler like SLURM, ensure the job script requests the correct resources.
+For a 4-node setup with 8 GPUs per node, the SLURM header should include:
+
+```
+#SBATCH --nodes=4
+#SBATCH --gres=gpu:8
+#SBATCH --ntasks-per-node=8
+```
+
+The `srun` command should launch the training script, and PyTorch Lightning will automatically use environment variables like `SLURM_NTASKS` and `SLURM_NODEID` to coordinate the training process across nodes.
+It is also recommended to disable file locks in the environment to prevent initialization issues when the same environment is accessed from multiple nodes simultaneously.
+
+For cluster-specific configurations, such as on Jean-Zay, use `--ntasks-per-node=8` to assign one task per GPU and ensure exclusive node reservation for full memory access.
+Additionally, set NCCL-related environment variables to avoid communication conflicts between GPUs, such as export `NCCL_DEBUG=INFO` for debugging connectivity issues.
 
 ## Submitting on Multiple Cluster
 
