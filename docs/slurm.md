@@ -209,6 +209,24 @@ SynthiaGPU-Preempt    up   12:00:00      1   idle gn203
 JobTesting            up    1:00:00      2   idle cn[115-116]
 ```
 
+### My Account
+
+```sh
+sacctmgr show associations | grep ${USER}
+```
+
+Alternatively:
+
+```sh
+sacctmgr show user withassoc format=account,user,defaultaccount where user=$USER
+```
+
+```sh
+   Account       User   Def Acct
+---------- ---------- ----------
+   dt-base    larkins    dt-base
+```
+
 ### Compute Capabilities
 
 ```sh
