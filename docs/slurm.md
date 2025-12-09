@@ -194,6 +194,21 @@ ReservationName=maintenance3 StartTime=2024-02-03T14:30:00 EndTime=2024-02-05T14
    Users=root Accounts=(null) Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
 ```
 
+### Available Partitions
+
+```sh
+sinfo
+```
+
+```sh
+PARTITION          AVAIL  TIMELIMIT  NODES  STATE NODELIST
+SynthiaCPU-Preempt    up   12:00:00     14   idle cn[101-114]
+SynthiaGPU-Preempt    up   12:00:00      1  drain gn204
+SynthiaGPU-Preempt    up   12:00:00      2  alloc gn[201-202]
+SynthiaGPU-Preempt    up   12:00:00      1   idle gn203
+JobTesting            up    1:00:00      2   idle cn[115-116]
+```
+
 ### Compute Capabilities
 
 ```sh
