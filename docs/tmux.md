@@ -8,6 +8,12 @@
 tmux set-environment -gru FZF_TMUX_OPTS
 ```
 
+Fix the dark colors in `tmux` when `$TERM` is not correctly set.
+
+```sh
+tmux set-environment -g TERM "putty-256color"
+```
+
 ```
 set-environment [-Fhgru] [-t target-session] name [value]
     (alias: setenv)
