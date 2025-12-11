@@ -17,14 +17,21 @@ In Putty, change Settings -> Connection > Data > Terminal-type string to: `putty
 ["Emulate" 256 colors in PuTTY terminal](https://superuser.com/a/436928)
 
 1. Configure Putty
+   In Settings > Windows > Colours there is a check box for "Allow terminal to use xterm 256-colour mode".
 
-In Settings > Windows > Colours there is a check box for "Allow terminal to use xterm 256-colour mode". 2. Let the app know
+1. Let the app know
+   You'll probably have to change Settings -> Connection > Data > Terminal-type string to: `xterm-256color`
+   if your server has a terminfo entry for `putty-256color`, typically in `/usr/share/terminfo/p/putty-256color`, you can set `Putty`'s Terminal-Type to `putty-256color` instead.
+   The main thing here is to make the server use an available `Terminfo` entry that most closely matches the way `Putty` is configured.
 
-You'll probably have to change Settings -> Connection > Data > Terminal-type string to: `xterm-256color`
+## `tmux`
 
-if your server has a terminfo entry for `putty-256color`, typically in `/usr/share/terminfo/p/putty-256color`, you can set `Putty`'s Terminal-Type to `putty-256color` instead.
+`tmux` will display darker color, making it almost impossible to read unless you change to `putty-256color`.
+If you already have a running `tmux` server, you can dynamically fix it by doing:
 
-The main thing here is to make the server use an available `Terminfo` entry that most closely matches the way `Putty` is configured.
+```sh
+tmux set-environment -g TERM "xterm"
+```
 
 ### 24bit
 
