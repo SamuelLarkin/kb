@@ -1,5 +1,17 @@
 # SLURM
 
+## Errors
+
+### CUDA out of Memory
+
+`torch.OutOfMemoryError`: CUDA out of memory.
+Tried to allocate 256.00 MiB.
+GPU 0 has a total capacity of 79.18 GiB of which 166.31 MiB is free.
+Including non-PyTorch memory, this process has 79.01 GiB memory in use.
+Of the allocated memory 78.50 GiB is allocated by PyTorch, and 1.28 MiB is reserved by PyTorch but unallocated.
+If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+See documentation for Memory Management (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
 ## Access Internet from a Node
 
 ### GPSC-C
@@ -577,6 +589,12 @@ SLURM_TASKS_PER_NODE=${SLURM_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
 # *****************************************
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
 
+# If reserved but unallocated memory is large try setting
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+# See documentation for Memory Management
+# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
 # Requeueing on Trixie
 # [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
@@ -670,7 +688,7 @@ readonly head_node_ip
 readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
 
 
-source wmt25-lrsl-evaluation/venv/bin/activate ""
+source venv/bin/activate ""
 
 # Call this after you have setup your environemnt and all your local variables
 debug_info
