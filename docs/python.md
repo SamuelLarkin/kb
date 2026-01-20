@@ -1,5 +1,31 @@
 # Python
 
+## Creating Virtual Environments
+
+The preferred method is to use `uv` as it is much faster than other methods.
+[uv documentation](https://docs.astral.sh/uv)
+
+Install `uv`
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Create your environment.
+
+```sh
+uv venv --python-preference=only-managed --python=3.12 --relocatable --prompt=CAISI venv
+```
+
+Activate your environment and start populating it with your dependencies.
+
+```sh
+source venv/bin/activate
+uv pip install XYZ
+# or
+uv pip install -r requirements.txt
+```
+
 ## Profiling Imports
 
 How to profile python's import statements.
