@@ -1,5 +1,26 @@
 # Git
 
+## PAT and github
+
+Alternative: Use `url` insteadOf with Personal Access Tokens (PAT)
+If you prefer a lightweight, token-based approach (especially for automation), configure Git to inject your PAT directly into URLs using `insteadOf`.
+
+Set up a PAT-based URL replacement:
+
+```sh
+git config --global url."https://api:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+```
+
+Replace `${GITHUB_TOKEN}` with your actual GitHub Personal Access Token (required if 2FA is enabled).
+This works for SSH and HTTPS URLs:
+
+```sh
+git config --global url."https://api:${GITHUB_TOKEN}@github.com/".insteadOf "ssh://git@github.com/"
+git config --global url."https://api:${GITHUB_TOKEN}@github.com/".insteadOf "git@github.com:"
+```
+
+⚠️ Note: This method embeds the token in Git config, so avoid using it on shared or public machines.
+
 ## Git CLI
 
 ### Remove Remote Branch from Local
@@ -70,4 +91,3 @@ cd EveryVoice-mirror/
 sed -i 's|refs/pull/|refs/heads/pull/|' packed-refs
 git log --all --graph --decorate --oneline   # or your favourite compact log
 ```
-
