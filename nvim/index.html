@@ -1,0 +1,1449 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://SamuelLarkin.github.io/kb/nvim/">
+      
+      
+        <link rel="prev" href="../miscellaneous/">
+      
+      
+        <link rel="next" href="../ollama/">
+      
+      
+      <link rel="icon" href="../favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>nvim - Samuel Larkin's Knowledge Base Documenation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#neovim" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://github.com/SamuelLarkin/kb" title="Samuel Larkin&#39;s Knowledge Base Documenation" class="md-header__button md-logo" aria-label="Samuel Larkin's Knowledge Base Documenation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Samuel Larkin's Knowledge Base Documenation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              nvim
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SamuelLarkin/kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SamuelLarkin / Knowledge Base
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://github.com/SamuelLarkin/kb" title="Samuel Larkin&#39;s Knowledge Base Documenation" class="md-nav__button md-logo" aria-label="Samuel Larkin's Knowledge Base Documenation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Samuel Larkin's Knowledge Base Documenation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SamuelLarkin/kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SamuelLarkin / Knowledge Base
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../color/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration File Explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fzf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fzf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../huggingface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HuggingFace
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    json
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miller
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miscellaneous/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miscellaneous
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    nvim
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    nvim
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips-And-Tricks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lazyvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      LazyVim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#treesitter" class="md-nav__link">
+    <span class="md-ellipsis">
+      TreeSitter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TreeSitter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvim-treesitter-textobjects" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-treesitter-textobjects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvim-treesitter-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-treesitter-context
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telescope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Telescope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Telescope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telescopenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      telescope.nvim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#telescope-fzf-nativenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      telescope-fzf-native.nvim
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-keynvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      which-key.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitsignsnvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      gitsigns.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vim-illuminate" class="md-nav__link">
+    <span class="md-ellipsis">
+      vim-illuminate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troublenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      trouble.Nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-sever-protocol-lsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Sever Protocol (LSP)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#masonnvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      mason.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noicenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      noice.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miniindentscopre" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.indentscopre
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lualinenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      lualine.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#luasnip" class="md-nav__link">
+    <span class="md-ellipsis">
+      LuaSnip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvim-cmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-cmp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-nvim-lsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-nvim-lsp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp_luasnip" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp_luasnip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minipairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.pairs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minisurround" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.surround
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miniai" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.ai
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minicomment" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.comment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvim-notify" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-notify
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ollama/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ollama
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Perl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../putty/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Putty
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rsync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rsync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../slurm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SLURM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tmux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    tmux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips-And-Tricks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lazyvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      LazyVim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#treesitter" class="md-nav__link">
+    <span class="md-ellipsis">
+      TreeSitter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TreeSitter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nvim-treesitter-textobjects" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-treesitter-textobjects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvim-treesitter-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-treesitter-context
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telescope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Telescope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Telescope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#telescopenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      telescope.nvim
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#telescope-fzf-nativenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      telescope-fzf-native.nvim
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-keynvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      which-key.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gitsignsnvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      gitsigns.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vim-illuminate" class="md-nav__link">
+    <span class="md-ellipsis">
+      vim-illuminate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troublenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      trouble.Nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-sever-protocol-lsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Language Sever Protocol (LSP)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#masonnvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      mason.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noicenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      noice.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miniindentscopre" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.indentscopre
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lualinenvim" class="md-nav__link">
+    <span class="md-ellipsis">
+      lualine.nvim
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#luasnip" class="md-nav__link">
+    <span class="md-ellipsis">
+      LuaSnip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvim-cmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-cmp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-nvim-lsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-nvim-lsp
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp-path
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmp_luasnip" class="md-nav__link">
+    <span class="md-ellipsis">
+      cmp_luasnip
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minipairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.pairs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minisurround" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.surround
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miniai" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.ai
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minicomment" class="md-nav__link">
+    <span class="md-ellipsis">
+      mini.comment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvim-notify" class="md-nav__link">
+    <span class="md-ellipsis">
+      nvim-notify
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="neovim">Neovim<a class="headerlink" href="#neovim" title="Permanent link">&para;</a></h1>
+<ul>
+<li><a href="https://dotfyle.com/neovim/configurations/top">Popular Neovim Configurations</a></li>
+<li><a href="https://github.com/ChristianChiarulli/nvim/">Christian Chiarulli's neovim config</a></li>
+</ul>
+<h2 id="tips-and-tricks">Tips-And-Tricks<a class="headerlink" href="#tips-and-tricks" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.reddit.com/r/neovim/comments/oo8jcu/is_it_possible_to_disable_lsp_formatting/">Is it possible to disable lsp formatting temporarily?</a>
+  You can avoid all autocommands with <code>:noa w</code>, or ignore some (or all) for some time with <code>:set eventignore=BufWritePre</code>.</li>
+<li>Replace <code>gq{motion}</code> by <code>gw{motion}</code> to format the lines that {motion} moves over.</li>
+</ul>
+<h2 id="lazyvim">LazyVim<a class="headerlink" href="#lazyvim" title="Permanent link">&para;</a></h2>
+<p>LazyVim is a collection of plugins and is built on top of <a href="https://github.com/folke/lazy.nvim">lazy.vim</a>.
+LazyVim is a Neovim setup powered by <a href="https://github.com/folke/lazy.nvim">💤 lazy.nvim</a> to make it easy to customize and extend your config.</p>
+<ul>
+<li><a href="https://www.lazyvim.org/">LazyVim</a></li>
+<li><a href="https://github.com/LazyVim/LazyVim">GitHub</a>: Neovim config for the lazy</li>
+<li><a href="https://github.com/folke/lazy.nvim">GitHub - lazy.vim</a>: 💤 A modern plugin manager for Neovim</li>
+</ul>
+<h2 id="treesitter">TreeSitter<a class="headerlink" href="#treesitter" title="Permanent link">&para;</a></h2>
+<p>TreeSitter in <code>nvim</code> is used for better syntax highlighting.</p>
+<p>Tree-sitter is a parser generator tool and an incremental parsing library.
+It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited.
+Tree-sitter aims to be:</p>
+<ul>
+<li>General enough to parse any programming language</li>
+<li>Fast enough to parse on every keystroke in a text editor</li>
+<li>Robust enough to provide useful results even in the presence of syntax errors</li>
+<li>
+<p>Dependency-free so that the runtime library (which is written in pure C) can be embedded in any application</p>
+</li>
+<li>
+<p><a href="https://github.com/tree-sitter/tree-sitter">tree-sitter</a>: An incremental parsing system for programming tools</p>
+</li>
+<li><a href="https://tree-sitter.github.io/tree-sitter/">Documentation</a></li>
+<li><a href="https://github.com/nvim-treesitter/nvim-treesitter">nvim-treesitter</a>: Nvim Treesitter configurations and abstraction layer</li>
+</ul>
+<h3 id="nvim-treesitter-textobjects">nvim-treesitter-textobjects<a class="headerlink" href="#nvim-treesitter-textobjects" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/nvim-treesitter/nvim-treesitter-textobjects">github</a>:
+Syntax aware text-objects, select, move, swap, and peek support.</p>
+<h3 id="nvim-treesitter-context">nvim-treesitter-context<a class="headerlink" href="#nvim-treesitter-context" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/nvim-treesitter/nvim-treesitter-context">github</a>:
+Show the function you are in at the top of the buffer.</p>
+<p>A Vim plugin that shows the context of the currently visible buffer contents.
+It's supposed to work on a wide range of file types, but is probably most useful when looking at source code files.
+In most programming languages this context will show you which function you're looking at, and within that function which loops or conditions are surrounding the visible code.</p>
+<h2 id="telescope">Telescope<a class="headerlink" href="#telescope" title="Permanent link">&para;</a></h2>
+<h3 id="telescopenvim">telescope.nvim<a class="headerlink" href="#telescopenvim" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/nvim-telescope/telescope.nvim">github</a>:
+Find, Filter, Preview, Pick. All lua, all the time.</p>
+<h3 id="telescope-fzf-nativenvim">telescope-fzf-native.nvim<a class="headerlink" href="#telescope-fzf-nativenvim" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/nvim-telescope/telescope-fzf-native.nvim">github</a>:
+FZF sorter for telescope written in c.
+<code>fzf-native</code> is a <code>c</code> port of <code>fzf</code>.
+It only covers the algorithm and implements few functions to support calculating the score.</p>
+<h2 id="which-keynvim">which-key.nvim<a class="headerlink" href="#which-keynvim" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/folke/which-key.nvim">github</a>:
+💥 Create key bindings that stick. WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.</p>
+<h2 id="gitsignsnvim">gitsigns.nvim<a class="headerlink" href="#gitsignsnvim" title="Permanent link">&para;</a></h2>
+<p><strong>Equivalent to VCSVimdiff</strong></p>
+<p><a href="https://github.com/lewis6991/gitsigns.nvim">github</a>:
+Git integration for buffers.
+Super fast git decorations implemented purely in Lua.</p>
+<p>Features</p>
+<ul>
+<li>Signs for added, removed, and changed lines</li>
+<li>Asynchronous using luv</li>
+<li>Navigation between hunks</li>
+<li>Stage hunks (with undo)</li>
+<li>Preview diffs of hunks (with word diff)</li>
+<li>Customizable (signs, highlights, mappings, etc)</li>
+<li>Status bar integration</li>
+<li>Git blame a specific line using virtual text.</li>
+<li>Hunk text object</li>
+<li>Automatically follow files moved in the index.</li>
+<li>Live intra-line word diff</li>
+<li>Ability to display deleted/changed lines via virtual lines.</li>
+<li>Support for yadm</li>
+<li>Support for detached working trees.</li>
+</ul>
+<h2 id="vim-illuminate">vim-illuminate<a class="headerlink" href="#vim-illuminate" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/RRethy/vim-illuminate">github</a>:
+illuminate.vim - (Neo)Vim plugin for automatically highlighting other uses of the word under the cursor using either LSP, Tree-sitter, or regex matching.</p>
+<h2 id="troublenvim">trouble.Nvim<a class="headerlink" href="#troublenvim" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/folke/trouble.nvim">github</a>:
+🚦 A pretty diagnostics, references, telescope results, quickfix and location list to help you solve all the trouble your code is causing.</p>
+<h2 id="language-sever-protocol-lsp">Language Sever Protocol (LSP)<a class="headerlink" href="#language-sever-protocol-lsp" title="Permanent link">&para;</a></h2>
+<h2 id="masonnvim">mason.nvim<a class="headerlink" href="#masonnvim" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/williamboman/mason.nvim">github</a>:
+Portable package manager for Neovim that runs everywhere Neovim runs.
+Easily install and manage LSP servers, DAP servers, linters, and formatters.</p>
+<p><code>:h mason-introduction</code></p>
+<p><code>mason.nvim</code> is a Neovim plugin that allows you to easily manage external editor tooling such as LSP servers, DAP servers, linters, and formatters through a single interface.
+It runs everywhere Neovim runs (across Linux, macOS, Windows, etc.), with only a small set of <a href="https://github.com/williamboman/mason.nvim#requirements">external requirements</a> needed.</p>
+<p>Packages are installed in Neovim's data directory (<code>:h standard-path</code>) by default.
+Executables are linked to a single <code>bin/</code> directory, which <code>mason.nvim</code> will add to Neovim's PATH during setup, allowing seamless access from Neovim builtins (shell, terminal, etc.) as well as other 3rd party plugins.</p>
+<p>For a list of all available packages, see <a href="https://mason-registry.dev/registry/list">https://mason-registry.dev/registry/list</a>.</p>
+<h2 id="noicenvim">noice.nvim<a class="headerlink" href="#noicenvim" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/folke/noice.nvim">github</a>:
+💥 Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.</p>
+<h2 id="miniindentscopre">mini.indentscopre<a class="headerlink" href="#miniindentscopre" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/echasnovski/mini.indentscope">github</a>:
+Neovim Lua plugin to visualize and operate on indent scope. Part of 'mini.nvim' library.</p>
+<h2 id="lualinenvim">lualine.nvim<a class="headerlink" href="#lualinenvim" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/nvim-lualine/lualine.nvim">github</a>:
+A blazing fast and easy to configure neovim statusline plugin written in pure lua.</p>
+<h2 id="luasnip">LuaSnip<a class="headerlink" href="#luasnip" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/L3MON4D3/LuaSnip">github</a>:
+Snippet Engine for Neovim written in Lua.</p>
+<h2 id="nvim-cmp">nvim-cmp<a class="headerlink" href="#nvim-cmp" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/hrsh7th/nvim-cmp">github</a>:
+A completion plugin for neovim coded in Lua.
+A completion engine plugin for neovim written in Lua. Completion sources are installed from external repositories and "sourced".</p>
+<h2 id="cmp-nvim-lsp">cmp-nvim-lsp<a class="headerlink" href="#cmp-nvim-lsp" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/hrsh7th/cmp-nvim-lsp">github</a>:
+nvim-cmp source for neovim builtin LSP client.</p>
+<p>Language servers provide different completion results depending on the capabilities of the client.
+Neovim's default omnifunc has basic support for serving completion candidates.
+<code>nvim-cmp</code> supports more types of completion candidates, so users must override the capabilities sent to the server such that it can provide these candidates during a completion request.
+These capabilities are provided via the helper function <code>require('cmp_nvim_lsp').default_capabilities</code></p>
+<p>As these candidates are sent on each request, adding these capabilities will break the built-in omnifunc support for neovim's language server client.
+<code>nvim-cmp</code> provides manually triggered completion that can replace omnifunc.
+See <code>:help cmp-faq</code> for more details.</p>
+<h2 id="cmp-buffer">cmp-buffer<a class="headerlink" href="#cmp-buffer" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/hrsh7th/cmp-buffer">github</a>:
+nvim-cmp source for buffer words.</p>
+<h2 id="cmp-path">cmp-path<a class="headerlink" href="#cmp-path" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/hrsh7th/cmp-path">github</a>:
+nvim-cmp source for filesystem paths.</p>
+<h2 id="cmp_luasnip">cmp_luasnip<a class="headerlink" href="#cmp_luasnip" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/saadparwaiz1/cmp_luasnip">github</a>:
+luasnip completion source for nvim-cmp</p>
+<h2 id="minipairs">mini.pairs<a class="headerlink" href="#minipairs" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/echasnovski/mini.pairs">github</a>:
+Neovim Lua plugin to automatically manage character pairs. Part of 'mini.nvim' library.</p>
+<h2 id="minisurround">mini.surround<a class="headerlink" href="#minisurround" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/echasnovski/mini.surround">github</a>:
+Neovim Lua plugin with fast and feature-rich surround actions. Part of 'mini.nvim' library.</p>
+<h2 id="miniai">mini.ai<a class="headerlink" href="#miniai" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/echasnovski/mini.ai">github</a>:
+Neovim Lua plugin to extend and create <code>a</code>/<code>i</code> textobjects. Part of 'mini.nvim' library.</p>
+<h2 id="minicomment">mini.comment<a class="headerlink" href="#minicomment" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/echasnovski/mini.comment">github</a>:
+Neovim Lua plugin for fast and familiar per-line commenting. Part of 'mini.nvim' library.</p>
+<h2 id="nvim-notify">nvim-notify<a class="headerlink" href="#nvim-notify" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/rcarriga/nvim-notify">github</a>:
+A fancy, configurable, notification manager for NeoVim.</p>
+<h1 id="vim">vim<a class="headerlink" href="#vim" title="Permanent link">&para;</a></h1>
+<h2 id="editing-remote-files-via-scp">Editing remote files via scp<a class="headerlink" href="#editing-remote-files-via-scp" title="Permanent link">&para;</a></h2>
+<pre><code class="language-sh">vimdiff local_file scp://remoteuser@server.tld//absolute/path/to/document
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select", "announce.dismiss"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

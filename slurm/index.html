@@ -1,0 +1,2019 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://SamuelLarkin.github.io/kb/slurm/">
+      
+      
+        <link rel="prev" href="../rsync/">
+      
+      
+        <link rel="next" href="../tmux/">
+      
+      
+      <link rel="icon" href="../favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>SLURM - Samuel Larkin's Knowledge Base Documenation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slurm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://github.com/SamuelLarkin/kb" title="Samuel Larkin&#39;s Knowledge Base Documenation" class="md-header__button md-logo" aria-label="Samuel Larkin's Knowledge Base Documenation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Samuel Larkin's Knowledge Base Documenation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SLURM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SamuelLarkin/kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SamuelLarkin / Knowledge Base
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://github.com/SamuelLarkin/kb" title="Samuel Larkin&#39;s Knowledge Base Documenation" class="md-nav__button md-logo" aria-label="Samuel Larkin's Knowledge Base Documenation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Samuel Larkin's Knowledge Base Documenation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SamuelLarkin/kb" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SamuelLarkin / Knowledge Base
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../color/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Colors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration File Explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fzf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    fzf
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    git
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../huggingface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HuggingFace
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    json
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miller
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miscellaneous/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miscellaneous
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nvim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    nvim
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ollama/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ollama
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../perl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Perl
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../putty/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Putty
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rsync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    rsync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    SLURM
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    SLURM
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuda-out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      CUDA out of Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-internet-from-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Internet from a Node
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Internet from a Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpsc-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC-C
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-command-and-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Command and Information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job Command and Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update a job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-scriptless-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Scriptless Job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jobs-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job's Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabulate-the-information-of-queued-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tabulate the Information of Queued jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stats-of-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stats of a job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cluster information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Partitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      My Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute Capabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodes-specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node's Specs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allocated-hostnames-of-a-multinode-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allocated Hostnames of a Multinode Job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpsc5" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC5
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPSC5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-to-a-worker-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH to a Worker Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpscc" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSCC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPSCC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#script-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Script Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sleeper-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sleeper Job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-pytorch-on-multiple-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running pytorch on Multiple Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running pytorch on Multiple Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acceleratehuggingface-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accelerate/HuggingFace Specific
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-on-multiple-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Submitting on Multiple Cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templateslurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template.slurm
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tmux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    tmux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vscode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuda-out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      CUDA out of Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-internet-from-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Internet from a Node
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Internet from a Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpsc-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC-C
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpsc" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-command-and-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job Command and Information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job Command and Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update a job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-scriptless-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Scriptless Job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jobs-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job's Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabulate-the-information-of-queued-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tabulate the Information of Queued jobs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stats-of-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stats of a job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cluster-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cluster information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Partitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#my-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      My Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute Capabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodes-specs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node's Specs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cluster Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allocated-hostnames-of-a-multinode-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allocated Hostnames of a Multinode Job
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpsc5" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSC5
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPSC5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-to-a-worker-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH to a Worker Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpscc" class="md-nav__link">
+    <span class="md-ellipsis">
+      GPSCC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GPSCC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#script-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Script Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sleeper-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sleeper Job
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connect-to-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Connect to Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-pytorch-on-multiple-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running pytorch on Multiple Nodes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running pytorch on Multiple Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acceleratehuggingface-specific" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accelerate/HuggingFace Specific
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-on-multiple-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Submitting on Multiple Cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templateslurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Template.slurm
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="slurm">SLURM<a class="headerlink" href="#slurm" title="Permanent link">&para;</a></h1>
+<h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h2>
+<h3 id="cuda-out-of-memory">CUDA out of Memory<a class="headerlink" href="#cuda-out-of-memory" title="Permanent link">&para;</a></h3>
+<p><code>torch.OutOfMemoryError</code>: CUDA out of memory.
+Tried to allocate 256.00 MiB.
+GPU 0 has a total capacity of 79.18 GiB of which 166.31 MiB is free.
+Including non-PyTorch memory, this process has 79.01 GiB memory in use.
+Of the allocated memory 78.50 GiB is allocated by PyTorch, and 1.28 MiB is reserved by PyTorch but unallocated.
+If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+See documentation for Memory Management (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)</p>
+<h2 id="access-internet-from-a-node">Access Internet from a Node<a class="headerlink" href="#access-internet-from-a-node" title="Permanent link">&para;</a></h2>
+<h3 id="gpsc-c">GPSC-C<a class="headerlink" href="#gpsc-c" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">export https_proxy=http://webproxy.collab.science.gc.ca:8888
+export http_proxy=http://webproxy.collab.science.gc.ca:8888
+</code></pre>
+<h3 id="gpsc">GPSC<a class="headerlink" href="#gpsc" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">export https_proxy=http://webproxy.science.gc.ca:8888
+export http_proxy=http://webproxy.science.gc.ca:8888
+</code></pre>
+<h2 id="job-command-and-information">Job Command and Information<a class="headerlink" href="#job-command-and-information" title="Permanent link">&para;</a></h2>
+<h3 id="update-a-job">Update a job<a class="headerlink" href="#update-a-job" title="Permanent link">&para;</a></h3>
+<p>Add a dependency to run a job after another job.</p>
+<pre><code class="language-sh">scontrol update jobid=&lt;JOBID&gt; dependency=afterok:&lt;PREVIOUS_JOBID&gt;
+</code></pre>
+<p>Add dependencies to multiple jobs</p>
+<pre><code class="language-sh">scontrol \
+  update \
+    jobid=$(echo {15882..15893} | tr ' ' ',')
+    dependency=afterok:15754:15756:15757:15758:15765:15766:15767:15740:15743
+</code></pre>
+<p>Change the time limit.</p>
+<pre><code class="language-sh">scontrol update jobid=&lt;JOBID&gt; TimeLimit=&lt;NEW_TIMELIMIT&gt;
+</code></pre>
+<p>Change the number of maximum concurrent tasks.</p>
+<pre><code class="language-sh">scontrol update jobid=&lt;JOBID&gt; ArrayTaskThrottle=0
+</code></pre>
+<h3 id="a-scriptless-job">A Scriptless Job<a class="headerlink" href="#a-scriptless-job" title="Permanent link">&para;</a></h3>
+<p><a href="https://stackoverflow.com/a/33402070">Running a binary without a top level script in SLURM</a></p>
+<pre><code class="language-sh"> sbatch \
+   --time=00:20:00 \
+   --partition=TrixieMain,JobTesting \
+   --account=dt-mtp \
+   --nodes=1 \
+   --ntasks-per-node=1 \
+   --cpus-per-task=40 \
+   --mem=40G \
+   --wrap='time python -m sockeye.translate --output-type json --batch-size 32 --models base_model --input corpora/validation.en --use-cpu &gt; model/decode.output.0.00000.json'
+</code></pre>
+<h3 id="jobs-information">Job's Information<a class="headerlink" href="#jobs-information" title="Permanent link">&para;</a></h3>
+<p>List detailed information for a job (useful for troubleshooting):</p>
+<pre><code class="language-sh">scontrol show jobid --details &lt;JOBID&gt;
+</code></pre>
+<pre><code>JobId=403641 JobName=HoC-CL.training
+   UserId=larkins(171967808) GroupId=larkins(171967808) MCS_label=N/A
+   Priority=68528 Nice=0 Account=dt-mtp QOS=normal
+   JobState=PENDING Reason=ReqNodeNotAvail,_Reserved_for_maintenance Dependency=(null)
+   Requeue=1 Restarts=1 BatchFlag=1 Reboot=0 ExitCode=0:0
+   DerivedExitCode=0:0
+   RunTime=00:00:00 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2024-01-19T04:39:27 EligibleTime=2024-01-19T04:41:28
+   AccrueTime=2024-01-19T04:41:28
+   StartTime=2024-01-21T14:30:00 EndTime=2024-01-22T02:30:00 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2024-01-19T10:13:15
+   Partition=TrixieMain AllocNode:Sid=hn2:20782
+   ReqNodeList=(null) ExcNodeList=cn119
+   NodeList=(null)
+   BatchHost=cn120
+   NumNodes=1 NumCPUs=24 NumTasks=4 CPUs/Task=6 ReqB:S:C:T=0:0:*:*
+   TRES=cpu=24,mem=96G,node=1,billing=24,gres/gpu=4
+   Socks/Node=* NtasksPerN:B:S:C=4:0:*:* CoreSpec=*
+   MinCPUsNode=24 MinMemoryNode=96G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) Network=(null)
+   Command=/gpfs/projects/DT/mtp/models/HoC-ContinualLearning/nmt/tools/train.sh
+   WorkDir=/gpfs/projects/DT/mtp/models/HoC-ContinualLearning/nmt/en2fr/baseline_initial
+   Comment=House of Commons Continual Learning NMT training
+   StdErr=/gpfs/projects/DT/mtp/models/HoC-ContinualLearning/nmt/en2fr/baseline_initial/HoC-CL.training-403641.out
+   StdIn=/dev/null
+   StdOut=/gpfs/projects/DT/mtp/models/HoC-ContinualLearning/nmt/en2fr/baseline_initial/HoC-CL.training-403641.out
+   Power=
+   TresPerNode=gpu:4
+</code></pre>
+<p>Find out where a job will run</p>
+<pre><code class="language-sh">scontrol show job &lt;JOBID&gt;
+</code></pre>
+<h3 id="tabulate-the-information-of-queued-jobs">Tabulate the Information of Queued jobs<a class="headerlink" href="#tabulate-the-information-of-queued-jobs" title="Permanent link">&para;</a></h3>
+<p>If you are running a lot of jobs and need to inspect some of them for some feature, example, what command they will run, use <code>mlr</code>.</p>
+<pre><code>squeue --Format='JobID' --user=$USER --noheader \
+| \parallel 'scontrol --oneliner show job {}' \
+| sed 's/ /,/g' \
+| mlr --opprint cat \
+| less
+</code></pre>
+<h3 id="stats-of-a-job">Stats of a job<a class="headerlink" href="#stats-of-a-job" title="Permanent link">&para;</a></h3>
+<p>Get some stats about a job that ran on <code>Slurm</code>.
+Get stats about a job that has finished.</p>
+<pre><code class="language-sh">sacct --long --jobs=&lt;JOBID&gt;
+sacct -l -j &lt;JOBID&gt;
+</code></pre>
+<pre><code class="language-sh">seff 112610
+</code></pre>
+<pre><code>Job ID: 112610
+Cluster: trixie-rhel9
+User/Group: larkins/larkins
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 32
+CPU Utilized: 00:02:17
+CPU Efficiency: 3.79% of 01:00:16 core-walltime
+Job Wall-clock time: 00:01:53
+Memory Utilized: 2.78 GB
+Memory Efficiency: 6.96% of 40.00 GB
+</code></pre>
+<h2 id="cluster-information">Cluster information<a class="headerlink" href="#cluster-information" title="Permanent link">&para;</a></h2>
+<p>See what the nodes really offer.</p>
+<pre><code class="language-sh">scontrol show nodes
+</code></pre>
+<pre><code>NodeName=cn136 Arch=x86_64 CoresPerSocket=16
+   CPUAlloc=0 CPUTot=64 CPULoad=0.01
+   AvailableFeatures=(null)
+   ActiveFeatures=(null)
+   Gres=gpu:4
+   NodeAddr=cn136 NodeHostName=cn136
+   OS=Linux 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022
+   RealMemory=192777 AllocMem=0 FreeMem=176763 Sockets=2 Boards=1
+   State=IDLE ThreadsPerCore=2 TmpDisk=0 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=JobTesting
+   BootTime=2023-09-21T07:56:52 SlurmdStartTime=2023-09-21T07:57:17
+   CfgTRES=cpu=64,mem=192777M,billing=64,gres/gpu=4
+   AllocTRES=
+   CapWatts=n/a
+   CurrentWatts=0 AveWatts=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+</code></pre>
+<p>See the information of an upcoming maintenance.</p>
+<pre><code class="language-sh">scontrol show reservation
+</code></pre>
+<pre><code>ReservationName=maintenance2 StartTime=2024-01-19T14:30:00 EndTime=2024-01-21T14:30:00 Duration=2-00:00:00
+   Nodes=cn[104-136] NodeCnt=33 CoreCnt=1056 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES,ALL_NODES
+   TRES=cpu=2112
+   Users=root Accounts=(null) Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
+
+ReservationName=maintenance3 StartTime=2024-02-03T14:30:00 EndTime=2024-02-05T14:30:00 Duration=2-00:00:00
+   Nodes=cn[104-136] NodeCnt=33 CoreCnt=1056 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES,ALL_NODES
+   TRES=cpu=2112
+   Users=root Accounts=(null) Licenses=(null) State=INACTIVE BurstBuffer=(null) Watts=n/a
+</code></pre>
+<h3 id="available-partitions">Available Partitions<a class="headerlink" href="#available-partitions" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">sinfo
+</code></pre>
+<pre><code class="language-sh">PARTITION          AVAIL  TIMELIMIT  NODES  STATE NODELIST
+SynthiaCPU-Preempt    up   12:00:00     14   idle cn[101-114]
+SynthiaGPU-Preempt    up   12:00:00      1  drain gn204
+SynthiaGPU-Preempt    up   12:00:00      2  alloc gn[201-202]
+SynthiaGPU-Preempt    up   12:00:00      1   idle gn203
+JobTesting            up    1:00:00      2   idle cn[115-116]
+</code></pre>
+<h3 id="my-account">My Account<a class="headerlink" href="#my-account" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">sacctmgr show associations | grep ${USER}
+</code></pre>
+<p>Alternatively:</p>
+<pre><code class="language-sh">sacctmgr show user withassoc format=account,user,defaultaccount where user=$USER
+</code></pre>
+<pre><code class="language-sh">   Account       User   Def Acct
+---------- ---------- ----------
+   dt-base    larkins    dt-base
+</code></pre>
+<h3 id="compute-capabilities">Compute Capabilities<a class="headerlink" href="#compute-capabilities" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">sbatch \
+  --partition=JobTesting \
+  --gres=gpu:1 \
+  --time=00:10:00 \
+  --cpus-per-task=1 \
+  --tasks-per-node=1 \
+  --nodes=1 \
+  --mem=1G \
+  --wrap='nvidia-smi --query-gpu=compute_cap'
+</code></pre>
+<pre><code>compute_cap
+7.0
+
+</code></pre>
+<h3 id="nodes-specs">Node's Specs<a class="headerlink" href="#nodes-specs" title="Permanent link">&para;</a></h3>
+<p>Get node's specs.</p>
+<pre><code class="language-sh">sinfo --Node --responding --long
+sinfo -N -r -l
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">NODELIST</th>
+<th style="text-align: right;">NODES</th>
+<th style="text-align: left;">PARTITION</th>
+<th style="text-align: left;">STATE</th>
+<th style="text-align: right;">CPUS</th>
+<th style="text-align: right;">S:C:T</th>
+<th style="text-align: right;">MEMORY</th>
+<th style="text-align: right;">TMP_DISK</th>
+<th style="text-align: right;">WEIGHT</th>
+<th style="text-align: right;">AVAIL_FE</th>
+<th style="text-align: left;">REASON</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">cn101</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">drained</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">update</td>
+</tr>
+<tr>
+<td style="text-align: left;">cn102</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">mixed</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr>
+<td style="text-align: left;">cn110</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">mixed</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr>
+<td style="text-align: left;">cn118</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr>
+<td style="text-align: left;">cn119</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr>
+<td style="text-align: left;">cn125</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">TrixieMain*</td>
+<td style="text-align: left;">idle</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">2:16:2</td>
+<td style="text-align: right;">192777</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">(null)</td>
+<td style="text-align: left;">none</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cluster-usage">Cluster Usage<a class="headerlink" href="#cluster-usage" title="Permanent link">&para;</a></h3>
+<p>Find the cluster usage per user.</p>
+<pre><code class="language-sh">sreport user top start=2020-06-01 end=2020-06-30 -t percent
+</code></pre>
+<pre><code>--------------------------------------------------------------------------------
+Top 10 Users 2020-06-01T00:00:00 - 2020-06-29T23:59:59 (2505600 secs)
+Usage reported in Percentage of Total
+--------------------------------------------------------------------------------
+  Cluster     Login     Proper Name         Account      Used   Energy
+--------- --------- --------------- --------------- --------- --------
+   trixie  stewartd         Stewart            ai4d    24.23%    0.00%
+   trixie   larkins          Larkin            ai4d    23.75%    0.00%
+   trixie   ryczkok          Ryczko             sdt     3.07%    0.00%
+   trixie      guoh             Guo    ai4d-core-06     0.16%    0.00%
+   trixie       loc              Lo            ai4d     0.13%    0.00%
+   trixie   valdesj          Valdes              dt     0.00%    0.00%
+   trixie       xip              Xi              dt     0.00%    0.00%
+   trixie     asadh                        covid-02     0.00%    0.00%
+   trixie     paulp            Paul            ai4d     0.00%    0.00%
+   trixie    ebadia           Ebadi              dt     0.00%    0.00%
+</code></pre>
+<h3 id="allocated-hostnames-of-a-multinode-job">Allocated Hostnames of a Multinode Job<a class="headerlink" href="#allocated-hostnames-of-a-multinode-job" title="Permanent link">&para;</a></h3>
+<p>Get a list of hostnames allocated to a multi node job.</p>
+<pre><code class="language-sh">scontrol show hostnames $SLURM_NODELIST
+</code></pre>
+<pre><code>cn101
+cn102
+cn103
+cn104
+</code></pre>
+<h2 id="gpsc5">GPSC5<a class="headerlink" href="#gpsc5" title="Permanent link">&para;</a></h2>
+<h3 id="ssh-to-a-worker-node">SSH to a Worker Node<a class="headerlink" href="#ssh-to-a-worker-node" title="Permanent link">&para;</a></h3>
+<p>This is an example command to connect to a worker node on GPSC5</p>
+<pre><code class="language-sh">srun --overlap --pty --jobid=&lt;JOBID&gt; bash -l
+</code></pre>
+<p>Example of connecting to a GPU running job on GPSC5.</p>
+<pre><code class="language-sh">srun --overlap --gres=gpu:1 --nodes=1 --ntasks=1 --mem-per-cpu=0 --pty --oversubscribe --jobid=&lt;SLURM_JOBID&gt; /bin/bash -l
+</code></pre>
+<pre><code class="language-sh">srun \
+  --overlap \
+  --oversubscribe \
+  --pty \
+  --gres=gpu:0 \
+  --nodes=1 \
+  --ntasks=1 \
+  --mem-per-cpu=0 \
+  --jobid=&lt;JOBID&gt; \
+  /bin/bash -l
+</code></pre>
+<h2 id="gpscc">GPSCC<a class="headerlink" href="#gpscc" title="Permanent link">&para;</a></h2>
+<h3 id="script-example">Script Example<a class="headerlink" href="#script-example" title="Permanent link">&para;</a></h3>
+<p>The following example uses multiple nodes.</p>
+<pre><code class="language-sbatch">#!/bin/bash
+
+#SBATCH --job-name=train
+#SBATCH --partition=gpu_a100
+#SBATCH --account=nrc_ict__gpu_a100
+
+#SBATCH --time=2880
+
+##IMPORTANT: `#SBATCH --ntasks-per-node=2`  MUST match  `#SBATCH --gres=gpu:2`
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --gres=gpu:2
+
+#SBATCH --output=%x-%j.out
+#SBATCH --error=%x-%j.err
+#SBATCH --open-mode=append
+#SBATCH --mail-user==tes001
+#SBATCH --mail-type=NONE
+
+#SBATCH --signal=B:15@30
+
+
+ulimit -v unlimited
+
+cd /home/tes001/DT/tes001/
+source ./SETUP_PT2.source
+cd /home/tes001/DT/tes001/LJSpeech-1.1/PT2
+
+srun everyvoice train text-to-spec --devices 2 --nodes 1 config/everyvoice-text-to-spec.yaml
+</code></pre>
+<h3 id="sleeper-job">Sleeper Job<a class="headerlink" href="#sleeper-job" title="Permanent link">&para;</a></h3>
+<p>Start a sleeper job</p>
+<pre><code class="language-sh">psub -N sleeper -Q nrc_ict -gpu 'sleep 3600'
+</code></pre>
+<h3 id="connect-to-node">Connect to Node<a class="headerlink" href="#connect-to-node" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">srun \
+  --overlap \
+  --oversubscribe \
+  --pty \
+  --nodes=1 \
+  --ntasks=1 \
+  --mem-per-cpu=0 \
+  --jobid=&lt;JOBID&gt; \
+  /bin/bash -l
+</code></pre>
+<h2 id="running-pytorch-on-multiple-nodes">Running pytorch on Multiple Nodes<a class="headerlink" href="#running-pytorch-on-multiple-nodes" title="Permanent link">&para;</a></h2>
+<h3 id="acceleratehuggingface-specific">Accelerate/HuggingFace Specific<a class="headerlink" href="#acceleratehuggingface-specific" title="Permanent link">&para;</a></h3>
+<pre><code class="language-sh">#!/bin/bash
+
+# [SLURM/ACCELERATE](https://github.com/huggingface/accelerate/blob/main/examples/slurm/submit_multinode.sh)
+# [MNIST](https://huggingface.co/blog/pytorch-ddp-accelerate-transformers)
+
+#SBATCH --partition=TrixieMain
+#SBATCH --account=dt-mtp
+
+#SBATCH --job-name=MNIST.distributed
+
+#SBATCH --time=12:00:00
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:4
+
+#SBATCH --output=%x-%j.out
+#SBATCH --signal=B:USR1@30
+#SBATCH --requeue
+
+# Requeueing on Trixie
+# [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
+# [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
+
+function _requeue {
+   echo &quot;BASH - trapping signal 10 - requeueing $SLURM_JOBID&quot;
+   date
+   # This would allow to generically requeue any job but since we are using XLM
+   # which is slurm aware, XLM could save its model before requeueing.
+   scontrol requeue &quot;$SLURM_JOBID&quot;
+}
+
+if [[ -n &quot;$SLURM_JOBID&quot; ]]; then
+   trap _requeue USR1
+fi
+
+
+# Keep a copy of the code in case it changes between runs.
+head -n 112312 &quot;$0&quot; my_huggingface_trainer.py
+
+# Setup your working environment.
+source setup_env.sh &quot;&quot;
+
+# These are required to setup the distributed framework.
+export TQDM_MININTERVAL=90
+head_node_ip=$(scontrol show hostnames &quot;$SLURM_JOB_NODELIST&quot; | head -n 1)
+readonly head_node_ip
+readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+export launcher=&quot;accelerate launch \
+  --mixed_precision=fp16 \
+  --num_processes=$((SLURM_NNODES * SLURM_GPUS_ON_NODE)) \
+  --num_machines=$SLURM_NNODES \
+  --num_cpu_threads_per_process=$SLURM_CPUS_PER_TASK \
+  --rdzv_backend=c10d \
+  --main_process_ip=$head_node_ip \
+  --main_process_port=$head_node_port \
+  --machine_rank=$SLURM_NODEID \
+  &quot;
+
+# Dump the environment.
+( set -o posix ; set )
+
+
+function task {
+# NOTE: You may have to provide options to your script to detect nodes/GPUs `--trainer.num_nodes=&quot;$SLURM_NNODES&quot;`.
+  srun $launcher my_huggingface_trainer.py
+# or
+  srun $launcher -m my_python_module
+}
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task &amp;
+wait
+</code></pre>
+<p>Question: using pytorch lightining using multiple nodes and multiple gpu per node</p>
+<p>To train a PyTorch Lightning model across multiple nodes with multiple GPUs per node, configure the <code>Trainer</code> with the appropriate parameters.
+Use the <code>accelerator="gpu"</code>, devices to specify the number of GPUs per node, <code>num_nodes</code> to define the total number of nodes, and <code>strategy="ddp"</code> for distributed data parallelism.
+For example, to train on 32 GPUs across 4 nodes with 8 GPUs per node, the configuration would be:</p>
+<pre><code class="language-python">trainer = Trainer(
+    accelerator=&quot;gpu&quot;,
+    devices=8,
+    num_nodes=4,
+    strategy=&quot;ddp&quot;,
+    max_epochs=10
+)
+</code></pre>
+<p>This setup leverages PyTorch Lightning's built-in DDP support to manage distributed training across nodes.
+The devices parameter can also be set to "auto" to automatically detect available GPUs.</p>
+<p>When using a job scheduler like SLURM, ensure the job script requests the correct resources.
+For a 4-node setup with 8 GPUs per node, the SLURM header should include:</p>
+<pre><code>#SBATCH --nodes=4
+#SBATCH --gres=gpu:8
+#SBATCH --ntasks-per-node=8
+</code></pre>
+<p>The <code>srun</code> command should launch the training script, and PyTorch Lightning will automatically use environment variables like <code>SLURM_NTASKS</code> and <code>SLURM_NODEID</code> to coordinate the training process across nodes.
+It is also recommended to disable file locks in the environment to prevent initialization issues when the same environment is accessed from multiple nodes simultaneously.</p>
+<p>For cluster-specific configurations, such as on Jean-Zay, use <code>--ntasks-per-node=8</code> to assign one task per GPU and ensure exclusive node reservation for full memory access.
+Additionally, set NCCL-related environment variables to avoid communication conflicts between GPUs, such as export <code>NCCL_DEBUG=INFO</code> for debugging connectivity issues.</p>
+<h2 id="submitting-on-multiple-cluster">Submitting on Multiple Cluster<a class="headerlink" href="#submitting-on-multiple-cluster" title="Permanent link">&para;</a></h2>
+<p>On GPSC, we can now submit up to 1000 6 hour-job with <code>#SBATCH --qos=low</code>.</p>
+<pre><code class="language-sh">sbatch \
+  --time=00:10:00 \
+  --clusters=gpsc5,gpsc6,gpsc7,gpsc8 \
+  --account=${NRC_RC} \
+  --partition=standard \
+  myjob.sh
+</code></pre>
+<h2 id="templateslurm">Template.slurm<a class="headerlink" href="#templateslurm" title="Permanent link">&para;</a></h2>
+<pre><code class="language-sh">#!/bin/bash
+# vim:syntax=bash:
+
+# sbatch WMT2025_eval.slurm
+
+#SBATCH --job-name=WMT25.eval
+#SBATCH --comment=&quot;Official WMT2025 LRSL eval script&quot;
+
+# Trixie
+#SBATCH --partition=TrixieMain,JobTesting
+#SBATCH --account=dt-mtp
+# On GPSC7
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+# On GPSC5
+##SBATCH --partition=gpu_v100
+##SBATCH --account=nrc_ict__gpu_v100
+# On GPSC-C
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --comment=&quot;image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest&quot;
+##SBATCH --comment=&quot;image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master&quot;
+
+#SBATCH --gres=gpu:1
+#SBATCH --time=12:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=6G
+
+#SBATCH --open-mode=append
+#SBATCH --output=%x-%j.out
+
+#SBATCH --requeue
+#SBATCH --signal=B:USR1@30
+
+# Fix SLURM environment variables.
+SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' =&gt; '24'
+SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0=${SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0%%(*)}   # '24(x2)' =&gt; '24'
+SLURM_STEP_TASKS_PER_NODE=${SLURM_STEP_TASKS_PER_NODE%%(*)}   # '4(x2)' =&gt; '4'
+SLURM_TASKS_PER_NODE=${SLURM_TASKS_PER_NODE%%(*)}   # '4(x2)' =&gt; '4'
+
+# NOTE: We set OMP_NUM_THREADS or else we get the following Warning:
+# WARNING:torch.distributed.run:
+# *****************************************
+# Setting OMP_NUM_THREADS environment variable for each process to be 1 in
+# default, to avoid your system being overloaded, please further tune the
+# variable for optimal performance in your application as needed.
+# *****************************************
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
+
+# If reserved but unallocated memory is large try setting
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+# See documentation for Memory Management
+# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+# Requeueing on Trixie
+# [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
+# [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
+function _requeue {
+   echo &quot;BASH - trapping signal 10 - requeueing $SLURM_JOBID&quot;
+   date
+   # This would allow to generically requeue any job but since we are using XLM
+   # which is slurm aware, XLM could save its model before requeueing.
+   scontrol requeue &quot;$SLURM_JOBID&quot;
+}
+
+if [[ -n &quot;$SLURM_JOBID&quot; ]]; then
+  declare -a FORMAT_STRING=(
+    JobID
+    Submit
+    Start
+    End
+    Elapsed
+    ExitCode
+    State
+    CPUTime
+    MaxRSS
+    MaxVMSize
+    MaxDiskRead
+    MaxDiskWrite
+    AllocCPUs
+    AllocTRES%-50
+    NodeList
+    JobName%-30
+    Comment%-80
+  )
+  SACCT_FORMAT=$(IFS=&quot;,&quot;; echo &quot;${FORMAT_STRING[*]}&quot;)
+  export SACCT_FORMAT
+  trap &quot;sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT&quot; 0
+  trap _requeue USR1
+  unset FORMAT_STRING
+fi
+
+head -n 123123 &quot;$0&quot; &gt;&amp;2
+
+
+# Output debugging information
+function debug_info {
+  echo &quot;DEBUGGING INFO&quot; &gt;&amp;2
+
+  {
+    date
+    hostname
+    uname --all
+    cat /etc/issue
+    pwd
+    command -v python
+    # [How to list variables declared in script in bash?](https://stackoverflow.com/a/1305273)
+    # In section SHELL BUILTIN COMMANDS (in the set section) it says: &quot;In
+    # posix mode, only shell variables are listed.&quot;
+    ( set -o posix; set; )
+    tr &quot;:&quot; &quot;\n&quot; &lt;&lt;&lt; &quot;$LD_LIBRARY_PATH&quot;
+    # What conda/uv environment are we in?
+    # Record all package versions.
+    if [[ -n &quot;$VIRTUAL_ENV&quot; ]]; then
+      echo &quot;VENV: $VIRTUAL_ENV&quot;
+      command -v uv
+      uv pip list
+      uv pip freeze
+    fi
+    if [[ -n &quot;$CONDA_DEFAULT_ENV&quot; ]]; then
+      command -v conda
+      conda env export
+    fi
+  } &gt;&amp;2
+
+  {
+    # What GPU id is assigned to this job.
+    nvidia-smi --list-gpus
+    nvidia-smi
+  } | sed 's/^/   /' &gt;&amp;2
+
+  echo &quot;DEBUGGING INFO END&quot;
+  echo;echo;echo
+}
+
+# GPSC
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] &amp;&amp; export https_proxy=http://webproxy.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] &amp;&amp; export http_proxy=http://webproxy.science.gc.ca:8888
+# GPSC-C
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] &amp;&amp; export https_proxy=http://webproxy.collab.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] &amp;&amp; export http_proxy=http://webproxy.collab.science.gc.ca:8888
+export TQDM_MININTERVAL=90
+head_node_ip=$(scontrol show hostnames &quot;$SLURM_JOB_NODELIST&quot; | head -n 1)
+readonly head_node_ip
+readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+
+
+source venv/bin/activate &quot;&quot;
+
+# Call this after you have setup your environemnt and all your local variables
+debug_info
+
+function task {
+  command time --portability lm_eval \
+    --model hf \
+    --model_args pretrained=unsloth/Qwen2.5-3B-Instruct-unsloth-bnb-4bit \
+    --tasks sorbian \
+    --device cuda:0 \
+    --batch_size 8 \
+    --output_path baseline_output_sorbian \
+    --log_samples
+}
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task &amp;
+wait
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.select", "announce.dismiss"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
