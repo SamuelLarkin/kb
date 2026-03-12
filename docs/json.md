@@ -277,6 +277,66 @@ find -type f -name \*scores.json \
 | less
 ```
 
+### Joins
+
+Given the following files.
+Example Input
+left_file.jsonl:
+
+```json
+{ "id": "10", "data": "abc" }
+{ "id": "20", "data": "xyz" }
+```
+
+right_file.jsonl:
+
+```json
+{ "id": "10", "content": "yui" }
+{ "id": "30", "content": "ujm" }
+```
+
+#### Inner Join
+
+```sh
+jq --compact-output --slurpfile right_file right_file.jsonl '
+  INDEX($right_file[]; .id) as $dict
+  | . as $left
+  | $dict[$left.id] as $right
+  | select($right != null)
+  | $left + $right
+' left_file.jsonl
+```
+
+```json
+{ "id": "10", "data": "abc", "content": "yui" }
+```
+
+#### Left Join
+
+To join two JSON files based on a specific field (e.g., `id`), you can use `jq`, a powerful command-line JSON processor.
+
+Using `jq` for an Inner Join
+If both files contain arrays of objects and you want to join them on a common key (like `id`), use this efficient `jq` script:
+
+```sh
+jq --compact-output --slurpfile right_file right_file.jsonl '
+  INDEX($right_file[]; .id) as $dict |
+  . + $dict[.id] | select(. != null)
+' left_file.jsonl
+```
+
+`INDEX($file2[]; .id)`: Builds a lookup hash from `file2` using the `id` field as the key.
+`$file1[]`: Iterates over each object in `file1`.
+`. + $dict[.id]`: Merges the object from `file1` with the matching object from `file2`.
+`select(. != null)`: Ensures only matches are output (inner join).
+
+Output
+
+```json
+{ "id": "10", "data": "abc", "content": "yui" }
+{ "id": "30", "content": "ujm" }
+```
+
 ### Parallel Processing
 
 Note that we use `--keep-order`, `--spreadstdin` & `--recend='\n'`.
