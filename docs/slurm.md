@@ -537,6 +537,10 @@ sbatch \
 
 ## Template.slurm
 
+### Fullest
+
+This version contains all the bell & whistle for maximum tracking.
+
 ```sh
 #!/bin/bash
 # vim:syntax=bash:
@@ -707,4 +711,82 @@ function task {
 # WARNING: You must sent your in the background in order for the requeueing mechanism to work.
 task &
 wait
+```
+
+### Simple with Requeueing
+
+```sh
+#!/bin/bash
+
+#SBATCH --job-name=WMT25.eval
+#SBATCH --comment="Official WMT2025 LRSL eval script"
+
+# Trixie
+#SBATCH --partition=TrixieMain,JobTesting
+#SBATCH --account=dt-mtp
+# On GPSC7
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+# On GPSC5
+##SBATCH --partition=gpu_v100
+##SBATCH --account=nrc_ict__gpu_v100
+# On GPSC-C
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
+##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
+
+#SBATCH --gres=gpu:0
+#SBATCH --time=12:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=6G
+
+#SBATCH --open-mode=append
+#SBATCH --output=%x-%j.out
+
+#SBATCH --requeue
+#SBATCH --signal=B:USR1@30
+
+# Requeueing on Trixie
+# [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
+# [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
+function _requeue {
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+   date
+   # This would allow to generically requeue any job but since we are using XLM
+   # which is slurm aware, XLM could save its model before requeueing.
+   scontrol requeue "$SLURM_JOBID"
+}
+
+export TQDM_MININTERVAL=90
+
+# This isn't strictly necessary if you have already source your tool stack.
+source venv/bin/activate ""
+
+function task {
+  # put your commands here
+}
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task &
+wait
+```
+
+### Shortest
+
+If you don't want a wrapper script, we can always invoke `sbatch` with all its required arguments.
+
+```sh
+sbatch \
+	--job-name=WMT25.eval \
+	--partition=gpu_v100 \
+	--account=nrc_ict__gpu_v100 \
+	--nodes=1 \
+	--time=12:00:00 \
+	--ntasks-per-node=1 \
+	--cpus-per-task=32 \
+	--mem=6G \
+	YOUR_COMMAND
 ```
