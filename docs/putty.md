@@ -1,4 +1,5 @@
 # Putty
+
 ## Making a Tunnel
 
 Right-click with the mouse in the window's title bar.
@@ -15,8 +16,16 @@ Note that the ports can be different but it is simpler to remember if you use th
 
 <img width="452" height="438" alt="image-1" src="https://github.com/user-attachments/assets/c5d83445-8006-41c8-a501-50d807f6de40" />
 
-Your tunnel should be operational.  Now use a browser and type `localhost:2024` or change the port to whatever you chose.
+Your tunnel should be operational. Now use a browser and type `localhost:2024` or change the port to whatever you chose.
 
 Of course, you need to have `tensorboard --port=2024 --bind_all --logdir=. --window_title=FMR` running.
 
 Note that `2024` here is the same as the `Destination` port you chose in `putty`.
+
+### Tunnel to PLive on DAC-02
+
+Note, to access plive on a dac machine, we need to go through the jump host.
+
+```sh
+ssh -J 167.37.166.167 -L 8060:localhost:8060 -L 8090:localhost:8090 -L 8091:localhost:8091 10.106.19.91
+```
