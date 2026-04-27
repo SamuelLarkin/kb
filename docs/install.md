@@ -10,6 +10,18 @@ uv venv  --relocatable --python-preference=only-managed  --python=3.12 --prompt=
 
 ### uv/Apex
 
+[source](https://github.com/astral-sh/uv/issues/7771#issuecomment-2885423024)
+
+```sh
+uv pip install -v \
+    --disable-pip-version-check \
+    --no-cache-dir \
+    --no-build-isolation \
+    --config-setting '"--build-option=--cpp_ext"' \
+    --config-setting '"--build-option=--cuda_ext"' \
+    git+https://github.com/NVIDIA/apex.git@master
+```
+
 ## Unsloth.ai
 
 ### On GPSC7
