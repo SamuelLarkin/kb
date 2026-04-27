@@ -291,6 +291,40 @@ COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF      NODE NAME
 vim     7688 larkins  cwd    DIR   0,47     4096 154447160 /gpfs/projects/DT/mtp/models/HoC-Senate/corpora/spm/v2
 ```
 
+## Word Count per Line
+
+Which is faster to get the word count per line?
+TL;DR;
+`awk '{print NF}'`
+
+```sh
+hyperfine \
+  --export-markdown speed.md \
+  --prepare 'zcat train.en.gz | head -n 500000 > /tmp/train.en.txt' \
+  --conclude 'rm /tmp/train.en.txt' \
+  'perl -nle "print scalar split" < /tmp/train.en.txt' \
+  'awk "{print NF}" < /tmp/train.en.txt'
+```
+
+| Command                                                                |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
+| :--------------------------------------------------------------------- | -----------: | -------: | -------: | ----------: |
+| `zcat train.en.gz \| head -n 500000 \| perl -nle "print scalar split"` | 496.1 ± 27.0 |    446.5 |    537.6 |        1.00 |
+| `zcat train.en.gz \| head -n 500000 \| awk "{print NF}"`               | 566.7 ± 28.2 |    521.6 |    625.4 | 1.14 ± 0.08 |
+
+```sh
+hyperfine \
+  --export-markdown speed.md \
+  --prepare 'zcat train.en.gz > /tmp/train.en.txt' \
+  --conclude 'rm /tmp/train.en.txt' \
+  'perl -nle "print scalar split" < /tmp/train.en.txt' \
+  'awk "{print NF}" < /tmp/train.en.txt'
+```
+
+| Command                                              |       Mean [s] | Min [s] | Max [s] |    Relative |
+| :--------------------------------------------------- | -------------: | ------: | ------: | ----------: |
+| `zcat train.en.gz \| perl -nle "print scalar split"` | 22.005 ± 1.346 |  20.649 |  24.265 |        1.00 |
+| `zcat train.en.gz \| awk "{print NF}"`               | 22.916 ± 1.150 |  21.893 |  24.405 | 1.04 ± 0.08 |
+
 ## conda
 
 Build environment spec from explicit specs in history.
