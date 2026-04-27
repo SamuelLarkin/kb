@@ -13,7 +13,7 @@ echo $tool_dir
 
 test -f $tool_dir/../venv/bin/activate && source $tool_dir/../venv/bin/activate ""
 [ -f $tool_dir/aliases ] && source $tool_dir/aliases ""
-export PATH=$tool_dir${PATH:+:$PATH}
+[[ $PATH =~ $tool_dir ]] || export PATH=$tool_dir${PATH:+:$PATH}
 
 unset tool_dir
 ```
