@@ -21,6 +21,13 @@ git config --global url."https://api:${GITHUB_TOKEN}@github.com/".insteadOf "git
 
 ⚠️ Note: This method embeds the token in Git config, so avoid using it on shared or public machines.
 
+This adds the following to your `~/.config/git/config`.
+
+```
+[url "https://api:github_pat_YOUR_PAT_TOKEN@github.com/"]
+  insteadOf = git@github.com:
+```
+
 ## Git CLI
 
 ### Remove Remote Branch from Local
