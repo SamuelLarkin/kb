@@ -1,5 +1,16 @@
 # Git
 
+## Serge's Solution
+
+When `ssh` is blocked from your DAC machine.
+
+```
+Host github.com
+   Hostname ssh.github.com
+   Port 443
+   User git
+```
+
 ## PAT and github
 
 Alternative: Use `url` insteadOf with Personal Access Tokens (PAT)
