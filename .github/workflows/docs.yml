@@ -5,6 +5,7 @@
 name: Deploy docs
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -12,25 +13,27 @@ on:
     paths:
       - "**.md"
       - "mkdocs.yml"
-  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+# [source](https://zensical-action.cssnr.com/#features)
 jobs:
   docs:
-    # Create latest docs
+    name: 'Docs'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.zensical.outputs.page_url }}
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup doc deploy
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REQUIREMENTS: docs/requirements.txt
+      - name: 'Zensical Action'
+        id: zensical
+        uses: cssnr/zensical-action@v1

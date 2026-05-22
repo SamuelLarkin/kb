@@ -306,10 +306,10 @@ hyperfine \
   'awk "{print NF}" < /tmp/train.en.txt'
 ```
 
-| Command                                                                |    Mean [ms] | Min [ms] | Max [ms] |    Relative |
-| :--------------------------------------------------------------------- | -----------: | -------: | -------: | ----------: |
-| `zcat train.en.gz \| head -n 500000 \| perl -nle "print scalar split"` | 496.1 ± 27.0 |    446.5 |    537.6 |        1.00 |
-| `zcat train.en.gz \| head -n 500000 \| awk "{print NF}"`               | 566.7 ± 28.2 |    521.6 |    625.4 | 1.14 ± 0.08 |
+| Command                                                                |   Mean \[ms] | Min \[ms] | Max \[ms] |    Relative |
+| :--------------------------------------------------------------------- | -----------: | --------: | --------: | ----------: |
+| `zcat train.en.gz \| head -n 500000 \| perl -nle "print scalar split"` | 496.1 ± 27.0 |     446.5 |     537.6 |        1.00 |
+| `zcat train.en.gz \| head -n 500000 \| awk "{print NF}"`               | 566.7 ± 28.2 |     521.6 |     625.4 | 1.14 ± 0.08 |
 
 ```sh
 hyperfine \
@@ -320,10 +320,10 @@ hyperfine \
   'awk "{print NF}" < /tmp/train.en.txt'
 ```
 
-| Command                                              |       Mean [s] | Min [s] | Max [s] |    Relative |
-| :--------------------------------------------------- | -------------: | ------: | ------: | ----------: |
-| `zcat train.en.gz \| perl -nle "print scalar split"` | 22.005 ± 1.346 |  20.649 |  24.265 |        1.00 |
-| `zcat train.en.gz \| awk "{print NF}"`               | 22.916 ± 1.150 |  21.893 |  24.405 | 1.04 ± 0.08 |
+| Command                                              |      Mean \[s] | Min \[s] | Max \[s] |    Relative |
+| :--------------------------------------------------- | -------------: | -------: | -------: | ----------: |
+| `zcat train.en.gz \| perl -nle "print scalar split"` | 22.005 ± 1.346 |   20.649 |   24.265 |        1.00 |
+| `zcat train.en.gz \| awk "{print NF}"`               | 22.916 ± 1.150 |   21.893 |   24.405 | 1.04 ± 0.08 |
 
 ## conda
 
