@@ -1,0 +1,9 @@
+[project]
+name = "kb"
+version = "0.1.0"
+description = "Samuel's Notes"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "zensical>=0.0.43",
+]

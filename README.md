@@ -5,15 +5,12 @@ This repository consists of tips-and-tricks that I found or techniques that I ha
 ## Install
 
 ```sh
-python -m venv venv
-source venv/bin/activate ""
-python -m pip install -r requirements.txt
+uv sync
 git config --local core.hooksPath .githooks/
 ```
 
 ## Build
 
 ```sh
-source venv/bin/activate ""
-mkdocs build
+uv run zensical build
 ```
