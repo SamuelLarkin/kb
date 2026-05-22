@@ -55,6 +55,7 @@ markdown_extensions:
       permalink: true
 nav:
   - Home: README.md
+  - AI: ai.md
   - Colors: color.md
   - Configuration File Explained: config_files.md
   - fzf: fzf.md
