@@ -6,7 +6,7 @@
 
 To make a `jq` script executable:
 
-```sh
+```sh title="template"
 #!/usr/bin/env -S jq --monochrome-output --compact-output --from-file
 # -S, --split-string=S
 
@@ -22,11 +22,11 @@ This happens when you extracted data from `mysql`.
 `mysql` doesn't allow subqueries to return multiple rows with multiple columns thus you have to do the same work using `JOIN`.
 [Merge Arrays of JSON](https://stackoverflow.com/a/42012281)
 
-```sh
+```sh title="input"
 echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
 ```
 
-```
+```title="output"
 {
   "id": 1,
   "b": [
@@ -50,12 +50,12 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
   - take the first element and aggregate all of the `b` in a list
   - return that first element that has been augmented with a list of `b`
 
-```sh
+```sh title="command"
 echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
 | jq --slurp 'group_by(.id) | .[] | (.[0].b=([.[].b]|flatten)) | .[0]'
 ```
 
-```
+```title="output"
 {
   "id": 1,
   "b": [
@@ -75,7 +75,7 @@ Compare two jsonl files that are not in the same order.
 This implies that we need to sort the files on some `key`.
 Do a trick a la `Schwartian transform` where we prepend the sort `key`, sort on that `key` and the remove the `key`.
 
-```sh
+```sh title="command"
 jqdiff \
   <(zcat train.jsonl.gz \
     | jq --compact-output --raw-output '[.id, .|@text] | @tsv' \
@@ -89,7 +89,7 @@ jqdiff \
 
 Otherwise, use the alias `jqdiff` which essentially does
 
-```sh
+```sh title="command"
 vimdiff <(jq --sort-keys . file1.json) <(jq --sort-keys . file2.json)
 ```
 
@@ -97,13 +97,13 @@ vimdiff <(jq --sort-keys . file1.json) <(jq --sort-keys . file2.json)
 
 Given
 
-```json
+```json title="input"
 [{ "seg": ["A", "B"] }, { "seg": "C" }]
 ```
 
 The second object is NOT an array but you need it to be an array to process all elements the same way, you can make sure all segments are arrays by doing:
 
-```sh
+```sh title="command"
 jq '.[] | .seg | (if type == "object" then [.] else . end) | .[]'
 ```
 
@@ -111,7 +111,7 @@ jq '.[] | .seg | (if type == "object" then [.] else . end) | .[]'
 
 Count the number of entries/sentence pairs that have the `.unparsable` key.
 
-```sh
+```sh title="command"
 pv Huge.jsonl \
 | jq --null-input '[ inputs | select(.unparsable)] | reduce .[] as $item (0; . + 1)'
 ```
@@ -120,11 +120,11 @@ pv Huge.jsonl \
 
 If you need the file name in your script, you can call the function `input_filename`.
 
-```sh
+```sh title="command"
 jq '[input_filename, input_line_number]' translation/nmt/test.en2fr.scores.json
 ```
 
-```
+```title="output"
 [
   "translation/nmt/test.en2fr.scores.json",
   53
@@ -135,7 +135,7 @@ jq '[input_filename, input_line_number]' translation/nmt/test.en2fr.scores.json
 
 Given
 
-```xml
+```xml title="input"
 <?xml version='1.0' encoding='utf-8'?>
 <dataset id="wmttest2024">
   <collection id="general">
@@ -169,11 +169,11 @@ Given
 
 Remove documents that are NOT of `news` domain keeping the document's structure.
 
-```sh
-~/.local/bin/yq 'del(.dataset.collection.doc[] | select(.["+@domain"] != "news"))' wmttest2024.en-es.xml
+```sh title="command"
+yq 'del(.dataset.collection.doc[] | select(.["+@domain"] != "news"))' wmttest2024.en-es.xml
 ```
 
-```xml
+```xml title="output"
 <?xml version='1.0' encoding='utf-8'?>
 <dataset id="wmttest2024">
   <collection id="general">
@@ -225,7 +225,7 @@ _Tilde-worldbank-1-eng-spa.eng.gz_
 "[Life] is extremely difficult.
 ```
 
-```sh
+```sh title="command"
 paste \
   <(zcat lingua_eng_spa/Tilde-worldbank-1-eng-spa.spa.gz) \
   <(zcat lingua_all_languages/Tilde-worldbank-1-eng-spa.spa.gz) \
@@ -236,7 +236,7 @@ paste \
 | jq '.[]'
 ```
 
-```json
+```json title="output"
 {
   "eng_spa": {
     "lid": "SPA",
@@ -268,7 +268,7 @@ paste \
 Context: after generating `*.scores.json` using `sacrebleu  --width=14 reference --metrics bleu chrf ter  < translation > scores.json`.
 Can we extract BLEU scores from all our experiments and tabulate the result using `mlr`?
 
-```sh
+```sh title="command"
 find -type f -name \*scores.json \
 | xargs dirname \
 | parallel 'jq "{\"expt_name\": \"{//}\",  \"{/}\": (.[] | select(.name == \"BLEU\") | .score)}" {}/*scores.json' \
@@ -281,23 +281,20 @@ find -type f -name \*scores.json \
 
 Given the following files.
 Example Input
-left_file.jsonl:
 
-```json
+```json title="left_file.jsonl"
 { "id": "10", "data": "abc" }
 { "id": "20", "data": "xyz" }
 ```
 
-right_file.jsonl:
-
-```json
+```json title="right_file.jsonl"
 { "id": "10", "content": "yui" }
 { "id": "30", "content": "ujm" }
 ```
 
 #### Inner Join
 
-```sh
+```sh title="command"
 jq --compact-output --slurpfile right_file right_file.jsonl '
   INDEX($right_file[]; .id) as $dict
   | . as $left
@@ -307,7 +304,7 @@ jq --compact-output --slurpfile right_file right_file.jsonl '
 ' left_file.jsonl
 ```
 
-```json
+```json title="output"
 { "id": "10", "data": "abc", "content": "yui" }
 ```
 
@@ -318,7 +315,7 @@ To join two JSON files based on a specific field (e.g., `id`), you can use `jq`,
 Using `jq` for an Inner Join
 If both files contain arrays of objects and you want to join them on a common key (like `id`), use this efficient `jq` script:
 
-```sh
+```sh title="command"
 jq --compact-output --slurpfile right_file right_file.jsonl '
   INDEX($right_file[]; .id) as $dict |
   . + $dict[.id] | select(. != null)
@@ -330,9 +327,7 @@ jq --compact-output --slurpfile right_file right_file.jsonl '
 `. + $dict[.id]`: Merges the object from `file1` with the matching object from `file2`.
 `select(. != null)`: Ensures only matches are output (inner join).
 
-Output
-
-```json
+```json title="output"
 { "id": "10", "data": "abc", "content": "yui" }
 { "id": "30", "content": "ujm" }
 ```
@@ -341,7 +336,7 @@ Output
 
 Note that we use `--keep-order`, `--spreadstdin` & `--recend='\n'`.
 
-```sh
+```sh title="command"
 function process {
    cat
 }
@@ -362,7 +357,7 @@ zcat input.gz \
 
 Select entries that have a field value within a set.
 
-```sh
+```sh title="command"
 jq 'select(.BlockID == (1742974, 1742975))' data/hoc-log-20241218-blocks.json
 ```
 
@@ -370,8 +365,8 @@ jq 'select(.BlockID == (1742974, 1742975))' data/hoc-log-20241218-blocks.json
 
 Using [yq](https://github.com/mikefarah/yq/), we can convert a xml document into a json file.
 
-```sh
-yq -p xml -o json < input.xml > output.json
+```sh title="command"
+yq --input-format xml --output-format json < input.xml > output.json
 ```
 
 ### Zip Multiple files
@@ -379,7 +374,7 @@ yq -p xml -o json < input.xml > output.json
 [Merge arrays](https://github.com/jqlang/jq/issues/680)
 The key here is the `transpose`.
 
-```sh
+```sh title="command"
 zcat translation.fr.json.gz \
 | jq \
     --slurp \
