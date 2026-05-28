@@ -427,7 +427,9 @@ srun \
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:4
+##SBATCH --gres=gpu:4
+##SBATCH --gpus-per-task=4
+#SBATCH --gpus-per-node=4
 
 #SBATCH --output=%x-%j.out
 #SBATCH --signal=B:USR1@30
@@ -512,7 +514,9 @@ For a 4-node setup with 8 GPUs per node, the SLURM header should include:
 
 ```
 #SBATCH --nodes=4
-#SBATCH --gres=gpu:8
+##SBATCH --gres=gpu:8
+##SBATCH --gpus-per-task=8
+#SBATCH --gpus-per-node=8
 #SBATCH --ntasks-per-node=8
 ```
 
@@ -565,11 +569,13 @@ This version contains all the bell & whistle for maximum tracking.
 ##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
 ##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
-#SBATCH --gres=gpu:1
 #SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
+##SBATCH --gres=gpu:1
+##SBATCH --gpus-per-task=1
+#SBATCH --gpus-per-node=1
 #SBATCH --mem=6G
 
 #SBATCH --open-mode=append
@@ -736,11 +742,13 @@ wait
 ##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
 ##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
-#SBATCH --gres=gpu:0
 #SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=32
+##SBATCH --gres=gpu:1
+##SBATCH --gpus-per-task=1
+#SBATCH --gpus-per-node=1
 #SBATCH --mem=6G
 
 #SBATCH --open-mode=append
