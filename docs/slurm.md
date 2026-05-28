@@ -798,3 +798,221 @@ sbatch \
 	--mem=6G \
 	YOUR_COMMAND
 ```
+
+### Using `utils.sh`
+
+```sh title="utils.sh"
+# Requeueing on Trixie
+# [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
+# [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
+function _requeue {
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+   date
+   # This would allow to generically requeue any job but since we are using XLM
+   # which is slurm aware, XLM could save its model before requeueing.
+   scontrol requeue "$SLURM_JOBID"
+}
+
+
+function enable_automatic_requeueing {
+  if [[ -n "$SLURM_JOBID" ]]; then
+    declare -a FORMAT_STRING=(
+      JobID
+      Submit
+      Start
+      End
+      Elapsed
+      ExitCode
+      State
+      CPUTime
+      MaxRSS
+      MaxVMSize
+      MaxDiskRead
+      MaxDiskWrite
+      AllocCPUs
+      AllocTRES%-50
+      NodeList
+      JobName%-30
+      Comment%-80
+    )
+    SACCT_FORMAT=$(IFS=","; echo "${FORMAT_STRING[*]}")
+    export SACCT_FORMAT
+    trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
+    trap _requeue USR1
+    unset FORMAT_STRING
+  fi
+}
+
+
+function git_diff {
+  # ( cd $(uv pip list --editable --format json | jq -r '.[] | select(.name == "axolotl") | .editable_project_location') && git diff origin/main; )
+
+  while IFS=$'\t' read -r name location; do
+    echo "$name"
+    echo "$location"
+    ( cd "$location" && git diff main; )
+  done < <(uv pip list --editable --format json | jq --compact-output --raw-output '.[] | [.name, .editable_project_location] | @tsv')
+}
+
+
+# Output debugging information
+function debug_info {
+  echo "DEBUGGING INFO" >&2
+
+  {
+    date
+    hostname
+    uname --all
+    cat /etc/issue
+    pwd
+    command -v python
+    # [How to list variables declared in script in bash?](https://stackoverflow.com/a/1305273)
+    # In section SHELL BUILTIN COMMANDS (in the set section) it says: "In
+    # posix mode, only shell variables are listed."
+    ( set -o posix; set; )
+    tr ":" "\n" <<< "$LD_LIBRARY_PATH"
+    # What conda/uv environment are we in?
+    # Record all package versions.
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+      echo "VENV: $VIRTUAL_ENV"
+      command -v uv
+      uv pip list
+      uv pip freeze
+    fi
+    if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+      command -v conda
+      conda env export
+    fi
+  } >&2
+
+  {
+    # What GPU id is assigned to this job.
+    nvidia-smi --list-gpus
+    nvidia-smi
+  } | sed 's/^/   /' >&2
+
+  git_diff
+
+  echo "DEBUGGING INFO END"
+  echo;echo;echo
+}
+```
+
+```sh title="script.slurm"
+#!/bin/bash
+# vim:syntax=bash:sw=2:ts=2
+
+#SBATCH --job-name=TraLLN.lmf.sft
+#SBATCH --comment="TraLLM: LLaMa-Factory sft"
+
+# Synthia
+#SBATCH --partition=SynthiaGPU-Preempt
+#SBATCH --account=dt-base
+# Trixie
+##SBATCH --partition=TrixieMain,JobTesting
+##SBATCH --account=dt-mtp
+# On GPSC7
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+# On GPSC5
+##SBATCH --partition=gpu_v100
+##SBATCH --account=nrc_ict__gpu_v100
+# On GPSC-C
+##SBATCH --partition=gpu_a100
+##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
+##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
+
+#SBATCH --time=12:00:00
+#SBATCH --nodes=1
+#SBATCH --gpus-per-node=8
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=256G
+
+#SBATCH --open-mode=append
+#SBATCH --output=%x-%j.out
+
+#SBATCH --requeue
+#SBATCH --signal=B:USR1@30
+
+# Fix SLURM environment variables.
+SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
+SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0=${SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0%%(*)}   # '24(x2)' => '24'
+SLURM_STEP_TASKS_PER_NODE=${SLURM_STEP_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
+SLURM_TASKS_PER_NODE=${SLURM_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
+
+# NOTE: We set OMP_NUM_THREADS or else we get the following Warning:
+# WARNING:torch.distributed.run:
+# *****************************************
+# Setting OMP_NUM_THREADS environment variable for each process to be 1 in
+# default, to avoid your system being overloaded, please further tune the
+# variable for optimal performance in your application as needed.
+# *****************************************
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
+
+# If reserved but unallocated memory is large try setting
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+# See documentation for Memory Management
+# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+source utils.sh  # debug_info(), enable_automatic_requeueing()
+
+enable_automatic_requeueing
+
+head -n 123123 "$0" >&2
+
+
+# GPSC
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export https_proxy=http://webproxy.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export http_proxy=http://webproxy.science.gc.ca:8888
+# GPSC-C
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export https_proxy=http://webproxy.collab.science.gc.ca:8888
+# [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export http_proxy=http://webproxy.collab.science.gc.ca:8888
+export TQDM_MININTERVAL=90
+head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+readonly head_node_ip
+readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+
+export LOGLEVEL=INFO
+export NNODES=$SLURM_NNODES
+export NPROC_PER_NODE=$SLURM_GPUS_PER_NODE
+export HEAD_NODE_IP=$head_node_ip
+export HEAD_NODE_PORT=head_node_port
+export NODE_RANK=$SLURM_NODEID
+export NCCL_IB_DISABLE=0
+# export NCCL_SOCKET_IFNAME=^lo,docker0
+export NCCL_TIMEOUT=180000000
+export NCCL_DEBUG=INFO
+export TORCH_NCCL_BLOCKING_WAIT=1 # Ensure NCCL waits for operations to finish export NCCL_ASYNC_ERROR_HANDLING=1 # Allow handling of NCCL errors asynchronously
+
+source venv/bin/activate ""
+export HF_HOME=$HOME/scratch/cache/huggingface
+
+function task {
+  local -ar extra_args=("$@")
+
+  accelerate launch \
+    --multi_gpu \
+    --num_processes="$SLURM_GPUS_ON_NODE" \
+    --num_machines="$SLURM_NNODES" \
+    --mixed_precision=bf16 \
+    -m axolotl.cli.train \
+      "$config" \
+      --output-dir="$output_dir" \
+      --dataloader-num-workers="$SLURM_CPUS_PER_TASK" \
+      --dataset-num-proc="$SLURM_TASKS_PER_NODE" \
+      --dataset-processes="$SLURM_TASKS_PER_NODE" \
+      --deepspeed deepspeed_configs/zero1.json \
+      ${extra_args[@]}
+}
+
+
+# Call this after you have setup your environment and all your local variables
+debug_info
+
+# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+task "$@" &
+wait
+```
