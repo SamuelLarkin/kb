@@ -47,6 +47,9 @@ extra:
   version:
     provider: mike
     default: stable
+extra_javascript:
+  # Option 1: MathJax (Full LaTeX support, slightly slower)
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 markdown_extensions:
   - admonition
   #  - pymdownx.details
@@ -58,6 +61,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
   - toc:
       permalink: true
 nav:
