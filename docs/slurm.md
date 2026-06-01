@@ -554,18 +554,22 @@ This version contains all the bell & whistle for maximum tracking.
 #SBATCH --job-name=WMT25.eval
 #SBATCH --comment="Official WMT2025 LRSL eval script"
 
+# Find your accounts and partitions with the following commands:
+# sacctmgr show user withassoc format=account,user,defaultaccount where user=$USER
+# sinfo
+
 # Trixie
-#SBATCH --partition=TrixieMain,JobTesting
 #SBATCH --account=dt-mtp
+#SBATCH --partition=TrixieMain,JobTesting
 # On GPSC7
-##SBATCH --partition=gpu_a100
 ##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --partition=gpu_a100
 # On GPSC5
-##SBATCH --partition=gpu_v100
 ##SBATCH --account=nrc_ict__gpu_v100
+##SBATCH --partition=gpu_v100
 # On GPSC-C
-##SBATCH --partition=gpu_a100
 ##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --partition=gpu_a100
 ##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
 ##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
@@ -578,10 +582,14 @@ This version contains all the bell & whistle for maximum tracking.
 #SBATCH --gpus-per-node=1
 #SBATCH --mem=6G
 
+# Append to the log file otherwise when your job gets requeued, you will lose your previous logs.
 #SBATCH --open-mode=append
+# log file will be named <job_name>-<job_id>.out
 #SBATCH --output=%x-%j.out
 
+# Tell SLURM you would like to requeue your job if not completed.
 #SBATCH --requeue
+# Ask SLURM to tell your code it is about to kill your job.
 #SBATCH --signal=B:USR1@30
 
 # Fix SLURM environment variables.
@@ -727,18 +735,22 @@ wait
 #SBATCH --job-name=WMT25.eval
 #SBATCH --comment="Official WMT2025 LRSL eval script"
 
+# Find your accounts and partitions with the following commands:
+# sacctmgr show user withassoc format=account,user,defaultaccount where user=$USER
+# sinfo
+
 # Trixie
-#SBATCH --partition=TrixieMain,JobTesting
 #SBATCH --account=dt-mtp
+#SBATCH --partition=TrixieMain,JobTesting
 # On GPSC7
-##SBATCH --partition=gpu_a100
 ##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --partition=gpu_a100
 # On GPSC5
-##SBATCH --partition=gpu_v100
 ##SBATCH --account=nrc_ict__gpu_v100
+##SBATCH --partition=gpu_v100
 # On GPSC-C
-##SBATCH --partition=gpu_a100
 ##SBATCH --account=nrc_ict__gpu_a100
+##SBATCH --partition=gpu_a100
 ##SBATCH --comment="image=nrc/nrc_all_default_ubuntu-22.04-amd64_latest"
 ##SBATCH --comment="image=registry.maze-c.collab.science.gc.ca/sschpcs/generic-job:ubuntu22.04_master"
 
@@ -751,10 +763,14 @@ wait
 #SBATCH --gpus-per-node=1
 #SBATCH --mem=6G
 
+# Append to the log file otherwise when your job gets requeued, you will lose your previous logs.
 #SBATCH --open-mode=append
+# log file will be named <job_name>-<job_id>.out
 #SBATCH --output=%x-%j.out
 
+# Tell SLURM you would like to requeue your job if not completed.
 #SBATCH --requeue
+# Ask SLURM to tell your code it is about to kill your job.
 #SBATCH --signal=B:USR1@30
 
 # Requeueing on Trixie
@@ -791,8 +807,8 @@ sbatch \
 	--job-name=WMT25.eval \
 	--partition=gpu_v100 \
 	--account=nrc_ict__gpu_v100 \
-	--nodes=1 \
 	--time=12:00:00 \
+	--nodes=1 \
 	--ntasks-per-node=1 \
 	--cpus-per-task=32 \
 	--mem=6G \
@@ -802,15 +818,16 @@ sbatch \
 ### Using `utils.sh`
 
 ```sh title="utils.sh"
+# vim:syntax=bash:sw=2:ts=2
 # Requeueing on Trixie
 # [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
 function _requeue {
-   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
-   date
-   # This would allow to generically requeue any job but since we are using XLM
-   # which is slurm aware, XLM could save its model before requeueing.
-   scontrol requeue "$SLURM_JOBID"
+  echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+  date
+  # This would allow to generically requeue any job but since we are using XLM
+  # which is slurm aware, XLM could save its model before requeueing.
+  scontrol requeue "$SLURM_JOBID"
 }
 
 
@@ -905,6 +922,10 @@ function debug_info {
 #SBATCH --job-name=TraLLN.lmf.sft
 #SBATCH --comment="TraLLM: LLaMa-Factory sft"
 
+# Find your accounts and partitions with the following commands:
+# sacctmgr show user withassoc format=account,user,defaultaccount where user=$USER
+# sinfo
+
 # Synthia
 #SBATCH --partition=SynthiaGPU-Preempt
 #SBATCH --account=dt-base
@@ -930,10 +951,14 @@ function debug_info {
 #SBATCH --cpus-per-task=64
 #SBATCH --mem=256G
 
+# Append to the log file otherwise when your job gets requeued, you will lose your previous logs.
 #SBATCH --open-mode=append
+# log file will be named <job_name>-<job_id>.out
 #SBATCH --output=%x-%j.out
 
+# Tell SLURM you would like to requeue your job if not completed.
 #SBATCH --requeue
+# Ask SLURM to tell your code it is about to kill your job.
 #SBATCH --signal=B:USR1@30
 
 # Fix SLURM environment variables.
