@@ -50,3 +50,16 @@ Effect of $T$:
 - $T \to \infty$: The distribution becomes uniform, where all tokens have equal probability ($1/N$).
 
 This scaling allows precise control over the "sharpness" of the probability distribution during AI inference.
+
+## Temperature
+
+LLM temperature is a hyperparameter that controls the randomness and creativity of text generation during inference by modifying the probability distribution of the model's output tokens.
+Technically, it works by dividing the model's raw scores (logits) by the temperature value before applying the softmax function; a value of 1.0 leaves the distribution unchanged, values below 1.0 sharpen the distribution to favor high-probability tokens, and values above 1.0 flatten it to allow more diverse, less probable selections.
+
+Common applications and ranges include:
+
+- Low Temperature (0.0–0.3): Produces deterministic, factual, and consistent outputs, ideal for technical documentation, coding, or factual Q&A where accuracy is paramount.
+- Medium Temperature (0.4–0.8): Balances structure and creativity, suitable for conversational AI or general summarization tasks requiring natural language flow.
+- High Temperature (0.9–1.5+): Maximizes diversity and unpredictability, used for brainstorming, creative writing, or idea generation, though excessively high values can lead incoherent or "chaotic" results.
+
+Temperature is often used in conjunction with top-k or top-p (nucleus) sampling to further constrain the pool of candidate tokens, ensuring that increased randomness does not compromise the coherence of the generated text.
