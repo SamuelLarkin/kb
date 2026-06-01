@@ -1,9 +1,5 @@
 #!/bin/sh
 
-if [[ $(command -v zensical) ]]; then
-  uv sync
-fi
-
 echo "Building Document site..."
-uv run zensical build
+uvx zensical build
 echo "zensical site built successfully."
