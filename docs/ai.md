@@ -29,3 +29,24 @@ Contrast with SentencePiece (▁)
 It is worth noting that not all tokenizers use Ġ.
 The SentencePiece library, used by models like T5 and Llama 2/3 (with some variations), uses a low line underscore (▁) for the same purpose.
 This is a hardcoded convention in the SentencePiece package, chosen to visually distinguish word boundaries from regular text without relying on byte-mapping quirks.
+
+## Softmax
+
+The softmax function with temperature $T$ modifies the standard softmax by scaling the logits $z_i$ before exponentiation.
+The formula is:
+
+$$P_i = \frac{e^{z_i/T}}{\sum_j e^{z_i/T}}$$
+
+Where:
+
+- $P_i$ is the probability of token $i$.
+- $z_i$ is the logit (raw score) for token $i$.
+- $T$ is the temperature parameter ($T > 0$).
+
+Effect of $T$:
+
+- $T \to 0$: The distribution becomes peaked, approaching a one-hot vector where the token with the highest logit has probability $1$.
+- $T = 1$: The standard softmax function; the original probability distribution is preserved.
+- $T \to \infty$: The distribution becomes uniform, where all tokens have equal probability ($1/N$).
+
+This scaling allows precise control over the "sharpness" of the probability distribution during AI inference.
