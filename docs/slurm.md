@@ -833,6 +833,13 @@ function _requeue {
 
 function enable_automatic_requeueing {
   if [[ -n "$SLURM_JOBID" ]]; then
+    trap _requeue USR1
+  fi
+}
+
+
+function enable_accounting_report {
+  if [[ -n "$SLURM_JOBID" ]]; then
     declare -a FORMAT_STRING=(
       JobID
       Submit
@@ -855,7 +862,6 @@ function enable_automatic_requeueing {
     SACCT_FORMAT=$(IFS=","; echo "${FORMAT_STRING[*]}")
     export SACCT_FORMAT
     trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
-    trap _requeue USR1
     unset FORMAT_STRING
   fi
 }
