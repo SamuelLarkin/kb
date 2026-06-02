@@ -80,6 +80,7 @@ nav:
   - nvim: nvim.md
   - ollama: ollama.md
   - Perl: perl.md
+  - Podman: podman.md
   - Putty: putty.md
   - Python: python.md
   - rsync: rsync.md
