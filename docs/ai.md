@@ -30,6 +30,15 @@ It is worth noting that not all tokenizers use Ġ.
 The SentencePiece library, used by models like T5 and Llama 2/3 (with some variations), uses a low line underscore (▁) for the same purpose.
 This is a hardcoded convention in the SentencePiece package, chosen to visually distinguish word boundaries from regular text without relying on byte-mapping quirks.
 
+## FSDP vs ZeRO
+
+FSDP (Fully Sharded Data Parallel) is a PyTorch-native implementation that primarily targets ZeRO Stage 3 (Full Sharding), sharding model parameters, gradients, and optimizer states to maximize memory efficiency for large models, whereas ZeRO Stage 1 only shards optimizer states.
+
+- Memory Footprint: ZeRO Stage 1 reduces memory usage by up to 4x by sharding only optimizer states, while FSDP (in its default FULL_SHARD mode) shards everything, achieving memory reduction proportional to the number of GPUs (up to 8x or more for models with large optimizer states).
+- Sharding Granularity: ZeRO Stage 1 is limited to optimizer state partitioning; FSDP supports multiple sharding strategies including FULL_SHARD (ZeRO-3 equivalent), SHARD_GRAD_OP (ZeRO-2 equivalent), and NO_SHARD (DDP equivalent), allowing users to trade off memory savings for communication overhead.
+- Performance: ZeRO Stage 1 has low communication overhead similar to standard Distributed Data Parallel (DDP) but is often considered less optimal than Stage 2 or 3 for large models. FSDP introduces communication overhead due to gathering and scattering parameters but mitigates this through backward prefetching and activation checkpointing to overlap communication with computation.
+- Implementation: ZeRO is part of the DeepSpeed library (developed by Microsoft), while FSDP is PyTorch’s native solution (developed by Meta), offering seamless integration into standard PyTorch workflows without external dependencies.
+
 ## Softmax
 
 The softmax function with temperature $T$ modifies the standard softmax by scaling the logits $z_i$ before exponentiation.
