@@ -818,21 +818,22 @@ sbatch \
 ### Using `utils.sh`
 
 ```sh title="utils.sh"
-# vim:syntax=bash:sw=2:ts=2
 # Requeueing on Trixie
 # [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
+
 function _requeue {
-  echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
-  date
-  # This would allow to generically requeue any job but since we are using XLM
-  # which is slurm aware, XLM could save its model before requeueing.
-  scontrol requeue "$SLURM_JOBID"
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID" >&2
+   date
+   # This would allow to generically requeue any job but since we are using XLM
+   # which is slurm aware, XLM could save its model before requeueing.
+   scontrol requeue "$SLURM_JOBID"
 }
 
 
 function enable_automatic_requeueing {
   if [[ -n "$SLURM_JOBID" ]]; then
+    echo "Enabling automatic requeueing." >&2
     trap _requeue USR1
   fi
 }
@@ -909,6 +910,11 @@ function debug_info {
   } >&2
 
   {
+    # [Troubleshooting NCCL issues](https://docs.axolotl.ai/docs/nccl.html)
+    nvidia-smi nvlink --status
+
+    nvidia-smi --query-gpu=compute_cap
+
     # What GPU id is assigned to this job.
     nvidia-smi --list-gpus
     nvidia-smi
