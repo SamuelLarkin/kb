@@ -485,7 +485,7 @@ function task {
   srun $launcher -m my_python_module
 }
 
-# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+# WARNING: You must send your task in the background in order for the requeueing mechanism to work.
 task &
 wait
 ```
@@ -722,7 +722,7 @@ function task {
     --log_samples
 }
 
-# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+# WARNING: You must send your task in the background in order for the requeueing mechanism to work.
 task &
 wait
 ```
@@ -793,7 +793,7 @@ function task {
   # put your commands here
 }
 
-# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+# WARNING: You must send your task in the background in order for the requeueing mechanism to work.
 task &
 wait
 ```
@@ -925,6 +925,47 @@ function debug_info {
   echo "DEBUGGING INFO END"
   echo;echo;echo
 }
+
+
+function write_slurm_script {
+  local -r output_dir=${1:-.}
+  local -r script_path="$output_dir/$SLURM_JOB_NAME-$SLURM_JOBID.slurm"
+
+  mkdir -p "$output_dir"
+  scontrol write batch_script "$SLURM_JOBID" "$script_path"
+  chmod a-w "$script_path"
+}
+
+
+cat "$0" >&2
+
+# Fix SLURM environment variables.
+export SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
+export SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0=${SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0%%(*)}   # '24(x2)' => '24'
+export SLURM_STEP_TASKS_PER_NODE=${SLURM_STEP_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
+export SLURM_TASKS_PER_NODE=${SLURM_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
+
+# NOTE: We set OMP_NUM_THREADS or else we get the following Warning:
+# WARNING:torch.distributed.run:
+# *****************************************
+# Setting OMP_NUM_THREADS environment variable for each process to be 1 in
+# default, to avoid your system being overloaded, please further tune the
+# variable for optimal performance in your application as needed.
+# *****************************************
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
+
+# If reserved but unallocated memory is large try setting
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+# See documentation for Memory Management
+# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+
+# These are required to setup the distributed framework.
+export TQDM_MININTERVAL=90
+head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+export head_node_ip
+export head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
 ```
 
 ```sh title="script.slurm"
@@ -973,33 +1014,12 @@ function debug_info {
 # Ask SLURM to tell your code it is about to kill your job.
 #SBATCH --signal=B:USR1@30
 
-# Fix SLURM environment variables.
-SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
-SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0=${SLURM_JOB_CPUS_PER_NODE_PACK_GROUP_0%%(*)}   # '24(x2)' => '24'
-SLURM_STEP_TASKS_PER_NODE=${SLURM_STEP_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
-SLURM_TASKS_PER_NODE=${SLURM_TASKS_PER_NODE%%(*)}   # '4(x2)' => '4'
-
-# NOTE: We set OMP_NUM_THREADS or else we get the following Warning:
-# WARNING:torch.distributed.run:
-# *****************************************
-# Setting OMP_NUM_THREADS environment variable for each process to be 1 in
-# default, to avoid your system being overloaded, please further tune the
-# variable for optimal performance in your application as needed.
-# *****************************************
-export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
-
-# If reserved but unallocated memory is large try setting
-# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
-# See documentation for Memory Management
-# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
-#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-
-source utils.sh  # debug_info(), enable_automatic_requeueing()
+source utils.sh  # debug_info(), enable_automatic_requeueing() enable_accounting_report(), write_slurm_script()
 
 enable_automatic_requeueing
+enable_accounting_report
 
-head -n 123123 "$0" >&2
-
+write_slurm_script
 
 # GPSC
 # [[ $JOBCTL_SLURM_CELLS =~ gpsc[^3] ]] && export https_proxy=http://webproxy.science.gc.ca:8888
@@ -1007,20 +1027,21 @@ head -n 123123 "$0" >&2
 # GPSC-C
 # [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export https_proxy=http://webproxy.collab.science.gc.ca:8888
 # [[ $JOBCTL_SLURM_CELLS =~ gpscc3 ]] && export http_proxy=http://webproxy.collab.science.gc.ca:8888
-export TQDM_MININTERVAL=90
-head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
-readonly head_node_ip
-readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+
+# If reserved but unallocated memory is large try setting
+# PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.
+# See documentation for Memory Management
+# (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+#PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 export LOGLEVEL=INFO
 export NNODES=$SLURM_NNODES
 export NPROC_PER_NODE=$SLURM_GPUS_PER_NODE
 export HEAD_NODE_IP=$head_node_ip
-export HEAD_NODE_PORT=head_node_port
+export HEAD_NODE_PORT=$head_node_port
 export NODE_RANK=$SLURM_NODEID
 export NCCL_IB_DISABLE=0
 # export NCCL_SOCKET_IFNAME=^lo,docker0
-export NCCL_TIMEOUT=180000000
 export NCCL_DEBUG=INFO
 export TORCH_NCCL_BLOCKING_WAIT=1 # Ensure NCCL waits for operations to finish export NCCL_ASYNC_ERROR_HANDLING=1 # Allow handling of NCCL errors asynchronously
 
@@ -1049,7 +1070,7 @@ function task {
 # Call this after you have setup your environment and all your local variables
 debug_info
 
-# WARNING: You must sent your in the background in order for the requeueing mechanism to work.
+# WARNING: You must send your task in the background in order for the requeueing mechanism to work.
 task "$@" &
 wait
 ```
