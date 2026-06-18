@@ -161,6 +161,12 @@ Memory Utilized: 2.78 GB
 Memory Efficiency: 6.96% of 40.00 GB
 ```
 
+### Manual Requeueing
+
+```sh
+scancel --signal=USR1 <job_id>
+```
+
 ## Cluster information
 
 See what the nodes really offer.
