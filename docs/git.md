@@ -1,5 +1,13 @@
 # Git
 
+## What is the origin branch I'm on?
+
+```sh
+git rev-parse --abbrev-ref @{u}
+```
+
+- @{u}: Shorthand for the upstream branch (e.g., origin/main).
+
 ## Serge's Solution
 
 When `ssh` is blocked from your DAC machine.
