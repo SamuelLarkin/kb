@@ -943,12 +943,13 @@ function debug_info {
 
 
 function write_slurm_script {
-  local -r output_dir=${1:-.}
-  local -r script_path="$output_dir/$SLURM_JOB_NAME-$SLURM_JOBID.slurm"
+  local -r _output_dir=${1:-.}
+  local -r script_path="$_output_dir/$SLURM_JOB_NAME-$SLURM_JOBID.slurm"
 
-  mkdir -p "$output_dir"
+  mkdir -p "$_output_dir"
   scontrol write batch_script "$SLURM_JOBID" "$script_path"
   chmod a-w "$script_path"
+  chmod ug+x "$script_path"
 }
 
 
