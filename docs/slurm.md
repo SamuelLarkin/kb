@@ -875,12 +875,21 @@ function enable_accounting_report {
 
 
 function git_diff {
-  # ( cd $(uv pip list --editable --format json | jq -r '.[] | select(.name == "axolotl") | .editable_project_location') && git diff origin/main; )
+  function differ {
+    local -r local_branch=$(git branch --show-current)
+    local -r remote_branch=$(git rev-parse --abbrev-ref @{u})
+
+    echo "local branch: $local_branch"
+    echo "remote branch: $remote_branch"
+    git remote -vv
+    git status -b --porcelain=v2
+    git diff @{u}  # Shorthand for the upstream branch (e.g., origin/main)
+  }
 
   while IFS=$'\t' read -r name location; do
     echo "$name"
     echo "$location"
-    ( cd "$location" && git diff main; )
+    ( cd "$location" && differ | cat; )
   done < <(uv pip list --editable --format json | jq --compact-output --raw-output '.[] | [.name, .editable_project_location] | @tsv')
 }
 
