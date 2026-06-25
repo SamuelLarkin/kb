@@ -847,6 +847,7 @@ function enable_automatic_requeueing {
 
 function enable_accounting_report {
   if [[ -n "$SLURM_JOBID" ]]; then
+    echo "Enabling accounting report." >&2
     declare -a FORMAT_STRING=(
       JobID
       Submit
@@ -982,6 +983,11 @@ export TQDM_MININTERVAL=90
 head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 export head_node_ip
 export head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+
+# When running on the head-node for debugging
+export SLURM_GPUS_ON_NODE=${SLURM_GPUS_ON_NODE:-0}
+export SLURM_NNODES=${SLURM_NNODES:-1}
+export SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK:-4}
 ```
 
 ```sh title="script.slurm"
