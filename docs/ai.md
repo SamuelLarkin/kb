@@ -72,3 +72,19 @@ Common applications and ranges include:
 - High Temperature (0.9–1.5+): Maximizes diversity and unpredictability, used for brainstorming, creative writing, or idea generation, though excessively high values can lead incoherent or "chaotic" results.
 
 Temperature is often used in conjunction with top-k or top-p (nucleus) sampling to further constrain the pool of candidate tokens, ensuring that increased randomness does not compromise the coherence of the generated text.
+
+## Smaller Gradient Norm
+
+To make gradients smaller or prevent them from becoming unstable (exploding) during neural network training, you should primarily use gradient clipping and adjust your activation functions and normalization techniques.
+
+- **Gradient Clipping**: This is the most direct method to limit gradient magnitude.
+  You can use gradient clipping to impose a maximum threshold on the gradient norm.
+  If the norm exceeds this limit, the gradients are rescaled to fit within the safe range, preventing unstable weight updates.
+  In PyTorch, this is implemented using `torch.nn.utils.clip_grad_norm_`.
+- **Switch to Non-Saturating Activations**: Functions like Sigmoid and **Tanh** have small derivatives that can shrink gradients or cause instability.
+  Switching to **ReLU** or its variants (like **Leaky ReLU** or **ELU**) helps maintain stronger, more stable gradient flows.
+- **Batch Normalization**: Applying Batch Normalization normalizes layer inputs to have zero mean and unit variance.
+  This stabilizes the distribution of inputs, which helps prevent gradients from becoming excessively large or vanishing.
+- **Proper Weight Initialization**: Use initialization schemes like **Xavier Initialization** (for **sigmoid**/**tanh**) or **Kaiming Initialization** (for **ReLU**) to keep gradients balanced during the initial backpropagation steps.
+- **Learning Rate Adjustment**: Reducing the learning rate can mitigate the impact of large gradients, though this is a hyperparameter tuning step rather than a direct gradient manipulation.
+  Adaptive optimizers like Adam or **RMSprop** also help by adjusting the learning rate per parameter based on gradient history.
