@@ -26,6 +26,21 @@ uv pip install XYZ
 uv pip install -r requirements.txt
 ```
 
+## Setup `logging`
+
+Setup `logging` in such a way that we can override the log level using an environment variable.
+
+```python
+logging.basicConfig(
+    level=getattr(
+        logging, os.environ.get("LOG_LEVEL", "INFO").upper(), logging.INFO
+    ),
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d_%H:%M:%S",
+)
+
+```
+
 ## Multiprocessing with Expensive Resources
 
 You can avoid global variables by attaching the expensive resource as an attribute of the worker function itself.
