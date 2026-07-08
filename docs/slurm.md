@@ -835,12 +835,15 @@ function _requeue {
    # which is slurm aware, XLM could save its model before requeueing.
    scontrol requeue "$SLURM_JOBID"
 }
+export -f _requeue
 
 
 function enable_automatic_requeueing {
   if [[ -n "$SLURM_JOBID" ]]; then
     echo "Enabling automatic requeueing." >&2
     trap _requeue USR1
+  else
+    echo "Impossible automatic requeueing." >&2
   fi
 }
 
@@ -871,20 +874,24 @@ function enable_accounting_report {
     export SACCT_FORMAT
     trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
     unset FORMAT_STRING
+  else
+    echo "Impossible accounting report." >&2
   fi
 }
 
 
 function git_diff {
   function differ {
+    local -r remote_branch=$(git symbolic-ref refs/remotes/origin/HEAD)
     local -r local_branch=$(git branch --show-current)
-    local -r remote_branch=$(git rev-parse --abbrev-ref @{u})
+    local -r common_branch=$(git merge-base $remote_branch $local_branch)
 
-    echo "local branch: $local_branch"
     echo "remote branch: $remote_branch"
+    echo "local branch: $local_branch"
+    echo "common branch: $common_branch"
     git remote -vv
     git status -b --porcelain=v2
-    git diff @{u}  # Shorthand for the upstream branch (e.g., origin/main)
+    git --no-pager diff $common_branch $local_branch
   }
 
   while IFS=$'\t' read -r name location; do
@@ -947,14 +954,16 @@ function write_slurm_script {
   local -r _output_dir=${1:-.}
   local -r script_path="$_output_dir/$SLURM_JOB_NAME-$SLURM_JOBID.slurm"
 
-  mkdir -p "$_output_dir"
-  scontrol write batch_script "$SLURM_JOBID" "$script_path"
-  chmod a-w "$script_path"
-  chmod ug+x "$script_path"
+  if [[ -n "$SLURM_JOBID" ]]; then
+    mkdir -p "$_output_dir"
+    scontrol write batch_script "$SLURM_JOBID" "$script_path"
+    chmod a-w "$script_path"
+    chmod ug+x "$script_path"
+  fi
 }
 
 
-cat "$0" >&2
+head -n 123123123 "$0" >&2
 
 # Fix SLURM environment variables.
 export SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
