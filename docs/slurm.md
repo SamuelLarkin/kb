@@ -547,6 +547,39 @@ sbatch \
 
 ## Template.slurm
 
+### Sending task to the background?
+
+Is it really necessary to send the task to the background in order to get bash to properly trap the requeueing signal?
+
+In a sbatch script for slurm do I need to send my job in the background if I'm using srun or srun will properly handle signal been sent to the job?
+No, you generally do not need to send jobs in the background if you are using srun directly within a batch script, as srun properly handles signal propagation to the job step.
+
+By default, when you use srun, the batch script blocks until the srun command completes. This allows the batch script to act as the parent process that receives signals from Slurm (such as SIGTERM or custom signals defined via --signal) and allows those signals to propagate correctly to the child processes managed by srun.
+
+- Signal Propagation: Slurm sends signals to the job's main batch step.
+  If srun is used, these signals are propagated to the job step, ensuring the process receives them (e.g., for graceful cleanup or interruption).
+- Backgrounding Risks: Running srun in the background (using &) without proper handling can lead to issues where the batch script exits before the background job finishes, or where signals are not intercepted correctly by the shell to manage the background process.
+- Exception: If you are running a command directly in the batch script without srun (e.g., python script.py), that command becomes a child process of the batch script. In this case, the batch script must explicitly trap signals and forward them to the child process, or the child process might not receive the signal correctly.
+  Using srun avoids this complexity.
+
+In summary, using srun is the recommended way to manage job steps in a batch script because it ensures proper resource allocation, signal handling, and output management without requiring background execution tricks.
+
+#### Test
+
+Using a simple sleeper script, it looks like bash was able to trap the signal and requeue.
+
+```sh title="will_it_requeue.slurm"
+source utils.sh  # enable_automatic_requeueing()
+enable_automatic_requeueing
+sleep 3600
+```
+
+Using the sleeper job and a shorter runtime than the sleep, the job gets automatically requeued.
+
+```sh
+sbatch --partition=standard --account=nrc_ict --time=00:02:00 --gpus-per-node=0  will_it_requeue.slurm
+```
+
 ### Fullest
 
 This version contains all the bell & whistle for maximum tracking.
