@@ -26,7 +26,7 @@ This is an example of an `activate` script when you compile a tool by hand and y
 ############ SENTENCEPIECE ############
 # Set this variable to override where SentencePiece is installed
 
-export SENTENCEPIECE_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+export SENTENCEPIECE_HOME="$( cd "$( dirname $(readlink -f "${BASH_SOURCE[0]}")) )" >/dev/null 2>&1 && pwd -P )"
 
 # Home
 export SENTENCEPIECE_HOME=${SENTENCEPIECE_HOME_OVERRIDE:-$SENTENCEPIECE_HOME}
