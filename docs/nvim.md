@@ -3,6 +3,10 @@
 - [Popular Neovim Configurations](https://dotfyle.com/neovim/configurations/top)
 - [Christian Chiarulli's neovim config](https://github.com/ChristianChiarulli/nvim/)
 
+## Shortcut Keys
+
+- view word/spell correction alternative `z=`
+
 ## Tips-And-Tricks
 
 - [Is it possible to disable lsp formatting temporarily?](https://www.reddit.com/r/neovim/comments/oo8jcu/is_it_possible_to_disable_lsp_formatting/)
