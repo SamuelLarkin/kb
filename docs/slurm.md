@@ -459,7 +459,7 @@ fi
 
 
 # Keep a copy of the code in case it changes between runs.
-head -n 112312 "$0" my_huggingface_trainer.py
+head -n 112312 "${BASH_SOURCE[0]}" my_huggingface_trainer.py
 
 # Setup your working environment.
 source setup_env.sh ""
@@ -690,7 +690,7 @@ if [[ -n "$SLURM_JOBID" ]]; then
   unset FORMAT_STRING
 fi
 
-head -n 123123 "$0" >&2
+head -n 123123 "${BASH_SOURCE[0]}" >&2
 
 
 # Output debugging information
@@ -996,7 +996,7 @@ function write_slurm_script {
 }
 
 
-head -n 123123123 "$0" >&2
+head -n 123123123 "${BASH_SOURCE[0]}" >&2
 
 # Fix SLURM environment variables.
 export SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE%%(*)}   # '24(x2)' => '24'
