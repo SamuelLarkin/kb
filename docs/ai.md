@@ -87,4 +87,42 @@ To make gradients smaller or prevent them from becoming unstable (exploding) dur
   This stabilizes the distribution of inputs, which helps prevent gradients from becoming excessively large or vanishing.
 - **Proper Weight Initialization**: Use initialization schemes like **Xavier Initialization** (for **sigmoid**/**tanh**) or **Kaiming Initialization** (for **ReLU**) to keep gradients balanced during the initial backpropagation steps.
 - **Learning Rate Adjustment**: Reducing the learning rate can mitigate the impact of large gradients, though this is a hyperparameter tuning step rather than a direct gradient manipulation.
-  Adaptive optimizers like Adam or **RMSprop** also help by adjusting the learning rate per parameter based on gradient history.
+  Adaptive optimizers like **Adam** or **RMSprop** also help by adjusting the learning rate per parameter based on gradient history.
+
+## Why would the gradient norm be bigger when the batch size is larger
+
+The gradient norm is typically larger for larger batch sizes because the variance of the gradient estimate decreases as the batch size increases.
+According to statistical theory, the variance of the gradient estimate scales inversely with the batch size ($N$), meaning the standard deviation (noise) scales as $1/\sqrt{N}$.
+
+While the mean gradient direction may remain similar, the distribution of gradients for larger batch sizes has a much heavier tail.
+This means that while small batches produce consistent, small updates, large batches produce updates that vary significantly in magnitude, often resulting in very large gradient steps when the specific samples in the batch align to create a strong signal.
+Additionally, larger batches allow the model to take larger gradient steps for the same number of samples seen, as the reduced noise permits a higher effective learning rate or simply reflects the accumulation of more accurate gradient signals.
+
+## By how much should a learning rate be augmented relative to the batch size
+
+The learning rate should be augmented based on the optimizer used and the magnitude of the batch size increase:
+
+### Scaling Rules by Optimizer
+
+#### Linear Scaling Rule (SGD with Momentum)
+
+For Stochastic Gradient Descent (SGD), particularly with momentum, the learning rate should scale linearly with the batch size.
+
+- Rule: If you increase the batch size by a factor of $k$, multiply the learning rate by $k$.
+- Formula: $\eta_{new} = \eta_{base} \times \frac{B_{new}}{B_{base}}$
+- Context: This rule was popularized by Goyal et al. (2017), who successfully trained ResNet-50 on ImageNet by scaling the batch size from 256 to 8,192 and the learning rate from 0.1 to 3.2. It maintains the "noise scale" of the gradient updates constant.
+- Caveat: This often requires a learning rate warmup period to prevent instability during the initial epochs when gradients are large.
+
+#### Square Root Scaling Rule (Adaptive Optimizers)
+
+For adaptive optimizers like Adam, RMSprop, or AdamW, the learning rate should typically scale with the square root of the batch size.
+
+- Rule: If you increase the batch size by a factor of $k$, multiply the learning rate by $\sqrt{k}$.
+- Formula: $\eta_{new} = \eta_{base} \times \sqrt{\frac{B_{new}}{B_{base}}}$
+- Context: Theoretical analysis (e.g., via Random Matrix Theory) suggests that because adaptive optimizers already normalize gradients by their second moments, the linear scaling of SGD is too aggressive. Square root scaling preserves the gradient variance more appropriately for these algorithms.
+
+### Practical Limits and Nuances
+
+- Thresholds: Linear scaling generally holds for SGD up to batch sizes of roughly 2,048–8,192. Beyond this, the relationship often breaks down, and performance may degrade unless specialized techniques (like LARS or LAMB optimizers) are used.
+- Small Batch Regime: When the batch size is very small (dominated by gradient noise), linear scaling is often a safe starting point even for some adaptive scenarios, but square root scaling is theoretically more sound for Adam.
+- Warmup: Regardless of the scaling rule, increasing the batch size (and consequently the learning rate) usually necessitates a longer warmup period to allow the model to stabilize before applying the full learning rate.
