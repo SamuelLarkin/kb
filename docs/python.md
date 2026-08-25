@@ -115,6 +115,15 @@ or:
 PYTHONPROFILEIMPORTTIME=1 myscript.python
 ```
 
+## Reload Module in Ipython
+
+When testing a live module with `ipython`, you can reload it using.
+
+```
+%load_ext
+%autoreload
+```
+
 ## SimpleNamespace
 
 [SimpleNamespace](https://docs.python.org/3/library/types.html#types.SimpleNamespace):
