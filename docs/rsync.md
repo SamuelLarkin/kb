@@ -47,7 +47,7 @@ rsync \
   --include='*/' \
   --include='*/expt_config' \
   --include='*/model_config.yaml' \
-  --include='*/prep.sh' \
+  --include='*/prep.slurm' \
   --exclude='*' \
   ../en2fr.2024-03-19/{finetuning,recency} \
   .
