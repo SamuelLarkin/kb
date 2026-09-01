@@ -236,7 +236,7 @@ sacctmgr show associations | grep ${USER}
 Alternatively:
 
 ```sh
-sacctmgr show user withassoc where user=$USER format=account,user,defaultaccount
+sacctmgr show user withassoc where user=$USER format=account%20,user,defaultaccount
 ```
 
 ```sh
