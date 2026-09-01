@@ -1,5 +1,9 @@
 #!/bin/sh
 
+if ! command -v zensical; then
+  prefix=uvx
+fi
+
 echo "Building Document site..."
-uvx zensical build
+$prefix zensical build
 echo "zensical site built successfully."
