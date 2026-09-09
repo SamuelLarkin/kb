@@ -23,6 +23,43 @@ cat
 
 ## Cookbook
 
+### Accumulate Total
+
+Given record of the form:
+
+```json
+{
+  "prompt": "p4-gemini",
+  "language": "cs-deu_Latn",
+  "input": 2610,
+  "output": 275
+}
+```
+
+If we want a final row with the totals, we can use `put` like so.
+Note that if the accumulation row doesn't have the exact same column names as the rest of the table, a separate table will be created.
+
+```sh
+cat run_gpt5_p4.sh-7393* run_gpt5_p123.sh-801249.out \
+| ./carbon_footprint_estimator.py extract \
+| mlr --ijsonl --opprint --barred \
+    stats1 -g prompt -f input,output -a sum \
+    then sort -f prompt \
+    then put '$total = $input_sum + $output_sum' \
+    then put '@input_sum += $input_sum; @output_sum += $output_sum; @total+=$total; end{ @row = {}; @row["prompt"]="all_prompts"; @row["input_sum"]=@input_sum; @row["output_sum"]=@output_sum; @row["total"]=@total; emit @row; }'
+```
+
++-------------+-----------+------------+----------+
+| prompt | input_sum | output_sum | total |
++-------------+-----------+------------+----------+
+| p1 | 1338679 | 1793158 | 3131837 |
+| p2 | 2692541 | 2475861 | 5168402 |
+| p3 | 7587578 | 2195223 | 9782801 |
+| p4-gemini | 6801009 | 1630974 | 8431983 |
+| p4-qwen | 6948016 | 1626732 | 8574748 |
+| all_prompts | 25367823 | 9721948 | 35089771 |
++-------------+-----------+------------+----------+
+
 ### Find HoC Sittings Elapsed Time
 
 ```sh
