@@ -100,6 +100,23 @@ Key Points:
 - Scope: The resource is stored in the function's namespace within the worker process, keeping the global namespace clean.
 - Access: Inside worker_task, we access the resource via worker_task.resource, ensuring each process uses the instance initialized specifically for it.
 
+## PEP723
+
+We can easily create a new `python` script with the `script` section using: `uv init --script delme.py`.
+
+For automatic `uv` environment creation, we can combine PEP723 with the `#!` trick:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+# "pandas",
+# "matplotlib",
+# ]
+# ///
+```
+
 ## Profiling Imports
 
 How to profile python's import statements.
@@ -144,5 +161,5 @@ print(json.dumps(my_data, indent=2, default=str))
 Disable the long exception stack.
 
 ```python
-app = typer.Typer(add_completion=False, pretty_exceptions_show_locals = False)
+app = typer.Typer(add_completion=False, pretty_exceptions_show_locals=False)
 ```
