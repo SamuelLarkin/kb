@@ -16,7 +16,6 @@ To make a `miller` script executable:
 #                information please see
 #                https://miller.readthedocs.io/en/latest/scripting/.
 
-
 --ijsonl --otsv
 cat
 ```
