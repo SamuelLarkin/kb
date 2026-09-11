@@ -80,6 +80,7 @@ nav:
   - nvim: nvim.md
   - ollama: ollama.md
   - Perl: perl.md
+  - Pixi: pixi.md
   - Podman: podman.md
   - Putty: putty.md
   - Python: python.md
