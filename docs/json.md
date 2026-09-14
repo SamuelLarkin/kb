@@ -263,6 +263,18 @@ paste \
 }
 ```
 
+### Flatten Arrays for Pretty Compact Display
+
+```jq
+#!/usr/bin/env -S jq --monochrome-output --compact-output --from-file
+# -S, --split-string=S
+
+# Pretty print arrays as a string.
+# Replaces arrays at any depth into a string representation.
+
+(.. | arrays) |= (select(any(type == "array" or type == "object")) // join(", "))
+```
+
 ### Group by X and Merge
 
 Context: after generating `*.scores.json` using `sacrebleu  --width=14 reference --metrics bleu chrf ter  < translation > scores.json`.
