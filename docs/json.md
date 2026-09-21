@@ -271,8 +271,16 @@ paste \
 
 # Pretty print arrays as a string.
 # Replaces arrays at any depth into a string representation.
+#(.. | arrays) |= (select(any(type == "array" or type == "object")) // join(", "))
 
-(.. | arrays) |= (select(any(type == "array" or type == "object")) // join(", "))
+# Replaces array of all numbers for a string representation.
+(.. | arrays) |= (
+  if type == "array" and all(type == "number") then
+    join(", ")
+  else
+    .
+  end
+)
 ```
 
 ### Group by X and Merge
