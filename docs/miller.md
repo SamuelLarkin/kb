@@ -172,6 +172,12 @@ sitting.parliament=44,sitting.session=1,sitting.number=118,#en_word=29726,#fr_wo
 | #fr_word           | 111   | 0          | 110            | 71944.38738738738  | 27816.245672487912 | 25521 | 76163  | 142068 |
 | #sentence          | 111   | 0          | 110            | 3312.189189189189  | 1315.06589889158   | 1147  | 3502   | 6588   |
 
+## Read from `--opprint --barred`
+
+```sh
+mlr -i pprint --barred-input cat metrics.tab
+```
+
 ### Tabulate BLEU Scores
 
 - Reading a csv dataframe
