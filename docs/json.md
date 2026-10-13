@@ -22,11 +22,7 @@ This happens when you extracted data from `mysql`.
 `mysql` doesn't allow subqueries to return multiple rows with multiple columns thus you have to do the same work using `JOIN`.
 [Merge Arrays of JSON](https://stackoverflow.com/a/42012281)
 
-```sh title="input"
-echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
-```
-
-```title="output"
+```json title="input"
 {
   "id": 1,
   "b": [
@@ -51,11 +47,11 @@ echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}'
   - return that first element that has been augmented with a list of `b`
 
 ```sh title="command"
-echo -e '{"id":1, "b":[{"c":1}]}{"id":1, "b":[{"c":2}]}' \
-| jq --slurp 'group_by(.id) | .[] | (.[0].b=([.[].b]|flatten)) | .[0]'
+< input.jsonl \
+jq --slurp 'group_by(.id) | .[] | (.[0].b = ([.[].b] | flatten)) | .[0]'
 ```
 
-```title="output"
+```json title="output"
 {
   "id": 1,
   "b": [
@@ -265,7 +261,7 @@ paste \
 
 ### Flatten Arrays for Pretty Compact Display
 
-```jq
+```jq title="command"
 #!/usr/bin/env -S jq --monochrome-output --compact-output --from-file
 # -S, --split-string=S
 
@@ -363,12 +359,13 @@ function process {
 export -f process
 
 zcat input.gz \
-    | time \parallel \
-       --keep-order \
-       --spreadstdin \
-       --recend='\n' \
-       --env=process \
-       'process' \
+| time \
+    parallel \
+      --keep-order \
+      --spreadstdin \
+      --recend='\n' \
+      --env=process \
+      'process' \
 | gzip \
 > output.gz
 ```
