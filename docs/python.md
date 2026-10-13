@@ -111,8 +111,8 @@ For automatic `uv` environment creation, we can combine PEP723 with the `#!` tri
 # /// script
 # requires-python = ">=3.14"
 # dependencies = [
-# "pandas",
-# "matplotlib",
+#   "pandas",
+#   "matplotlib",
 # ]
 # ///
 ```
