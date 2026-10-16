@@ -35,7 +35,7 @@ export http_proxy=http://webproxy.science.gc.ca:8888
 Add a dependency to run a job after another job.
 
 ```sh
-scontrol update jobid=<JOBID> dependency=afterok:<PREVIOUS_JOBID>
+scontrol update jobid=<JOB_ID> dependency=afterok:<PREVIOUS_JOB_ID>
 ```
 
 Add dependencies to multiple jobs
@@ -50,13 +50,13 @@ scontrol \
 Change the time limit.
 
 ```sh
-scontrol update jobid=<JOBID> TimeLimit=<NEW_TIMELIMIT>
+scontrol update jobid=<JOB_ID> TimeLimit=<NEW_TIMELIMIT>
 ```
 
 Change the number of maximum concurrent tasks.
 
 ```sh
-scontrol update jobid=<JOBID> ArrayTaskThrottle=0
+scontrol update jobid=<JOB_ID> ArrayTaskThrottle=0
 ```
 
 ### A Scriptless Job
@@ -80,7 +80,7 @@ scontrol update jobid=<JOBID> ArrayTaskThrottle=0
 List detailed information for a job (useful for troubleshooting):
 
 ```sh
-scontrol show jobid --details <JOBID>
+scontrol show jobid --details <JOB_ID>
 ```
 
 ```
@@ -118,7 +118,7 @@ JobId=403641 JobName=HoC-CL.training
 Find out where a job will run
 
 ```sh
-scontrol show job <JOBID>
+scontrol show job <JOB_ID>
 ```
 
 ### Tabulate the Information of Queued jobs
@@ -139,8 +139,8 @@ Get some stats about a job that ran on `Slurm`.
 Get stats about a job that has finished.
 
 ```sh
-sacct --long --jobs=<JOBID>
-sacct -l -j <JOBID>
+sacct --long --jobs=<JOB_ID>
+sacct -l -j <JOB_ID>
 ```
 
 ```sh
@@ -332,13 +332,13 @@ cn104
 This is an example command to connect to a worker node on GPSC5
 
 ```sh
-srun --overlap --pty --jobid=<JOBID> bash -l
+srun --overlap --pty --jobid=<JOB_ID> bash -l
 ```
 
 Example of connecting to a GPU running job on GPSC5.
 
 ```sh
-srun --overlap --gres=gpu:1 --nodes=1 --ntasks=1 --mem-per-cpu=0 --pty --oversubscribe --jobid=<SLURM_JOBID> /bin/bash -l
+srun --overlap --gres=gpu:1 --nodes=1 --ntasks=1 --mem-per-cpu=0 --pty --oversubscribe --jobid=<SLURM_JOB_ID> /bin/bash -l
 ```
 
 ```sh
@@ -350,7 +350,7 @@ srun \
   --nodes=1 \
   --ntasks=1 \
   --mem-per-cpu=0 \
-  --jobid=<JOBID> \
+  --jobid=<JOB_ID> \
   /bin/bash -l
 ```
 
@@ -410,7 +410,7 @@ srun \
   --nodes=1 \
   --ntasks=1 \
   --mem-per-cpu=0 \
-  --jobid=<JOBID> \
+  --jobid=<JOB_ID> \
   /bin/bash -l
 ```
 
@@ -446,14 +446,14 @@ srun \
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
 
 function _requeue {
-   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOB_ID"
    date
    # This would allow to generically requeue any job but since we are using XLM
    # which is slurm aware, XLM could save its model before requeueing.
-   scontrol requeue "$SLURM_JOBID"
+   scontrol requeue "$SLURM_JOB_ID"
 }
 
-if [[ -n "$SLURM_JOBID" ]]; then
+if [[ -n "$SLURM_JOB_ID" ]]; then
    trap _requeue USR1
 fi
 
@@ -468,7 +468,7 @@ source setup_env.sh ""
 export TQDM_MININTERVAL=90
 head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 readonly head_node_ip
-readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+readonly head_node_port=$(( SLURM_JOB_ID % (50000 - 30000 + 1 ) + 30000 ))
 export launcher="accelerate launch \
   --mixed_precision=fp16 \
   --num_processes=$((SLURM_NNODES * SLURM_GPUS_ON_NODE)) \
@@ -656,14 +656,14 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
 # [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
 function _requeue {
-   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOB_ID"
    date
    # This would allow to generically requeue any job but since we are using XLM
    # which is slurm aware, XLM could save its model before requeueing.
-   scontrol requeue "$SLURM_JOBID"
+   scontrol requeue "$SLURM_JOB_ID"
 }
 
-if [[ -n "$SLURM_JOBID" ]]; then
+if [[ -n "$SLURM_JOB_ID" ]]; then
   declare -a FORMAT_STRING=(
     JobID
     Submit
@@ -685,7 +685,7 @@ if [[ -n "$SLURM_JOBID" ]]; then
   )
   SACCT_FORMAT=$(IFS=","; echo "${FORMAT_STRING[*]}")
   export SACCT_FORMAT
-  trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
+  trap "sacct --jobs $SLURM_JOB_ID --format=$SACCT_FORMAT" 0
   trap _requeue USR1
   unset FORMAT_STRING
 fi
@@ -742,7 +742,7 @@ function debug_info {
 export TQDM_MININTERVAL=90
 head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 readonly head_node_ip
-readonly head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+readonly head_node_port=$(( SLURM_JOB_ID % (50000 - 30000 + 1 ) + 30000 ))
 
 
 source venv/bin/activate ""
@@ -816,11 +816,11 @@ wait
 # [source](https://www.sherlock.stanford.edu/docs/user-guide/running-jobs/)
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
 function _requeue {
-   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID"
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOB_ID"
    date
    # This would allow to generically requeue any job but since we are using XLM
    # which is slurm aware, XLM could save its model before requeueing.
-   scontrol requeue "$SLURM_JOBID"
+   scontrol requeue "$SLURM_JOB_ID"
 }
 
 export TQDM_MININTERVAL=90
@@ -862,17 +862,17 @@ sbatch \
 # [source](https://hpc-uit.readthedocs.io/en/latest/jobs/examples.html#how-to-recover-files-before-a-job-times-out)
 
 function _requeue {
-   echo "BASH - trapping signal 10 - requeueing $SLURM_JOBID" >&2
+   echo "BASH - trapping signal 10 - requeueing $SLURM_JOB_ID" >&2
    date
    # This would allow to generically requeue any job but since we are using XLM
    # which is slurm aware, XLM could save its model before requeueing.
-   scontrol requeue "$SLURM_JOBID"
+   scontrol requeue "$SLURM_JOB_ID"
 }
 export -f _requeue
 
 
 function enable_automatic_requeueing {
-  if [[ -n "$SLURM_JOBID" ]]; then
+  if [[ -n "$SLURM_JOB_ID" ]]; then
     echo "Enabling automatic requeueing." >&2
     trap _requeue USR1
   else
@@ -882,7 +882,7 @@ function enable_automatic_requeueing {
 
 
 function enable_accounting_report {
-  if [[ -n "$SLURM_JOBID" ]]; then
+  if [[ -n "$SLURM_JOB_ID" ]]; then
     echo "Enabling accounting report." >&2
     declare -a FORMAT_STRING=(
       JobID
@@ -905,7 +905,7 @@ function enable_accounting_report {
     )
     SACCT_FORMAT=$(IFS=","; echo "${FORMAT_STRING[*]}")
     export SACCT_FORMAT
-    trap "sacct --jobs $SLURM_JOBID --format=$SACCT_FORMAT" 0
+    trap "sacct --jobs $SLURM_JOB_ID --format=$SACCT_FORMAT" 0
     unset FORMAT_STRING
   else
     echo "Impossible accounting report." >&2
@@ -985,11 +985,11 @@ function debug_info {
 
 function write_slurm_script {
   local -r _output_dir=${1:-.}
-  local -r script_path="$_output_dir/$SLURM_JOB_NAME-$SLURM_JOBID.slurm"
+  local -r script_path="$_output_dir/$SLURM_JOB_NAME-$SLURM_JOB_ID.slurm"
 
-  if [[ -n "$SLURM_JOBID" ]]; then
+  if [[ -n "$SLURM_JOB_ID" ]]; then
     mkdir -p "$_output_dir"
-    scontrol write batch_script "$SLURM_JOBID" "$script_path"
+    scontrol write batch_script "$SLURM_JOB_ID" "$script_path"
     chmod a-w "$script_path"
     chmod ug+x "$script_path"
   fi
@@ -1024,7 +1024,7 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-$(nproc)}
 export TQDM_MININTERVAL=90
 head_node_ip=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
 export head_node_ip
-export head_node_port=$(( SLURM_JOBID % (50000 - 30000 + 1 ) + 30000 ))
+export head_node_port=$(( SLURM_JOB_ID % (50000 - 30000 + 1 ) + 30000 ))
 
 # When running on the head-node for debugging
 export SLURM_GPUS_ON_NODE=${SLURM_GPUS_ON_NODE:-0}
