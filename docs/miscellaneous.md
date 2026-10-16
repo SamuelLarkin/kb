@@ -389,3 +389,28 @@ Apply only to directories.
 find corpora/ models/ pkgs/ venv/ -type d \
 | xargs setfacl -d -m g:ai4dcluster-dt-mtp-project:rwx
 ```
+
+This command should grant whichever user you specify the same permissions as the owner.
+I would also recommend setting the `setgid` (`chmod g+s directory/`) bit on the directory so new files will all be owned by the group who owns the directory.
+That way you can manage permissions at a group level rather than recursing through the whole directory tree.
+
+```sh
+nfs4_setfacl \
+  -a "A::sam037@collab.science.gc.ca:rwatTnNcCy" \
+  /space/partner/nrc/work/ict/others/mgt-syntax-french/
+```
+
+This command grants the user the following specific NFSv4 permissions:
+
+- r: Read data (files) or list directory (directories).
+- w: Write data (files) or create files (directories).
+- a: Append data (files) or create subdirectories (directories).
+- t: Read file/directory attributes.
+- T: Write file/directory attributes.
+- n: Read named attributes.
+- N: Write named attributes.
+- c: Read the file/directory ACL.
+- C: Write the file/directory NFSv4 ACL.
+- y: Synchronous I/O.
+
+This configuration effectively provides read/write access for data and attributes, append/create capabilities for files and subdirectories, and ACL management (reading the ACL), but it does not include execute permissions (x) or delete permissions (d/D).
