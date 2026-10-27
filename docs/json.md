@@ -189,6 +189,36 @@ yq 'del(.dataset.collection.doc[] | select(.["+@domain"] != "news"))' wmttest202
 </dataset>
 ```
 
+### Filter Array for Object with a Field
+
+Let's say we want to know the record identifier.
+
+```json title="input"
+{
+  "recordInfo": [
+    {
+      "Unwanted": {
+        "content": "Don't care"
+      }
+    }
+    {
+      "recordIdentifier": {
+        "+content": "da369e31-4fca-418b-86ea-d20cae2713e8",
+        "+@source": "tdr2"
+      }
+    }
+  ],
+}
+```
+
+```sh title="command"
+jq '.recordInfo | map(select(.recordIdentifier))[0].recordIdentifier["+content"]' input.json
+```
+
+```json title="output"
+"da369e31-4fca-418b-86ea-d20cae2713e8"
+```
+
 ### Flat Files to Structured json
 
 When you have multiple flat files that you want to combine into a structured json.
