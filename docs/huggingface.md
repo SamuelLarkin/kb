@@ -2,7 +2,7 @@
 
 ## Generate.py
 
-```python tile="generate.py"
+```python title="generate.py"
 #!/usr/bin/env  python3
 """
 uv venv --relocatable --managed-python --prompt=axolotl --python=3.12 venv
