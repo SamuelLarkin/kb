@@ -363,15 +363,16 @@ If both files contain arrays of objects and you want to join them on a common ke
 
 ```sh title="command"
 jq --compact-output --slurpfile right_file right_file.jsonl '
-  INDEX($right_file[]; .id) as $dict |
-  . + $dict[.id] | select(. != null)
+  INDEX($right_file[]; .id) as $dict
+  | . + $dict[.id]
+  | select(. != null)
 ' left_file.jsonl
 ```
 
-`INDEX($file2[]; .id)`: Builds a lookup hash from `file2` using the `id` field as the key.
-`$file1[]`: Iterates over each object in `file1`.
-`. + $dict[.id]`: Merges the object from `file1` with the matching object from `file2`.
-`select(. != null)`: Ensures only matches are output (inner join).
+- `INDEX($right_file[]; .id)`: Builds a lookup hash from $right_file`using the`id` field as the key.
+- `$right_file[]`: Iterates over each object in $right_file`.
+- `. + $dict[.id]`: Merges the object from `left_file` with the matching object from $right_file`.
+- `select(. != null)`: Ensures only matches are output (inner join).
 
 ```json title="output"
 { "id": "10", "data": "abc", "content": "yui" }
