@@ -112,6 +112,14 @@ pv Huge.jsonl \
 | jq --null-input '[ inputs | select(.unparsable)] | reduce .[] as $item (0; . + 1)'
 ```
 
+### Field at Any Depth
+
+To find the value of a field at any depth in JSON using `jq`, use the recursive descent operator `..` combined with the field name and the try operator `?` to suppress errors for non-matching paths.
+
+```sh
+jq '.. | .fieldName? | select(. != null)'
+```
+
 ### Filename
 
 If you need the file name in your script, you can call the function `input_filename`.
