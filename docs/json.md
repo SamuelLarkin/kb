@@ -364,6 +364,16 @@ jq --compact-output --slurpfile right_file right_file.jsonl '
 
 #### Left Join
 
+##### Using `miller`
+
+Performing a left join on `id` using `left_file.jsonl` and `right_file.jsonl`.
+
+```sh
+mlr --jsonl join -u -j id -r id -f left_file.jsonl right_file.jsonl
+```
+
+##### Using `jq`
+
 To join two JSON files based on a specific field (e.g., `id`), you can use `jq`, a powerful command-line JSON processor.
 
 Using `jq` for an Inner Join
