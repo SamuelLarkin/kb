@@ -369,7 +369,7 @@ jq --compact-output --slurpfile right_file right_file.jsonl '
 Performing a left join on `id` using `left_file.jsonl` and `right_file.jsonl`.
 
 ```sh
-mlr --jsonl join -u -j id -r id -f left_file.jsonl right_file.jsonl
+mlr --jsonl join -u --ul -j id -r id -f left_file.jsonl right_file.jsonl
 ```
 
 ##### Using `jq`
@@ -380,11 +380,11 @@ Using `jq` for an Inner Join
 If both files contain arrays of objects and you want to join them on a common key (like `id`), use this efficient `jq` script:
 
 ```sh title="command"
-jq --compact-output --slurpfile right_file right_file.jsonl '
-  INDEX($right_file[]; .id) as $dict
-  | . + $dict[.id]
-  | select(. != null)
-' left_file.jsonl
+jq \
+  --compact-output \
+  --slurpfile right_file right_file.jsonl \
+  'INDEX($right_file[]; .id) as $dict | . + $dict[.id] // .' \
+  left_file.jsonl
 ```
 
 - `INDEX($right_file[]; .id)`: Builds a lookup hash from $right_file`using the`id` field as the key.
