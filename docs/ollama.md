@@ -147,3 +147,40 @@ cd qwen3-coder-next-gguf/Q4_1
 ollama create qwen3-coder-next:q4_1
 ollama run qwen3-coder-next:q4_1
 ```
+
+## Wait for the Backend Server
+
+### oLLaMa
+
+```sh
+readonly head_node_port=$(( SLURM_JOB_ID % (50000 - 30000 + 1 ) + 30000 ))
+export OLLAMA_HOST="127.0.0.1:$head_node_port"
+export OLLAMA_THREADS=$SLURM_JOB_CPUS_PER_NODE
+export OLLAMA_NUM_PARALLEL=1
+
+ollama serve &> "$SLURM_JOB_NAME-$SLURM_JOB_ID.ollama.log" &
+time curl --retry 8 --retry-connrefused --silent --fail $OLLAMA_HOST
+ollama pull "$model"
+ollama show --modelfile "$model"
+```
+
+### vLLM
+
+```sh
+# According to Google, the best we can hope for using V100 is gptq/float16
+vllm serve "$model" \
+  --port $head_node_port \
+  --quantization gptq \
+  --dtype float16 \
+  --seed 42 \
+  --gpu-memory-utilization 0.8 \
+  --max-num-batched-tokens 2048 \
+  --max-num-seqs 2 \
+  --tensor-parallel-size "${SLURM_GPUS_ON_NODE:-${SLURM_GPUS_ON_NODE}}" \
+&> "$SLURM_JOB_NAME-$SLURM_JOB_ID.vllm.log" &
+
+# Wait for the server to start
+# [When is ollama serve ready - for use in scripts?3341](https//github.com/ollama/ollama/issues/3341#issuecomment-2360577772)
+sleep $((22 * 60))  # Takes like 30 mins to get vLLM started.
+time curl --retry 8 --retry-connrefused --silent --fail http://localhost:$head_node_port
+```
