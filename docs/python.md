@@ -38,7 +38,53 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%Y-%m-%d_%H:%M:%S",
 )
+```
 
+## Write Logging Record to File
+
+```python
+import loguru
+
+JOB_NAME: str = os.environ.get(key="SLURM_JOB_NAME", default="local")                                                                                                                 JOB_ID: str = os.environ.get(key="SLURM_JOB_ID", default=datetime.today().strftime(format="%F-%T"))
+
+def custom_loguru_format(record):
+│   """
+│   Skip the extras if not defined.
+│   """
+│   if "publication_id" in record["extra"]:
+│   │   # If extra has data, include {extra}
+│   │   format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan><cyan>:</cyan><cyan>{function}</cyan><cyan>:</cyan><cyan>{line}</cya
+│   │   return format
+│   │
+│   format = "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan><cyan>:</cyan><cyan>{function}</cyan><cyan>:</cyan><cyan>{line}</cyan> -
+│   return format
+
+
+# 1. Remove the default handler to prevent duplicate logs
+logger.remove()
+
+# 2. Add a new handler with a custom format
+logger.add(
+│   sink=sys.stderr,
+│   format=custom_loguru_format,
+│   colorize=True,
+)
+logger.add(
+│   sink=f"{JOB_NAME}-{JOB_ID}.jsonl.log",
+│   serialize=True,  # transform the record to json
+│   enqueue=True,
+│   level="DEBUG",
+│   # WARNING: DON'T use `mode="r"` or else the log file is corrupted.
+│   # mode="w",  # Override previous log file.
+)
+logger: Logger = logger.opt(capture=True)
+```
+
+Then to use it.
+
+```python
+with logger.contextualize(publication_id=pid):
+  logger.debug("This log will automatically contain the publication's id.")
 ```
 
 ## Multiprocessing with Expensive Resources
