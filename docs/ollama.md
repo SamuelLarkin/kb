@@ -133,3 +133,17 @@ Translate the following text from French into English.\nFrench: {{ .Content }}\n
 ollama run Unbabel--TowerInstruct-13B-v0.1-Q4_K_.fr2enM < corpora/C13-1202-1333.fr
 ollama run Unbabel--TowerInstruct-13B-v0.1-Q4_K_.fr2enM < corpora/C14-0508-1335.fr
 ```
+
+## Allow Importing Multi-file GGUF Models
+
+[source](https://github.com/ollama/ollama/issues/5245)
+
+```sh
+hf download unsloth/Qwen3-Coder-Next-GGUF \
+  --include "Q4_1/*.gguf" \
+  --local-dir ./qwen3-coder-next-gguf
+
+cd qwen3-coder-next-gguf/Q4_1
+ollama create qwen3-coder-next:q4_1
+ollama run qwen3-coder-next:q4_1
+```
