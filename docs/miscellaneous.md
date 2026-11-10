@@ -221,6 +221,18 @@ Or just one entry:
 
 For additional information, consult help hash and man bash.
 
+## Replace `tee` with `awk`
+
+Using `awk` separes forking processes
+
+```sh title="from tee"
+command | tee >(grep 'pattern' > file_a) | grep -v 'pattern' | next_command
+```
+
+```sh title="to awk"
+command | awk '/pattern/ { print > "file_a"; next } { print }' | next_command
+```
+
 ## Seeded `shuf`
 
 ```sh
