@@ -136,3 +136,20 @@ Model-70B-Instruct-Q4_K_M.gguf
                    │  └──── K-quant: mixed precision
                    └─────── ~4 bits per weight
 ```
+
+## Agent in Relation with Harness
+
+Question: A multi agent system is running as many harness as there are agents
+Answer:
+Yes, that's essentially right — with one important addition.
+Each agent runs in _its own harness_: its own control loop, its own context window, its own prompt, and its own tool bindings.
+The definition is mechanical: "a harness that runs more than one agent loop on a shared task, each loop with its own context window."
+
+But it's not just N independent harnesses running side by side. There's a layer above them:
+
+- _Orchestration / coordination_ — a supervisor, message bus, or shared blackboard that routes work, manages dependencies, and aggregates results.
+- _Shared state_ — a common workspace, database, or message channel through which agents pass context (each agent's output becomes another's input).
+- _Often a shared model_ — the same LLM instance (or family) underpins all agents; what differs is the prompt, tool set, and context each harness feeds it.
+
+So the full picture is: _N agent harnesses_ + _1 coordination layer_ + _shared state_ + _(usually) a shared model_.
+The harnesses are per-agent; the glue between them is what makes it a system rather than just parallel agents.
