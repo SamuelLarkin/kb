@@ -1,5 +1,7 @@
 #!/bin/sh
 
+test -s .venv/bin/activate && . .venv/bin/activate
+
 if ! command -v zensical; then
   prefix=uvx
 fi
