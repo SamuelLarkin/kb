@@ -126,3 +126,13 @@ For adaptive optimizers like Adam, RMSprop, or AdamW, the learning rate should t
 - Thresholds: Linear scaling generally holds for SGD up to batch sizes of roughly 2,048–8,192. Beyond this, the relationship often breaks down, and performance may degrade unless specialized techniques (like LARS or LAMB optimizers) are used.
 - Small Batch Regime: When the batch size is very small (dominated by gradient noise), linear scaling is often a safe starting point even for some adaptive scenarios, but square root scaling is theoretically more sound for Adam.
 - Warmup: Regardless of the scaling rule, increasing the batch size (and consequently the learning rate) usually necessitates a longer warmup period to allow the model to stabilize before applying the full learning rate.
+
+## Quantization
+
+```
+Model-70B-Instruct-Q4_K_M.gguf
+                   │  │ │
+                   │  │ └── M = medium (S = small, L = large)
+                   │  └──── K-quant: mixed precision
+                   └─────── ~4 bits per weight
+```
